@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="PericosCorp.InventoryManager.Domain.Entities.Role" table="role">    
+   <id column="Id" name="Id" >
+     <generator class="native" />
+   </id> 
+   <property column="Name" name="Name" />
+   <property column="Description" name="Description" />
+ </class>
+</hibernate-mapping>
