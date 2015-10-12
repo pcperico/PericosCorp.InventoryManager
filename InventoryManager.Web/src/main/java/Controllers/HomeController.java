@@ -20,6 +20,7 @@ public class HomeController implements Controller {
 			ModelAndView modelAndView = new ModelAndView("newEmployee");
 			modelAndView.addObject("roles", "hola mundooooooooo");
 			//viewModel.setRoles(roleRepository.GetAll());
+			roleRepository.GetAll();
 		return modelAndView; //new ModelAndView("newEmployee","model",viewModel);
 	}
 	
