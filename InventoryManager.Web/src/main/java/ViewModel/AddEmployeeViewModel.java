@@ -19,6 +19,11 @@ public class AddEmployeeViewModel {
 	public void setRoles(List<Role> roles) {
 		Roles = roles;
 	}
+	public int getTotalRoles() {
+		return Roles.size();
+	}
+	
 	private Employee Employee;
 	private List<Role> Roles = new ArrayList<Role>();
+	private int TotalRoles;
 }

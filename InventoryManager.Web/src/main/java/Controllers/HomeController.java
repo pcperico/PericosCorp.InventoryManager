@@ -1,5 +1,7 @@
 package Controllers;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -16,12 +18,10 @@ public class HomeController implements Controller {
 	
 	public ModelAndView handleRequest(HttpServletRequest arg0,
 			HttpServletResponse arg1) throws Exception {
-			//AddEmployeeViewModel viewModel = new AddEmployeeViewModel();
-			ModelAndView modelAndView = new ModelAndView("newEmployee");
-			modelAndView.addObject("roles", "hola mundooooooooo");
-			//viewModel.setRoles(roleRepository.GetAll());
-			roleRepository.GetAll();
-		return modelAndView; //new ModelAndView("newEmployee","model",viewModel);
+			String now = (new Date()).toString();
+			AddEmployeeViewModel viewModel = new AddEmployeeViewModel();			
+			viewModel.setRoles(roleRepository.GetAll());			
+		return new ModelAndView("newEmployee","model",viewModel); 
 	}
 	
 	public void setRoleRepository(IRoleRepository _roleRepository) {
