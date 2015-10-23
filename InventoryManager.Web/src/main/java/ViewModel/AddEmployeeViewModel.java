@@ -25,5 +25,5 @@ public class AddEmployeeViewModel {
 	
 	private Employee Employee;
 	private List<Role> Roles = new ArrayList<Role>();
-	private int TotalRoles;
+	
 }

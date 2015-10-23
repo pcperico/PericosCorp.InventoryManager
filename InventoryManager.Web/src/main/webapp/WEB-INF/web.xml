@@ -5,15 +5,30 @@
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
 	
+	 <!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>/WEB-INF/spring/root-context.xml</param-value>
+    </context-param>
+    
+     <!-- Creates the Spring Container shared by all Servlets and Filters -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
 	<servlet>
 		<servlet-name>frontController</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		 <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring/frontController-context.xml</param-value>
+        </init-param>		
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	
 	<servlet-mapping>
 		<servlet-name>frontController</servlet-name>
-		<url-pattern>*.html</url-pattern>
+		<url-pattern>/</url-pattern>
 	</servlet-mapping>
   
   

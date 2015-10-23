@@ -1,18 +1,4 @@
 <%@ include file="/WEB-INF/jsp/include.jsp" %>
-
-<!--<html>
-  <head><title>Hello :: Spring Application</title></head>
-  <body>
-    <h1>Hello - Spring Application</h1>
-    <ul>
-	    <c:forEach items="${model.roles}" var="r">
-			<li><c:out value="${r.name}"></c:out> </li>
-		</c:forEach>
-    </ul>
-    <c:out value="${model.totalRoles}"></c:out>
-  </body>
-</html>-->
-
 <!DOCTYPE html>
 <html lang="en">
 
