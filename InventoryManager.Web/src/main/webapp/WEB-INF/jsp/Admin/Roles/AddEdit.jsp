@@ -7,26 +7,26 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
 </head>
-<body>
-	<label><c:out value="${role.name}"></c:out></label>
-	<form:form method="POST" commandname="Role" action="#">  
-		<table>  
-		<tbody>  
-		    <tr>  
-		        <td>Name:</td>  
-		        <td><form:input path="name" type="text" id="name"></form:input></td>  
-		    </tr>  
-		    <tr>  
-		        <td>Rating:</td>  
-		        <td><form:input path="Description"></form:input></td>  
-		    </tr>  
-		    <tr>  
-		        <td><input type="submit" value="Edit"></td>  
-		        <td></td>  
-		    </tr>  
-		</tbody>  
-		</table>  
-	</form:form>  
+<body>	
+	<c:url var="processAction" value="/Admin/roles/process" ></c:url>
+	<form:form action="/Admin/roles/process" modelAttribute="role"  enctype="multipart/form-data" method="POST">
+		 <form:label path="name">
+                <spring:message text="Name: "/>
+         </form:label>
+		<form:input path="name" />
+		<br />
+		<form:label path="description">
+                <spring:message text="Description: "/>
+         </form:label>
+		<form:input path="description" />
+		<br />
+		<c:if test="${role.id>0}">
+                <input type="submit" value="<spring:message text="Edit Role"/>" />
+        </c:if>
+        <c:if test="${role.id == 0}">
+        	<input type="submit" value="<spring:message text="Add Role"/>" />
+        </c:if>
+	</form:form>
 
 </body>
 </html>

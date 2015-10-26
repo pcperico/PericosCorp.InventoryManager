@@ -5,7 +5,7 @@
   <artifactId>InventoryManager.Web</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Web Maven Webapp</name>
+  <name>InventoryManager.Web</name>
   <url>http://maven.apache.org</url>
   <dependencies>   
    
@@ -19,7 +19,9 @@
 		<groupId>taglibs</groupId>
 		<artifactId>standard</artifactId>
 		<version>1.1.2</version>
-	</dependency>    
+	</dependency>
+	
+        
           
     <dependency>
     	<groupId>javax.servlet</groupId>
@@ -74,6 +76,7 @@
     	<artifactId>hibernate-validator</artifactId>
     	<version>5.0.1.Final</version>
 	</dependency>
+	
 	
   </dependencies>
   <build>
