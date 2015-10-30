@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="PericosCorp.InventoryManager.Domain.Entities.Employee" table="employee">    
+   <id column="Id" name="Id" >
+     <generator class="native" />
+   </id> 
+   <property column="FirstName" name="FirstName" type="string" />
+   <property column="LastName" name="LastName" type="string" />
+   <property column="BirthDate" name="BirthDate" type="date"  />
+   <property column="Phone" name="Phone" type="string"  />
+   <property column="Email" name="Email" type="string"  />
+   <property column="Position" name="Position" type="string" />
+   <property column="BeginDate" name="BeginDate" type="date"  />
+   <property column="EndDate" name="EndDate" type="date"  />
+   <property column="Address" name="Address" type="string"  />
+   <property column="UserName" name="UserName" type="string"  />
+   <property column="Password" name="Password" type="string"  />
+   <set name="EmployeeRoles" table="employeerole" 
+				inverse="true" lazy="false" fetch="select">
+            <key>
+                <column name="Id" not-null="true" />
+            </key>
+            <one-to-many class="PericosCorp.InventoryManager.Domain.Entities.EmployeeRole" />
+        </set>
+ </class>
+</hibernate-mapping>

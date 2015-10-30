@@ -12,8 +12,8 @@
   <property name="show_sql">true</property> 
   <property name="hibernate.default_schema">inventorymanagerdb</property>
   <property name="LogsPath">F:\Logs\DataTier\</property>
-  <mapping resource="Mappings/Role.hbm.xml"/>
-  <mapping resource="Mappings/Employee.hbm.xml"/>
-  <mapping resource="Mappings/EmployeeRole.hbm.xml"/>
+  <mapping resource="Role.hbm.xml"/>
+  <mapping resource="Employee.hbm.xml"/>
+  <mapping resource="EmployeeRole.hbm.xml"/>
 </session-factory>
 </hibernate-configuration>
