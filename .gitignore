@@ -1,1 +1,3 @@
-/InventoryManager.Desktop/target/
+InventoryManager.Domain/target/
+Templates/
+InventoryManager.Desktop/target/
