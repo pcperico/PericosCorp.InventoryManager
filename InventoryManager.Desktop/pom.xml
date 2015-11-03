@@ -4,55 +4,19 @@
     <groupId>PericosCorp</groupId>
     <artifactId>InventoryManager.Desktop</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>InventoryManager.Domain</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
+    <packaging>jar</packaging>   
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
+        <netbeans.hint.license>PericosCorpLicencese</netbeans.hint.license>
     </properties>
-    <build>
-  	<plugins>
-  		<plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-shade-plugin</artifactId>
-                    <executions>
-                        <execution>
-                            <phase>package</phase>
-                            <goals>
-                                <goal>shade</goal>
-                            </goals>
-			</execution>
-                    </executions>
-                    <configuration>
-                        <finalName>Release-${artifactId}-${version}</finalName>
-                        <archive>
-        			<manifest>
-          				<addClasspath>true</addClasspath>
-          				<mainClass>pericoscorp.inventorymanager.desktop.test</mainClass>
-        			</manifest>
-      			</archive>
-                    </configuration>
-		</plugin>
-		
-  		<plugin>
-  			 <groupId>org.apache.maven.plugins</groupId>
-    		 <artifactId>maven-jar-plugin</artifactId>
-    		 <configuration>
-      			<archive>
-        			<manifest>
-          				<addClasspath>true</addClasspath>
-          				<mainClass>pericoscorp.inventorymanager.desktop.test</mainClass>
-        			</manifest>
-      			</archive>
-    		</configuration>
-  		</plugin> 	 
-  	</plugins>  	
-  </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.java.net.substance</groupId>
+            <artifactId>substance</artifactId>
+            <version>6.0</version>
+        </dependency>
+    </dependencies>
+   
 </project>
