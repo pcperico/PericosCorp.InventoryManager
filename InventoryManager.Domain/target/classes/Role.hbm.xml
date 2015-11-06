@@ -7,5 +7,15 @@
    </id> 
    <property column="Name" name="Name" />
    <property column="Description" name="Description" />
+   <property column="Status" name="Status" type="java.lang.Boolean" />
  </class>
+  <sql-query name="Role.FindByName">    
+    <return-scalar column="Id" type="int"/>
+    <return-scalar column="Name" type="string"/>
+    <return-scalar column="Description" type="string"/>
+    <return-scalar column="Status" type="java.lang.Boolean"/>    
+    select Id, Name, Description,Status	
+        from role
+        where Name like :name        
+  </sql-query>    
 </hibernate-mapping>

@@ -32,5 +32,12 @@ public class Role implements Serializable {
 	private int Id;
 	private String Name;
 	private String Description;
+	private Boolean Status;
+	public Boolean isStatus() {
+		return Status;
+	}
+	public void setStatus(Boolean status) {
+		Status = status;
+	}
 
 }

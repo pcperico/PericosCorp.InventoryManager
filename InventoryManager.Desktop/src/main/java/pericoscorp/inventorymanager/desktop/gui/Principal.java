@@ -7,6 +7,7 @@
 package pericoscorp.inventorymanager.desktop.gui;
 
 import javax.swing.UIManager;
+import org.pushingpixels.substance.api.skin.SubstanceBusinessBlueSteelLookAndFeel;
 import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
 import pericoscorp.inventorymanager.desktop.gui.admin.roles.AdminRolesForm;
 
@@ -44,7 +45,7 @@ public class Principal extends javax.swing.JFrame {
         desktopPane.setBackground(new java.awt.Color(255, 255, 255));
 
         AdminMenu.setMnemonic('f');
-        AdminMenu.setText("Administration");
+        AdminMenu.setText("Administración");
 
         RolesMenu.setMnemonic('o');
         RolesMenu.setText("Roles");
@@ -86,7 +87,7 @@ public class Principal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    UIManager.setLookAndFeel(new SubstanceGraphiteLookAndFeel());
+                    UIManager.setLookAndFeel(new SubstanceBusinessBlueSteelLookAndFeel());
                 } catch (Exception e) {
                     System.out.println("Substance Graphite failed to initialize");
                 }
