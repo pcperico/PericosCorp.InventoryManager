@@ -1,5 +1,6 @@
 package PericosCorp.InventoryManager.Domain.Repositories.Implementations;
 
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -11,13 +12,10 @@ import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IRoleReposito
 
 public class RoleRepository extends Repository<Role> implements IRoleRepository  {
 
-	private ILoggerService loggerService;
-	/*@Autowired
-	public void setLoggerServicey(ILoggerService _loggILoggerService) {
-		this.loggerService=_loggILoggerService;
-	}*/
+	private ILoggerService loggerService;	
 	
-	private void setLoggerService()
+	
+	public void setLoggerService()
 	{
 		if(loggerService==null)
 		{
@@ -27,26 +25,25 @@ public class RoleRepository extends Repository<Role> implements IRoleRepository 
 		}
 	}
 	
-	
-	public Boolean CreateNewRole(String name, String description) {
+		
+	public int CreateNewRole(String name, String description) {
+		if(name.isEmpty() || description.isEmpty())
+			return 0;
 		try
 		{
 			System.out.println("role Repository");	
-			setLoggerService();
-			loggerService.LogInfo("test");
-			/*Role r = new Role();
+			setLoggerService();			
+			Role r = new Role();
 			r.setDescription(description);
 			r.setName(name);
-			Save(r);*/	
-			
-			return true;	
+			Save(r);				
+			return 1;	
 		}
 		catch(Exception ex)
-		{
-			
-			return false;
+		{			
+			loggerService.LogSever(ex);
+			return -1;
 		}
 		
 	}
-
 }

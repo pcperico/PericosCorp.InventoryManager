@@ -6,6 +6,12 @@
  */
 package pericoscorp.inventorymanager.desktop.gui.admin.roles;
 
+import PericosCorp.InventoryManager.Domain.Entities.Role;
+import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IRoleRepository;
+import java.util.List;
+import javax.swing.JInternalFrame;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import pericoscorp.inventorymanager.desktop.gui.InternalCenterFrame;
 
 /**
@@ -13,12 +19,19 @@ import pericoscorp.inventorymanager.desktop.gui.InternalCenterFrame;
  * @author Arturo E. Salinas
  */
 public class AdminRolesForm extends InternalCenterFrame {
-
+    private IRoleRepository rr;
+    DefaultTableModel dtm;
     /**
      * Creates new form AdminRolesForm
      */
     public AdminRolesForm() {
         initComponents();
+        rr= (IRoleRepository)ctx.getBean("IRoleRepository");
+        dtm = new DefaultTableModel();
+        dtm.addColumn("Name");
+        dtm.addColumn("Description");  
+        dtm.addColumn("");
+        
     }
 
     /**
@@ -30,23 +43,299 @@ public class AdminRolesForm extends InternalCenterFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lb_Find = new javax.swing.JLabel();
+        txt_find = new javax.swing.JTextField();
+        btn_Search = new javax.swing.JButton();
+        panelRoles = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbl_roles = new javax.swing.JTable();
+        panelAddRole = new javax.swing.JPanel();
+        lb_newRole = new javax.swing.JLabel();
+        lb_name = new javax.swing.JLabel();
+        lb_description = new javax.swing.JLabel();
+        btn_add = new javax.swing.JButton();
+        btn_clear = new javax.swing.JButton();
+        txt_roleName = new pericoscorp.swingcustomcontrolls.TextBoxLength();
+        txt_roleDescription = new pericoscorp.swingcustomcontrolls.TextBoxLength();
+        panelButtons = new javax.swing.JPanel();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+
         setClosable(true);
+        setTitle("Admin Roles");
+        setToolTipText("");
+        setMinimumSize(new java.awt.Dimension(600, 800));
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
+
+        lb_Find.setText("Find:");
+        lb_Find.setToolTipText("");
+
+        btn_Search.setText("Search");
+        btn_Search.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_SearchActionPerformed(evt);
+            }
+        });
+
+        panelRoles.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        tbl_roles.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {},
+                {},
+                {},
+                {}
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(tbl_roles);
+
+        javax.swing.GroupLayout panelRolesLayout = new javax.swing.GroupLayout(panelRoles);
+        panelRoles.setLayout(panelRolesLayout);
+        panelRolesLayout.setHorizontalGroup(
+            panelRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRolesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        panelRolesLayout.setVerticalGroup(
+            panelRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRolesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        panelAddRole.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        lb_newRole.setText("Add new role:");
+
+        lb_name.setText("* Name:");
+
+        lb_description.setText("* Description:");
+
+        btn_add.setText("Add");
+        btn_add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addActionPerformed(evt);
+            }
+        });
+
+        btn_clear.setText("Clear");
+        btn_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clearActionPerformed(evt);
+            }
+        });
+
+        txt_roleName.setLength(50);
+
+        txt_roleDescription.setLength(100);
+
+        javax.swing.GroupLayout panelAddRoleLayout = new javax.swing.GroupLayout(panelAddRole);
+        panelAddRole.setLayout(panelAddRoleLayout);
+        panelAddRoleLayout.setHorizontalGroup(
+            panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAddRoleLayout.createSequentialGroup()
+                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lb_newRole)
+                    .addGroup(panelAddRoleLayout.createSequentialGroup()
+                        .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lb_description)
+                            .addComponent(lb_name))
+                        .addGap(28, 28, 28)
+                        .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelAddRoleLayout.createSequentialGroup()
+                                .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txt_roleName, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                                .addComponent(txt_roleDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(35, Short.MAX_VALUE))
+        );
+        panelAddRoleLayout.setVerticalGroup(
+            panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAddRoleLayout.createSequentialGroup()
+                .addComponent(lb_newRole)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb_name)
+                    .addComponent(txt_roleName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
+                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb_description)
+                    .addComponent(txt_roleDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_add)
+                    .addComponent(btn_clear))
+                .addGap(0, 8, Short.MAX_VALUE))
+        );
+
+        panelButtons.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        jButton1.setText("Delete");
+
+        jButton2.setText("Edit");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panelButtonsLayout = new javax.swing.GroupLayout(panelButtons);
+        panelButtons.setLayout(panelButtonsLayout);
+        panelButtonsLayout.setHorizontalGroup(
+            panelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelButtonsLayout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addGroup(panelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panelButtonsLayout.setVerticalGroup(
+            panelButtonsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelButtonsLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton2)
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lb_Find)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_find, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_Search))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(panelAddRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(panelRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb_Find)
+                    .addComponent(txt_find, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_Search))
+                .addGap(18, 18, 18)
+                .addComponent(panelRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panelAddRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+     private void fillTable(List<Role> roles,DefaultTableModel model)    
+    {        
+        model.setRowCount(0);
+        this.tbl_roles.setModel(model);             
+        this.tbl_roles.getColumnModel().getColumn(2).setMinWidth(0);
+        this.tbl_roles.getColumnModel().getColumn(2).setMaxWidth(0);
+        Object [] fila = new Object[3];
+        for(Role r:roles)
+        {
+           fila[0] = r.getName();
+           fila[1] = r.getDescription();
+           fila[2] = r.getId();
+           model.addRow(fila);
+        }    
+        //this.lb_counter.setText("Total de Categorias: "+String.valueOf(categories.size()));
+    }
+     
+    private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+        fillTable(rr.GetAll(), dtm);
+    }//GEN-LAST:event_formInternalFrameOpened
+
+    private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
+        int result= rr.CreateNewRole(this.txt_roleName.getText().trim(),this.txt_roleDescription.getText().trim());
+        if(result==1) 
+        {
+           JOptionPane.showMessageDialog(null, "Role added successfully");
+           this.clearFields(btn_add.getParent());
+        }       
+        else if(result==0)
+            JOptionPane.showMessageDialog(null, "Please fill all required fields (*)");
+        else
+            JOptionPane.showMessageDialog(null, "Error saving role, please try again, or contact to system administrator");
+    }//GEN-LAST:event_btn_addActionPerformed
+
+    private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
+        this.clearFields(btn_clear.getParent());
+    }//GEN-LAST:event_btn_clearActionPerformed
+
+    private void btn_SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SearchActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_SearchActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+       if(tbl_roles.getSelectedRow()!=-1)
+       {
+           
+       }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void fillRoletoEdit()
+    {
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_Search;
+    private javax.swing.JButton btn_add;
+    private javax.swing.JButton btn_clear;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lb_Find;
+    private javax.swing.JLabel lb_description;
+    private javax.swing.JLabel lb_name;
+    private javax.swing.JLabel lb_newRole;
+    private javax.swing.JPanel panelAddRole;
+    private javax.swing.JPanel panelButtons;
+    private javax.swing.JPanel panelRoles;
+    private javax.swing.JTable tbl_roles;
+    private javax.swing.JTextField txt_find;
+    private pericoscorp.swingcustomcontrolls.TextBoxLength txt_roleDescription;
+    private pericoscorp.swingcustomcontrolls.TextBoxLength txt_roleName;
     // End of variables declaration//GEN-END:variables
 }
