@@ -16,12 +16,17 @@
    <property column="Address" name="Address" type="string"  />
    <property column="UserName" name="UserName" type="string"  />
    <property column="Password" name="Password" type="string"  />
-   <set name="EmployeeRoles" table="employeerole" 
-				inverse="true" lazy="false" fetch="select">
+   
+   <many-to-one name="Branch" class="PericosCorp.InventoryManager.Domain.Entities.Branch" fetch="select" lazy="false">
+            <column name="Branch_Id" not-null="true" />
+   </many-to-one>
+   
+   <set name="EmployeeRoles" table="employeerole" inverse="true" lazy="false" fetch="select">
             <key>
-                <column name="Id" not-null="true" />
+                <column name="EmployeeId" not-null="true" />
             </key>
             <one-to-many class="PericosCorp.InventoryManager.Domain.Entities.EmployeeRole" />
-        </set>
+   </set>
+   
  </class>
 </hibernate-mapping>

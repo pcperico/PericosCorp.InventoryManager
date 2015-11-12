@@ -42,6 +42,14 @@ public class Employee implements Serializable {
 	private String UserName;
 	private String Password;
 	private Set<EmployeeRole> EmployeeRoles = new HashSet<EmployeeRole>(0);
+	private Branch Branch;
+	public Branch getBranch() {
+		return Branch;
+	}
+
+	public void setBranch(Branch branch) {
+		Branch = branch;
+	}
 
 	public Set<EmployeeRole> getEmployeeRoles() {
 		return EmployeeRoles;
@@ -146,5 +154,7 @@ public class Employee implements Serializable {
 	public void setEmployeeRoles(Set<EmployeeRole> employeeRoles) {
 		EmployeeRoles = employeeRoles;
 	}
+	
+	
 
 }

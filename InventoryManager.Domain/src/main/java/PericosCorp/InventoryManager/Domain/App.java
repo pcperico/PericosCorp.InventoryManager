@@ -2,8 +2,7 @@ package PericosCorp.InventoryManager.Domain;
 
 
 
-import PericosCorp.InventoryManager.Domain.Entities.Role;
-import PericosCorp.InventoryManager.Domain.Repositories.Implementations.RoleRepository;
+import PericosCorp.InventoryManager.Domain.Repositories.Implementations.BranchRepository;
 
 /**
  * Hello world!
@@ -13,9 +12,12 @@ public class App
 {
     public static void main( String[] args )
     {
-    	RoleRepository rr = new RoleRepository();
-    	Role r = rr.Get(1);    	
-        System.out.println( "Hello World! "+r.getName() +" "+ (r.isStatus()?"Active":"Inactive"));
+    	/*EmployeeRepository rr = new EmployeeRepository();
+    	Employee r = rr.Get(2);    	
+        System.out.println( "Hello World! "+r.getFirstName() +" "+r.getBranch().getName()+" "+r.getEmployeeRoles().size());*/
+    	
+    	BranchRepository br = new BranchRepository();
+    	br.CreateNewBranch("Branch Test", "addr Test", "phone test");
     	  	
     }
 }
