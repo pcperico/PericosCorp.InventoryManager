@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * RoleRepository
+ * Created on 03-11-2015
+ * Copyright(c) 2015 PericosCorp Company, Inc.  All Rights Reserved.
+ * This software is the proprietary information of PericosCorp Company.
+ *******************************************************************************/
 package PericosCorp.InventoryManager.Domain.Repositories.Implementations;
 
 
@@ -13,7 +19,10 @@ import PericosCorp.Framework.Data.Repository;
 import PericosCorp.InventoryManager.Domain.Entities.Role;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IRoleRepository;
 
-
+/**
+*
+* @author Arturo E. Salinas
+*/
 public class RoleRepository extends Repository<Role> implements IRoleRepository  {
 
 	private ILoggerService loggerService;	
@@ -22,6 +31,8 @@ public class RoleRepository extends Repository<Role> implements IRoleRepository 
 	{
 		setLoggerService();
 	}
+	
+	@Override
 	public void setLoggerService()
 	{
 		if(loggerService==null)
@@ -32,13 +43,15 @@ public class RoleRepository extends Repository<Role> implements IRoleRepository 
 		}
 	}
 	
-		
+	/**
+	 * {@inheritDoc}
+	 */
+	
 	public int CreateNewRole(String name, String description) {
 		if(name.isEmpty() || description.isEmpty())
 			return 0;
 		try
-		{				
-			//setLoggerService();			
+		{	
 			Role r = new Role();
 			r.setDescription(description);
 			r.setName(name);
@@ -47,32 +60,38 @@ public class RoleRepository extends Repository<Role> implements IRoleRepository 
 			return 1;	
 		}
 		catch(Exception ex)
-		{			
+		{				
 			loggerService.LogSever(ex);
 			return -1;
 		}		
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */	
 	public int UpdateRole(int id,String name,String description)
 	{
 		if(id==0 || name.isEmpty() || description.isEmpty())
 			return 0;
 		try
 		{
-			Role r = Get(id);				
-			//setLoggerService();
+			Role r = Get(id);
 			r.setDescription(description);
 			r.setName(name);
 			Update(r);				
 			return 1;	
 		}
 		catch(Exception ex)
-		{			
+		{				
 			loggerService.LogSever(ex);
 			return -1;
 		}
 		
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	
 	public int TouchRoleStatus(int roleId)
 	{
@@ -84,13 +103,17 @@ public class RoleRepository extends Repository<Role> implements IRoleRepository 
 			return 1;
 		}
 		catch(Exception ex)
-		{			
+		{				
 			loggerService.LogSever(ex);
 			return -1;
 		}
 		
 	}
 	
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	public List<Role> FilterByName(String name) {
         try
         {
@@ -102,7 +125,7 @@ public class RoleRepository extends Repository<Role> implements IRoleRepository 
             return roles;
         }
         catch(Exception ex)
-        {
+        {			
         	loggerService.LogSever(ex);
             return null;
         }

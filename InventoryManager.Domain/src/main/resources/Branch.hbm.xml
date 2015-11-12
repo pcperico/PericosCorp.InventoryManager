@@ -9,4 +9,13 @@
    <property column="Address" name="Address" />
    <property column="Phone" name="Phone" />
  </class>
+ <sql-query name="Branch.FindByName">    
+    <return-scalar column="Id" type="int"/>
+    <return-scalar column="Name" type="string"/>
+    <return-scalar column="Address" type="string"/>
+    <return-scalar column="Phone" type="string"/>    
+    select *
+        from branch
+        where Name like :name        
+  </sql-query> 
 </hibernate-mapping>

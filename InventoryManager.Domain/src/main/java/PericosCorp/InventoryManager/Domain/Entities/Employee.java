@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * Employee
+ * Created on 03-11-2015
+ * Copyright(c) 2015 PericosCorp Company, Inc.  All Rights Reserved.
+ * This software is the proprietary information of PericosCorp Company.
+ *******************************************************************************/
 package PericosCorp.InventoryManager.Domain.Entities;
 
 import java.io.Serializable;
@@ -5,6 +11,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+*
+* @author Arturo E. Salinas
+*/
 public class Employee implements Serializable {
 	public Employee() {
 	};

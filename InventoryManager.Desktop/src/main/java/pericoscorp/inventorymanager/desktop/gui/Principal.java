@@ -9,6 +9,7 @@ package pericoscorp.inventorymanager.desktop.gui;
 import javax.swing.UIManager;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessBlueSteelLookAndFeel;
 import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
+import pericoscorp.inventorymanager.desktop.gui.admin.branches.BranchesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.roles.AdminRolesForm;
 
 /**
@@ -38,6 +39,7 @@ public class Principal extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         AdminMenu = new javax.swing.JMenu();
         RolesMenu = new javax.swing.JMenuItem();
+        BranchesMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(600, 800));
@@ -55,6 +57,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         AdminMenu.add(RolesMenu);
+
+        BranchesMenu.setText("Sucursales");
+        BranchesMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BranchesMenuActionPerformed(evt);
+            }
+        });
+        AdminMenu.add(BranchesMenu);
 
         menuBar.add(AdminMenu);
 
@@ -80,6 +90,12 @@ public class Principal extends javax.swing.JFrame {
         arf.show();
     }//GEN-LAST:event_RolesMenuActionPerformed
 
+    private void BranchesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BranchesMenuActionPerformed
+        BranchesAdminFrom baf = new BranchesAdminFrom();
+        this.desktopPane.add(baf);
+        baf.show();
+    }//GEN-LAST:event_BranchesMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -98,6 +114,7 @@ public class Principal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu AdminMenu;
+    private javax.swing.JMenuItem BranchesMenu;
     private javax.swing.JMenuItem RolesMenu;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuBar menuBar;

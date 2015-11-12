@@ -1,7 +1,18 @@
+/*******************************************************************************
+ * Role
+ * Created on 03-11-2015
+ * Copyright(c) 2015 PericosCorp Company, Inc.  All Rights Reserved.
+ * This software is the proprietary information of PericosCorp Company.
+ *******************************************************************************/
 package PericosCorp.InventoryManager.Domain.Entities;
 
 import java.io.Serializable;
 
+
+/**
+*
+* @author Arturo E. Salinas
+*/
 public class Role implements Serializable {
 	public Role(){};
 	public Role(String name, String description)

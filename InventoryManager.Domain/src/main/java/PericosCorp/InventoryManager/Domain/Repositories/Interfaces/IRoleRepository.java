@@ -1,3 +1,9 @@
+/*******************************************************************************
+ * IRoleRepository
+ * Created on 03-11-2015
+ * Copyright(c) 2015 PericosCorp Company, Inc.  All Rights Reserved.
+ * This software is the proprietary information of PericosCorp Company.
+ *******************************************************************************/
 package PericosCorp.InventoryManager.Domain.Repositories.Interfaces;
 
 import java.util.List;
@@ -5,6 +11,10 @@ import java.util.List;
 import PericosCorp.Framework.Data.IRepository;
 import PericosCorp.InventoryManager.Domain.Entities.Role;
 
+/**
+*
+* @author Arturo E. Salinas
+*/
 public interface IRoleRepository extends IRepository<Role> {
 	
 	/**
