@@ -66,7 +66,4 @@ public interface IRoleRepository extends IRepository<Role> {
 	 * List of roles filtered by name
 	 */
 	public List<Role> FilterByName(String name);
-	
-	
-
 }

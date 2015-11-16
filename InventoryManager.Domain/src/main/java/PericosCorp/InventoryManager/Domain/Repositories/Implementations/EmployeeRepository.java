@@ -21,28 +21,6 @@ import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IEmployeeRepo
 public class EmployeeRepository extends Repository<Employee> implements
 		IEmployeeRepository {
 
-	public void CreateNewEmployee(String firstName, String lastName,
-			Date birthDate, String phone, String email, String position,
-			Date beginDate, Date endDate, String address, String userName,
-			String password, Set<EmployeeRole> employeeRoles) {
-		Employee e = new Employee(firstName, lastName, birthDate, phone, email,
-				position, beginDate, endDate, address, userName, password,
-				employeeRoles);
-
-		try 
-        { 
-			beginOperation();	
-            session.save(e);             
-        }
-		catch(Exception he) 
-        { 
-            manageException(he);            
-        }
-		finally 
-        { 
-            finishOperation();
-        } 	
-		
-	}
+	
 
 }

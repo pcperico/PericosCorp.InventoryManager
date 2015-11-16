@@ -51,6 +51,12 @@
           			<include>*.cfg.xml</include>
           			<include>*.hbm.xml</include>
         		</includes>
+        	</resource>    
+        	<resource>
+            	<directory>src/main/java</directory>
+            	<includes>
+          			<include>DomainServicesContext.xml</include>
+        		</includes>
         	</resource>        	
     	</resources>
   	<plugins>

@@ -21,7 +21,7 @@
             <column name="Branch_Id" not-null="true" />
    </many-to-one>
    
-   <set name="EmployeeRoles" table="employeerole" inverse="true" lazy="false" fetch="select">
+   <set name="EmployeeRoles" table="employeerole" inverse="true" cascade="save-update" lazy="false" fetch="select">
             <key>
                 <column name="EmployeeId" not-null="true" />
             </key>

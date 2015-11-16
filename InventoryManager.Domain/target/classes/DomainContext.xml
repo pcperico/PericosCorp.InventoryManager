@@ -7,5 +7,4 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
      <bean id="ILoggerServiceDomain" class="PericosCorp.Framework.Core.Services.Implementation.LoggerService">
     	<property name="path" value="F:\Logs\DataTier\InventoryManager.Domain\" />
     </bean>  
-     
 </beans>

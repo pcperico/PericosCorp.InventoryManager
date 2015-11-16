@@ -10,6 +10,7 @@ import javax.swing.UIManager;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessBlueSteelLookAndFeel;
 import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
 import pericoscorp.inventorymanager.desktop.gui.admin.branches.BranchesAdminFrom;
+import pericoscorp.inventorymanager.desktop.gui.admin.employees.EmployeesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.roles.AdminRolesForm;
 
 /**
@@ -40,6 +41,7 @@ public class Principal extends javax.swing.JFrame {
         AdminMenu = new javax.swing.JMenu();
         RolesMenu = new javax.swing.JMenuItem();
         BranchesMenu = new javax.swing.JMenuItem();
+        employeesMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(600, 800));
@@ -65,6 +67,14 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         AdminMenu.add(BranchesMenu);
+
+        employeesMenu.setText("Empleados");
+        employeesMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                employeesMenuActionPerformed(evt);
+            }
+        });
+        AdminMenu.add(employeesMenu);
 
         menuBar.add(AdminMenu);
 
@@ -96,6 +106,12 @@ public class Principal extends javax.swing.JFrame {
         baf.show();
     }//GEN-LAST:event_BranchesMenuActionPerformed
 
+    private void employeesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeesMenuActionPerformed
+        EmployeesAdminFrom eaf = new EmployeesAdminFrom();
+        this.desktopPane.add(eaf);
+        eaf.show();
+    }//GEN-LAST:event_employeesMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -117,6 +133,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem BranchesMenu;
     private javax.swing.JMenuItem RolesMenu;
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JMenuItem employeesMenu;
     private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables
 

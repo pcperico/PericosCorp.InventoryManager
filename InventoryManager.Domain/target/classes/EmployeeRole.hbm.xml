@@ -7,8 +7,11 @@
    </id> 
    <property column="CreationDate" name="CreationDate" type="date" />
    <property column="Status" name="Status" type="boolean" />
-   <many-to-one name="Employee" class="PericosCorp.InventoryManager.Domain.Entities.Employee" lazy="false" fetch="select">
+   <many-to-one name="Employee" class="PericosCorp.InventoryManager.Domain.Entities.Employee"  lazy="false" fetch="select">
             <column name="EmployeeId" not-null="true" />
-        </many-to-one>
+   </many-to-one>
+   <many-to-one name="Role" class="PericosCorp.InventoryManager.Domain.Entities.Role"  lazy="false" fetch="select">
+            <column name="RoleId" not-null="true" />
+   </many-to-one>
  </class>
 </hibernate-mapping>

@@ -18,8 +18,5 @@ import PericosCorp.InventoryManager.Domain.Entities.EmployeeRole;
 * @author Arturo E. Salinas
 */
 public interface IEmployeeRepository extends IRepository<Employee> {
-	public void CreateNewEmployee(String firstName, String lastName, Date birthDate,
-			String phone, String email, String position, Date beginDate,
-			Date endDate, String address, String userName, String password,
-			Set<EmployeeRole> employeeRoles);
+	
 }

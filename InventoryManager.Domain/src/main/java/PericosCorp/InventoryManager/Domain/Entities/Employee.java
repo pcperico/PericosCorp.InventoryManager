@@ -22,7 +22,7 @@ public class Employee implements Serializable {
 	public Employee(String firstName, String lastName, Date birthDate,
 			String phone, String email, String position, Date beginDate,
 			Date endDate, String address, String userName, String password,
-			Set<EmployeeRole> employeeRoles) {
+			Set<EmployeeRole> employeeRoles,Branch branch) {
 		FirstName = firstName;
 		LastName = lastName;
 		BirthDate = birthDate;
@@ -35,6 +35,7 @@ public class Employee implements Serializable {
 		UserName = userName;
 		Password = password;
 		EmployeeRoles = employeeRoles;
+		Branch = branch;
 	}
 
 	private static final long serialVersionUID = 1L;
@@ -165,6 +166,10 @@ public class Employee implements Serializable {
 		EmployeeRoles = employeeRoles;
 	}
 	
+	public String getFullName()
+	{
+		return FirstName + " "+LastName; 
+	}
 	
 
 }
