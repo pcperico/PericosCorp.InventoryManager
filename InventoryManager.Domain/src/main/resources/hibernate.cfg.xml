@@ -10,11 +10,15 @@
   <property name="hibernate.connection.password">admin</property>
   <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>  
   <property name="show_sql">true</property> 
+  <property name="hibernate.cache.use_second_level_cache">false</property>
+  <property name="hibernate.cache.use_query_cache">false</property>
+  <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>         
   <property name="hibernate.default_schema">inventorymanagerdb</property>  
   <mapping resource="Role.hbm.xml"/>
   <mapping resource="Employee.hbm.xml"/>
   <mapping resource="Branch.hbm.xml"/>
   <mapping resource="EmployeeRole.hbm.xml"/>
   <mapping resource="EmployeeStatus.hbm.xml"/>
+  <mapping resource="ProductCategory.hbm.xml"/>
 </session-factory>
 </hibernate-configuration>

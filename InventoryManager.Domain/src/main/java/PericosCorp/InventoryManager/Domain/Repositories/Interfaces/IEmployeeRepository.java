@@ -6,12 +6,8 @@
  *******************************************************************************/
 package PericosCorp.InventoryManager.Domain.Repositories.Interfaces;
 
-import java.util.Date;
-import java.util.Set;
-
 import PericosCorp.Framework.Data.IRepository;
 import PericosCorp.InventoryManager.Domain.Entities.Employee;
-import PericosCorp.InventoryManager.Domain.Entities.EmployeeRole;
 
 /**
 *

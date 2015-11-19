@@ -74,5 +74,11 @@ public class EmployeeRole implements Serializable {
 	public void setStatus(boolean status) {
 		Status = status;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return Role.getName();
+	}
 
 }

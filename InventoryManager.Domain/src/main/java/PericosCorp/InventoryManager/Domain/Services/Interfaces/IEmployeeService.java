@@ -17,7 +17,7 @@ public interface IEmployeeService {
 	public void CreateNewEmployee(String firstName, String lastName, Date birthDate,
 			String phone, String email, String position, Date beginDate,
 			Date endDate, String address, String userName, String password,
-			int[] roleIds, int branchId);
+			int[] roleIds, int branchId,int statusId);
 	
 	public void Test();
 }

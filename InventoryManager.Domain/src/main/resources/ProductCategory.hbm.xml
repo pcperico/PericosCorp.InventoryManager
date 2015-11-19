@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="PericosCorp.InventoryManager.Domain.Entities.ProductCategory" table="productcategory">    
+   <id column="Id" name="Id" >
+     <generator class="native" />
+   </id> 
+   <property column="Name" name="Name" />
+   <property column="Description" name="Description" />   
+ </class>
+ <sql-query name="ProductCategory.FindByName">    
+    <return-scalar column="Id" type="int"/>
+    <return-scalar column="Name" type="string"/>
+    <return-scalar column="Description" type="string"/>
+    <return-scalar column="ProductsCount" type="int"/>        
+    select pc.*, count(p.Id) as ProductsCount
+	from productcategory pc
+		left join product p
+		on pc.id = p.Category_Id
+	where pc.Name like :name
+	group by pc.id
+	order by pc.Name   
+                
+  </sql-query> 
+  
+  <sql-query name="ProductCategory.GetWithTotalProducts">    
+    <return-scalar column="Id" type="int"/>
+    <return-scalar column="Name" type="string"/>
+    <return-scalar column="Description" type="string"/>
+    <return-scalar column="ProductsCount" type="int"/>        
+    select pc.*, count(p.Id) as ProductsCount
+	from productcategory pc
+		left join product p
+		on pc.id = p.Category_Id
+	group by pc.id
+	order by pc.Name    
+  </sql-query> 
+</hibernate-mapping>

@@ -55,4 +55,10 @@ public class Branch implements Serializable{
 		Address=address;
 		Phone=phone;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return Name;
+	}
 }

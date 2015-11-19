@@ -42,6 +42,11 @@ public interface IBranchRepository extends IRepository<Branch> {
 	 */
 	public int UpdateBranch(int id,String name,String address,String phone);
 	
+	/**
+	 * Method to find branches by name matches
+	 * @param name name to be search on bd 
+	 * @return a list of branch entites that name contains match with name param
+	 */
 	public List<Branch>FilterByName(String name);
 	
 }

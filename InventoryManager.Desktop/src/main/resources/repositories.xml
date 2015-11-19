@@ -4,8 +4,13 @@
     xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd"> 
 
+    <bean id="ILoggerServiceDesktop" class="PericosCorp.Framework.Core.Services.Implementation.LoggerService">
+    	<property name="path" value="F:\Logs\GuiTier\InventoryManager.Desktop\" />
+    </bean>  
     <bean id="IRoleRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.RoleRepository" />
     <bean id="IBranchRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.BranchRepository" />
     <bean id="IEmployeeRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.EmployeeRepository" />
-    <bean id="IEmployeeSerive" class="PericosCorp.InventoryManager.Domain.Services.Implementations.EmployeeService" />
+    <bean id="IEmployeeService" class="PericosCorp.InventoryManager.Domain.Services.Implementations.EmployeeService" />
+    <bean id="IEmployeeStatusRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.EmployeeStatusRepository" />    
+    <bean id="IProductCategoryRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.ProductCategoryRepository" />    
 </beans>

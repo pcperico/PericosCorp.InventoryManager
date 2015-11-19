@@ -91,8 +91,7 @@ public class BranchRepository extends Repository<Branch> implements IBranchRepos
             Query qu = session.getNamedQuery("Branch.FindByName").setString("name","%"+ name+"%"); 
             @SuppressWarnings("unchecked")
 			List<Branch> roles=  qu.setResultTransformer(Transformers.aliasToBean(Branch.class)).list();            
-            session.close();
-            loggerService.LogInfo("Getting by name");
+            session.close();            
             return roles;
         }
         catch(Exception ex)

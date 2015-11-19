@@ -9,6 +9,7 @@ package pericoscorp.inventorymanager.desktop.gui;
 import javax.swing.UIManager;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessBlueSteelLookAndFeel;
 import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
+import pericoscorp.inventorymanager.desktop.gui.Products.CategoriesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.branches.BranchesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.employees.EmployeesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.roles.AdminRolesForm;
@@ -42,6 +43,9 @@ public class Principal extends javax.swing.JFrame {
         RolesMenu = new javax.swing.JMenuItem();
         BranchesMenu = new javax.swing.JMenuItem();
         employeesMenu = new javax.swing.JMenuItem();
+        menu_Products = new javax.swing.JMenu();
+        menu_Categories = new javax.swing.JMenuItem();
+        menu_ProductsSubMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(600, 800));
@@ -75,6 +79,21 @@ public class Principal extends javax.swing.JFrame {
             }
         });
         AdminMenu.add(employeesMenu);
+
+        menu_Products.setText("Productos");
+
+        menu_Categories.setText("Categorias");
+        menu_Categories.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_CategoriesActionPerformed(evt);
+            }
+        });
+        menu_Products.add(menu_Categories);
+
+        menu_ProductsSubMenu.setText("Productos");
+        menu_Products.add(menu_ProductsSubMenu);
+
+        AdminMenu.add(menu_Products);
 
         menuBar.add(AdminMenu);
 
@@ -112,6 +131,12 @@ public class Principal extends javax.swing.JFrame {
         eaf.show();
     }//GEN-LAST:event_employeesMenuActionPerformed
 
+    private void menu_CategoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_CategoriesActionPerformed
+        CategoriesAdminFrom caf = new CategoriesAdminFrom();
+        this.desktopPane.add(caf);
+        caf.show();
+    }//GEN-LAST:event_menu_CategoriesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -135,6 +160,9 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem employeesMenu;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem menu_Categories;
+    private javax.swing.JMenu menu_Products;
+    private javax.swing.JMenuItem menu_ProductsSubMenu;
     // End of variables declaration//GEN-END:variables
 
 }

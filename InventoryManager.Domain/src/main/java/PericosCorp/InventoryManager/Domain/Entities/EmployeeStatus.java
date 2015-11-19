@@ -17,6 +17,11 @@ public class EmployeeStatus implements Serializable {
 	 *
 	 * @author Arturo E. Salinas
 	 */
+	public EmployeeStatus(){}
+	public EmployeeStatus(String name)
+	{
+		Name=name;
+	}
 	private int Id;
 	public int getId() {
 		return Id;
@@ -31,4 +36,10 @@ public class EmployeeStatus implements Serializable {
 		Name = name;
 	}
 	private String Name;	
+	
+	@Override
+	public String toString()
+	{
+		return Name;
+	}
 }
