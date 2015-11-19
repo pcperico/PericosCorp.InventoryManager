@@ -7,4 +7,5 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="IRoleRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.RoleRepository" />
     <bean id="IBranchRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.BranchRepository" />
     <bean id="IEmployeeRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.EmployeeRepository" />
+    <bean id="IEmployeeSerive" class="PericosCorp.InventoryManager.Domain.Services.Implementations.EmployeeService" />
 </beans>

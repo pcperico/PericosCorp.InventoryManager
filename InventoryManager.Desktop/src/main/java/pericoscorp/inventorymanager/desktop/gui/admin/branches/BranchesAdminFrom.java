@@ -55,12 +55,12 @@ public class BranchesAdminFrom extends InternalCenterFrame {
         lb_description = new javax.swing.JLabel();
         btn_add = new javax.swing.JButton();
         btn_clear = new javax.swing.JButton();
-        txt_branchName = new pericoscorp.swingcustomcontrolls.TextBoxLength();
-        txt_branchAddress = new pericoscorp.swingcustomcontrolls.TextBoxLength();
         jLabel1 = new javax.swing.JLabel();
         txt_id = new javax.swing.JTextField();
         lb_description1 = new javax.swing.JLabel();
-        txt_branchPhone = new pericoscorp.swingcustomcontrolls.NumericTextBox();
+        txt_branchName = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
+        txt_branchAddress = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
+        txt_branchPhone = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
         panelButtons = new javax.swing.JPanel();
         btn_edit = new javax.swing.JButton();
         btn_new = new javax.swing.JButton();
@@ -157,17 +157,18 @@ public class BranchesAdminFrom extends InternalCenterFrame {
             }
         });
 
-        txt_branchName.setLength(100);
-
-        txt_branchAddress.setLength(200);
-
         jLabel1.setText("Id:");
 
         txt_id.setEditable(false);
 
         lb_description1.setText("   Teléfono:");
 
-        txt_branchPhone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("####-####"))));
+        txt_branchName.setIsRequired(true);
+        txt_branchName.setLength(200);
+
+        txt_branchAddress.setIsRequired(true);
+        txt_branchAddress.setLength(200);
+
         txt_branchPhone.setLength(20);
 
         javax.swing.GroupLayout panelAddRoleLayout = new javax.swing.GroupLayout(panelAddRole);
@@ -175,34 +176,34 @@ public class BranchesAdminFrom extends InternalCenterFrame {
         panelAddRoleLayout.setHorizontalGroup(
             panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAddRoleLayout.createSequentialGroup()
+                .addComponent(lb_newRole)
+                .addGap(214, 218, Short.MAX_VALUE))
+            .addGroup(panelAddRoleLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_description1)
                     .addComponent(lb_description)
                     .addComponent(lb_name)
                     .addGroup(panelAddRoleLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabel1))
+                    .addComponent(lb_description1))
                 .addGap(18, 18, 18)
                 .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelAddRoleLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(10, 10, 10)
                         .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txt_branchName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelAddRoleLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(txt_branchAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(txt_branchPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelAddRoleLayout.createSequentialGroup()
-                        .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(panelAddRoleLayout.createSequentialGroup()
-                .addComponent(lb_newRole)
-                .addGap(214, 217, Short.MAX_VALUE))
+                        .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txt_branchPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txt_branchAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                    .addComponent(txt_branchName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panelAddRoleLayout.setVerticalGroup(
             panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,19 +217,19 @@ public class BranchesAdminFrom extends InternalCenterFrame {
                 .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_name)
                     .addComponent(txt_branchName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb_description)
+                    .addComponent(txt_branchAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
-                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_branchAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelAddRoleLayout.createSequentialGroup()
-                        .addComponent(lb_description)
-                        .addGap(18, 18, 18)
-                        .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lb_description1)
-                            .addComponent(txt_branchPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb_description1)
+                    .addComponent(txt_branchPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_add)
-                    .addComponent(btn_clear)))
+                    .addComponent(btn_clear))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelButtons.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -302,7 +303,7 @@ public class BranchesAdminFrom extends InternalCenterFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 63, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(panelAddRole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -434,9 +435,9 @@ public class BranchesAdminFrom extends InternalCenterFrame {
     private javax.swing.JPanel panelButtons;
     private javax.swing.JPanel panelRoles;
     private javax.swing.JTable tbl_branches;
-    private pericoscorp.swingcustomcontrolls.TextBoxLength txt_branchAddress;
-    private pericoscorp.swingcustomcontrolls.TextBoxLength txt_branchName;
-    private pericoscorp.swingcustomcontrolls.NumericTextBox txt_branchPhone;
+    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_branchAddress;
+    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_branchName;
+    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_branchPhone;
     private javax.swing.JTextField txt_find;
     private javax.swing.JTextField txt_id;
     // End of variables declaration//GEN-END:variables

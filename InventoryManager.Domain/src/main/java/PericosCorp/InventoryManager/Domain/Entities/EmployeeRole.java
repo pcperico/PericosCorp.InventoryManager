@@ -17,6 +17,7 @@ import java.util.Date;
 
 public class EmployeeRole implements Serializable {
 	public EmployeeRole() {
+		
 	};
 
 	public EmployeeRole(Employee employee, Role role, Date creationDate,

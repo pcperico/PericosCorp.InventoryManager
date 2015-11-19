@@ -15,5 +15,6 @@
   <mapping resource="Employee.hbm.xml"/>
   <mapping resource="Branch.hbm.xml"/>
   <mapping resource="EmployeeRole.hbm.xml"/>
+  <mapping resource="EmployeeStatus.hbm.xml"/>
 </session-factory>
 </hibernate-configuration>

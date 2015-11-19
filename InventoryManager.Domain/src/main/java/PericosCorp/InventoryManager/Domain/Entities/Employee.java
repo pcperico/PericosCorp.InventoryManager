@@ -54,6 +54,15 @@ public class Employee implements Serializable {
 	private String Password;
 	private Set<EmployeeRole> EmployeeRoles = new HashSet<EmployeeRole>(0);
 	private Branch Branch;
+	private EmployeeStatus EmployeeStatus;
+	public EmployeeStatus getEmployeeStatus() {
+		return EmployeeStatus;
+	}
+
+	public void setEmployeeStatus(EmployeeStatus employeeStatus) {
+		EmployeeStatus = employeeStatus;
+	}
+
 	public Branch getBranch() {
 		return Branch;
 	}

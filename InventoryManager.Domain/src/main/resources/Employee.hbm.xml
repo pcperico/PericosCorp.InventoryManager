@@ -28,5 +28,8 @@
             <one-to-many class="PericosCorp.InventoryManager.Domain.Entities.EmployeeRole" />
    </set>
    
+     <many-to-one name="EmployeeStatus" class="PericosCorp.InventoryManager.Domain.Entities.EmployeeStatus" lazy="false" fetch="select">
+            <column name="Status_Id" not-null="true" />
+     </many-to-one>
  </class>
 </hibernate-mapping>

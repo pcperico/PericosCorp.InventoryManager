@@ -26,7 +26,7 @@ public class App
     {
     	EmployeeRepository rr = new EmployeeRepository();
     	Employee r = rr.Get(2);    	
-        System.out.println( "Hello World! "+r.getFullName()+" "+r.getBranch().getName()+" "+r.getEmployeeRoles().size());
+        System.out.println( "Hello World! "+r.getFullName()+" "+r.getBranch().getName()+" "+r.getEmployeeRoles().size()+ " "+r.getEmployeeStatus().getName());
     	
     	/*BranchRepository br = new BranchRepository();
     	br.CreateNewBranch("Branch Test", "addr Test", "phone test");*/    	

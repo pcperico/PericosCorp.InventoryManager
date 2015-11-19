@@ -56,10 +56,10 @@ public class AdminRolesForm extends InternalCenterFrame {
         lb_description = new javax.swing.JLabel();
         btn_add = new javax.swing.JButton();
         btn_clear = new javax.swing.JButton();
-        txt_roleName = new pericoscorp.swingcustomcontrolls.TextBoxLength();
-        txt_roleDescription = new pericoscorp.swingcustomcontrolls.TextBoxLength();
         jLabel1 = new javax.swing.JLabel();
         txt_id = new javax.swing.JTextField();
+        txt_roleName = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
+        txt_roleDescription = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
         panelButtons = new javax.swing.JPanel();
         btn_delete = new javax.swing.JButton();
         btn_edit = new javax.swing.JButton();
@@ -70,11 +70,6 @@ public class AdminRolesForm extends InternalCenterFrame {
         setToolTipText("");
         setMinimumSize(new java.awt.Dimension(600, 800));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
-            }
-            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameOpened(evt);
-            }
             public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
@@ -84,6 +79,11 @@ public class AdminRolesForm extends InternalCenterFrame {
             public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
             }
         });
 
@@ -157,13 +157,15 @@ public class AdminRolesForm extends InternalCenterFrame {
             }
         });
 
-        txt_roleName.setLength(50);
-
-        txt_roleDescription.setLength(100);
-
         jLabel1.setText("Id:");
 
         txt_id.setEditable(false);
+
+        txt_roleName.setIsRequired(true);
+        txt_roleName.setLength(50);
+
+        txt_roleDescription.setIsRequired(true);
+        txt_roleDescription.setLength(100);
 
         javax.swing.GroupLayout panelAddRoleLayout = new javax.swing.GroupLayout(panelAddRole);
         panelAddRole.setLayout(panelAddRoleLayout);
@@ -178,15 +180,14 @@ public class AdminRolesForm extends InternalCenterFrame {
                         .addContainerGap()
                         .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(panelAddRoleLayout.createSequentialGroup()
-                            .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(txt_roleName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                        .addComponent(txt_roleDescription, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panelAddRoleLayout.createSequentialGroup()
+                        .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_roleName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txt_roleDescription, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelAddRoleLayout.setVerticalGroup(
@@ -444,7 +445,7 @@ public class AdminRolesForm extends InternalCenterFrame {
     private javax.swing.JTable tbl_roles;
     private javax.swing.JTextField txt_find;
     private javax.swing.JTextField txt_id;
-    private pericoscorp.swingcustomcontrolls.TextBoxLength txt_roleDescription;
-    private pericoscorp.swingcustomcontrolls.TextBoxLength txt_roleName;
+    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_roleDescription;
+    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_roleName;
     // End of variables declaration//GEN-END:variables
 }

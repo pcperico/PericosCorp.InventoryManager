@@ -5,11 +5,9 @@
      * This software is the proprietary information of PericosCorp Company.
  */
 package pericoscorp.inventorymanager.desktop.gui.admin.employees;
-import pericoscorp.inventorymanager.desktop.gui.admin.branches.*;
-import PericosCorp.InventoryManager.Domain.Entities.Branch;
 import PericosCorp.InventoryManager.Domain.Entities.Employee;
-import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IBranchRepository;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IEmployeeRepository;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -34,8 +32,7 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
         dtm.addColumn("Usuario");  
         dtm.addColumn("Fecha I");  
         dtm.addColumn("Fecha F");
-        dtm.addColumn("Id");
-        
+        dtm.addColumn("Id");        
     }
 
     /**
@@ -59,12 +56,11 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
         lb_description = new javax.swing.JLabel();
         btn_add = new javax.swing.JButton();
         btn_clear = new javax.swing.JButton();
-        txt_branchName = new pericoscorp.swingcustomcontrolls.TextBoxLength();
-        txt_branchAddress = new pericoscorp.swingcustomcontrolls.TextBoxLength();
         jLabel1 = new javax.swing.JLabel();
         txt_id = new javax.swing.JTextField();
         lb_description1 = new javax.swing.JLabel();
-        txt_branchPhone = new pericoscorp.swingcustomcontrolls.NumericTextBox();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         panelButtons = new javax.swing.JPanel();
         btn_edit = new javax.swing.JButton();
         btn_new = new javax.swing.JButton();
@@ -127,8 +123,8 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
             panelRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRolesLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 906, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelRolesLayout.setVerticalGroup(
             panelRolesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,9 +139,9 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
 
         lb_newRole.setText("Agegar/modificar Empleado");
 
-        lb_name.setText("* Nombre:");
+        lb_name.setText("* Nombres:");
 
-        lb_description.setText("* Dirección:");
+        lb_description.setText("* Apellidos:");
 
         btn_add.setText("Guardar");
         btn_add.addActionListener(new java.awt.event.ActionListener() {
@@ -161,46 +157,46 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
             }
         });
 
-        txt_branchName.setLength(100);
-
-        txt_branchAddress.setLength(200);
-
         jLabel1.setText("Id:");
 
         txt_id.setEditable(false);
 
-        lb_description1.setText("   Teléfono:");
+        lb_description1.setText("* Fecha Nac. (dd/MM/YYYY):");
 
-        txt_branchPhone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("####-####"))));
-        txt_branchPhone.setLength(20);
+        jLabel2.setText("* Teléfono:");
+
+        jLabel3.setText("Email:");
 
         javax.swing.GroupLayout panelAddRoleLayout = new javax.swing.GroupLayout(panelAddRole);
         panelAddRole.setLayout(panelAddRoleLayout);
         panelAddRoleLayout.setHorizontalGroup(
             panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAddRoleLayout.createSequentialGroup()
-                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(lb_newRole)
+                .addGap(617, 617, 617))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAddRoleLayout.createSequentialGroup()
+                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lb_description)
+                    .addComponent(lb_name)
+                    .addComponent(jLabel2)
+                    .addComponent(lb_description1)
                     .addGroup(panelAddRoleLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lb_description)
-                            .addComponent(lb_name)
-                            .addGroup(panelAddRoleLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel1))
-                            .addComponent(lb_description1))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_branchName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(txt_branchAddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txt_branchPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3))))
+                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelAddRoleLayout.createSequentialGroup()
-                        .addComponent(lb_newRole)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 181, Short.MAX_VALUE)
                         .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(65, Short.MAX_VALUE))
+                        .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(468, 468, 468))
+                    .addGroup(panelAddRoleLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         panelAddRoleLayout.setVerticalGroup(
             panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,29 +204,28 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
                 .addComponent(lb_newRole)
                 .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelAddRoleLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(jLabel1)
-                        .addGap(10, 10, 10)
-                        .addComponent(lb_name)
-                        .addGap(15, 15, 15)
-                        .addComponent(lb_description)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                        .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lb_description1)
-                            .addComponent(txt_branchPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelAddRoleLayout.createSequentialGroup()
+                                .addGap(2, 2, 2)
+                                .addComponent(jLabel1))
+                            .addGroup(panelAddRoleLayout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(lb_name)
+                                .addGap(15, 15, 15)
+                                .addComponent(lb_description)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_add)
-                            .addComponent(btn_clear)))
+                        .addComponent(lb_description1)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel2)
+                        .addGap(12, 12, 12)
+                        .addComponent(jLabel3))
                     .addGroup(panelAddRoleLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_branchName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)
-                        .addComponent(txt_branchAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(2, 2, 2)
+                        .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(28, 28, 28)
+                .addGroup(panelAddRoleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_add)
+                    .addComponent(btn_clear)))
         );
 
         panelButtons.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -276,19 +271,19 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(lb_Find)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_find, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(83, 83, 83)
                         .addComponent(btn_Search))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(panelAddRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelRoles, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,9 +297,11 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
                 .addComponent(panelRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(panelAddRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(panelAddRole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -314,16 +311,16 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
     {        
         model.setRowCount(0);
         this.tbl_employees.setModel(model);             
-        this.tbl_employees.getColumnModel().getColumn(3).setMinWidth(0);
-        this.tbl_employees.getColumnModel().getColumn(3).setMaxWidth(0);        
-        Object [] fila = new Object[4];
+        this.tbl_employees.getColumnModel().getColumn(4).setMinWidth(0);
+        this.tbl_employees.getColumnModel().getColumn(4).setMaxWidth(0);        
+        Object [] fila = new Object[5];
         for(Employee e:employees)
         {
            fila[0] = e.getFullName();
            fila[1] = e.getUserName();
            fila[2] =e.getBeginDate().toString();
            fila[3] = e.getEndDate();
-           fila[3] = e.getId();
+           fila[4] = e.getId();
            model.addRow(fila);
         }            
     }
@@ -393,7 +390,7 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
     private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
         isEditing=false;
         clearFields(panelAddRole);
-        this.txt_branchName.requestFocus();
+        
     }//GEN-LAST:event_btn_newActionPerformed
 
     private void tbl_employeesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_employeesMouseClicked
@@ -412,9 +409,9 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
     
     private void fillRoletoEdit(int branchSelected)
     {        
-        this.txt_branchName.setText(this.tbl_employees.getValueAt(branchSelected, 0).toString());
-        this.txt_branchAddress.setText(this.tbl_employees.getValueAt(branchSelected, 1).toString());
-        this.txt_branchPhone.setText(this.tbl_employees.getValueAt(branchSelected, 2).toString());
+        //this.txt_branchName.setText(this.tbl_employees.getValueAt(branchSelected, 0).toString());
+       // this.txt_branchAddress.setText(this.tbl_employees.getValueAt(branchSelected, 1).toString());
+        //this.txt_branchPhone.setText(this.tbl_employees.getValueAt(branchSelected, 2).toString());
         this.txt_id.setText(this.tbl_employees.getValueAt(branchSelected, 3).toString());
     }
 
@@ -425,6 +422,8 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
     private javax.swing.JButton btn_edit;
     private javax.swing.JButton btn_new;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lb_Find;
     private javax.swing.JLabel lb_description;
@@ -435,9 +434,6 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
     private javax.swing.JPanel panelButtons;
     private javax.swing.JPanel panelRoles;
     private javax.swing.JTable tbl_employees;
-    private pericoscorp.swingcustomcontrolls.TextBoxLength txt_branchAddress;
-    private pericoscorp.swingcustomcontrolls.TextBoxLength txt_branchName;
-    private pericoscorp.swingcustomcontrolls.NumericTextBox txt_branchPhone;
     private javax.swing.JTextField txt_find;
     private javax.swing.JTextField txt_id;
     // End of variables declaration//GEN-END:variables
