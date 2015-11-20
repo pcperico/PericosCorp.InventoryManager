@@ -239,7 +239,7 @@
                               <Component id="txt_firstName" max="32767" attributes="0"/>
                               <Component id="txt_id" min="-2" pref="35" max="-2" attributes="0"/>
                               <Component id="txt_lastName" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txt_brithDate" max="32767" attributes="0"/>
+                              <Component id="txt_birthDate" max="32767" attributes="0"/>
                               <Component id="txt_phone" min="-2" pref="200" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
@@ -336,7 +336,7 @@
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="txt_lastName" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="9" pref="9" max="-2" attributes="0"/>
-                          <Component id="txt_brithDate" min="-2" max="-2" attributes="0"/>
+                          <Component id="txt_birthDate" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="txt_phone" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -424,7 +424,7 @@
             <Property name="length" type="int" value="100"/>
           </Properties>
         </Component>
-        <Component class="pericoscorp.swingcustomcontrolls.DateTextBox" name="txt_brithDate">
+        <Component class="pericoscorp.swingcustomcontrolls.DateTextBox" name="txt_birthDate">
           <Properties>
             <Property name="isRequired" type="boolean" value="true"/>
             <Property name="length" type="int" value="10"/>

@@ -6,6 +6,8 @@
  */
 package pericoscorp.inventorymanager.desktop.gui.admin.employees;
 
+import PericosCorp.Framework.Core.Cryptography;
+import PericosCorp.Framework.Core.StringsHelpers;
 import PericosCorp.InventoryManager.Domain.Entities.Branch;
 import PericosCorp.InventoryManager.Domain.Entities.Employee;
 import PericosCorp.InventoryManager.Domain.Entities.EmployeeStatus;
@@ -99,7 +101,7 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
         jLabel3 = new javax.swing.JLabel();
         txt_firstName = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
         txt_lastName = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
-        txt_brithDate = new pericoscorp.swingcustomcontrolls.DateTextBox();
+        txt_birthDate = new pericoscorp.swingcustomcontrolls.DateTextBox();
         txt_phone = new pericoscorp.swingcustomcontrolls.NumericTextBox();
         txt_email = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
         jLabel4 = new javax.swing.JLabel();
@@ -236,8 +238,8 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
         txt_lastName.setIsRequired(true);
         txt_lastName.setLength(100);
 
-        txt_brithDate.setIsRequired(true);
-        txt_brithDate.setLength(10);
+        txt_birthDate.setIsRequired(true);
+        txt_birthDate.setLength(10);
 
         txt_phone.setIsRequired(true);
         txt_phone.setLength(8);
@@ -355,7 +357,7 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
                             .addComponent(txt_firstName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txt_lastName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txt_brithDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txt_birthDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txt_phone, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(panelAddEmployeeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,7 +436,7 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_lastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(9, 9, 9)
-                        .addComponent(txt_brithDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_birthDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txt_phone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -562,6 +564,16 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
         return ((Branch) this.cmb_branch.getItemAt(this.cmb_branch.getSelectedIndex())).getId();                
     }
     
+    
+    private int GetEmployeeIdSelected()
+    {
+        if(this.tbl_employees.getSelectedRow()!=-1)
+        {
+            return Integer.parseInt(this.tbl_employees.getValueAt(this.tbl_employees.getSelectedRow(), 4).toString());
+        }
+        return 0;
+    }
+    
     private int GetSelectedStatusId() {
         if (this.cmb_status.getSelectedIndex() == -1) 
             return 0;        
@@ -580,6 +592,25 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
         }
         return array;
     }
+    
+    private void fillEmployeetoEdit(int employeeId)
+    {
+        Employee e=  er.Get(employeeId);
+        this.txt_id.setText(String.valueOf(e.getId()));
+        this.txt_address.setText(e.getAddress());
+        this.txt_beginDate.setText(StringsHelpers.GetStringofDate(e.getBeginDate()));
+        this.txt_birthDate.setText(StringsHelpers.GetStringofDate(e.getBirthDate()));        
+        this.txt_dateEnd.setText(e.getEndDate()!=null?StringsHelpers.GetStringofDate(e.getEndDate()):"");
+        this.txt_email.setText(e.getEmail());
+        this.txt_firstName.setText(e.getFirstName());
+        this.txt_lastName.setText(e.getLastName());
+        this.txt_password.setText(Cryptography.DecodeBase64(e.getPassword()));
+        this.txt_phone.setText(e.getPhone());
+        this.txt_position.setText(e.getPosition());
+        this.txt_userName.setText(e.getUserName());
+        int x = this.branches.getIndexOf(e.getBranch());
+        this.cmb_branch.setSelectedIndex(this.branches.getIndexOf(e.getBranch()));
+    }
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
         fillTable(er.GetAll(), dtm);
@@ -588,10 +619,10 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         if(!ValidRequiredFields(panelAddEmployee))
             return;
-        es.CreateNewEmployee(this.txt_firstName.getText().trim(), this.txt_lastName.getText().trim(), ConvertToDate(this.txt_brithDate.getText().trim()),
+        es.CreateNewEmployee(this.txt_firstName.getText().trim(), this.txt_lastName.getText().trim(), ConvertToDate(this.txt_birthDate.getText().trim()),
                 this.txt_phone.getText().trim(), this.txt_email.getText().trim(), this.txt_position.getText().trim(), ConvertToDate(this.txt_beginDate.getText().trim()),
                 this.txt_dateEnd.getText().isEmpty() ? null : ConvertToDate(this.txt_dateEnd.getText().trim()), this.txt_address.getText().trim(),
-                this.txt_userName.getText().trim(), this.txt_password.getText().trim(), GetSelectedRoles(), GetSelectedBranchId(),GetSelectedStatusId());
+                this.txt_userName.getText().trim(),Cryptography.EncodeBase64(this.txt_password.getText().trim()), GetSelectedRoles(), GetSelectedBranchId(),GetSelectedStatusId());
 
 
     }//GEN-LAST:event_btn_addActionPerformed
@@ -605,7 +636,7 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
     }//GEN-LAST:event_btn_SearchActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-
+        fillEmployeetoEdit(GetEmployeeIdSelected());
     }//GEN-LAST:event_btn_editActionPerformed
 
     private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
@@ -662,7 +693,7 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
     private javax.swing.JTable tbl_employees;
     private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_address;
     private pericoscorp.swingcustomcontrolls.DateTextBox txt_beginDate;
-    private pericoscorp.swingcustomcontrolls.DateTextBox txt_brithDate;
+    private pericoscorp.swingcustomcontrolls.DateTextBox txt_birthDate;
     private pericoscorp.swingcustomcontrolls.DateTextBox txt_dateEnd;
     private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_email;
     private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_findByName;
