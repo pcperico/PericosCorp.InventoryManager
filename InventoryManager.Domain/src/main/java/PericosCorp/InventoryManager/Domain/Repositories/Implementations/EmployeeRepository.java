@@ -6,6 +6,10 @@
  *******************************************************************************/
 package PericosCorp.InventoryManager.Domain.Repositories.Implementations;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import PericosCorp.Framework.Core.Services.Interfaces.ILoggerService;
 import PericosCorp.Framework.Data.Repository;
 import PericosCorp.InventoryManager.Domain.Entities.Employee;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IEmployeeRepository;
@@ -17,6 +21,20 @@ import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IEmployeeRepo
 public class EmployeeRepository extends Repository<Employee> implements
 		IEmployeeRepository {
 
+	public EmployeeRepository()
+	{
+		setLoggerService();
+	}
 	
+	@Override
+	public void setLoggerService()
+	{
+		if(loggerService==null)
+		{
+			@SuppressWarnings("resource")
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("DomainContext.xml");
+			loggerService = (ILoggerService)ctx.getBean("ILoggerServiceDomain");
+		}
+	}
 
 }

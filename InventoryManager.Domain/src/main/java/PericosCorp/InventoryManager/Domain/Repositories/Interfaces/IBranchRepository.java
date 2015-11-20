@@ -23,8 +23,7 @@ public interface IBranchRepository extends IRepository<Branch> {
 	 * @param phone phone of th branch
 	 * @return
 	 * 1 if created and inserted successfully
-	 * 0 \n
-	 * 0 if instances is incomplete therefore isn't saved, \n 
+	 * 0 if instances is incomplete therefore isn't saved,  
 	 * -1 if an error happens
 	 */
 	public int CreateNewBranch(String name,String address,String phone);
@@ -36,8 +35,8 @@ public interface IBranchRepository extends IRepository<Branch> {
 	 * @param address branch address
 	 * @param phone branch phone
 	 * @return 
-	 * 1 if instance was updated successfully, \n
-	 * 0 if instances is incomplete therefore isn't updated, \n 
+	 * 1 if instance was updated successfully, 
+	 * 0 if instances is incomplete therefore isn't updated,  
 	 * -1 if an error happens
 	 */
 	public int UpdateBranch(int id,String name,String address,String phone);

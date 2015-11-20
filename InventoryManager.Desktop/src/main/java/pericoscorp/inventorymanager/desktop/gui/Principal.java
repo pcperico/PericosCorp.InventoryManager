@@ -9,9 +9,10 @@ package pericoscorp.inventorymanager.desktop.gui;
 import javax.swing.UIManager;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessBlueSteelLookAndFeel;
 import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
-import pericoscorp.inventorymanager.desktop.gui.Products.CategoriesAdminFrom;
+import pericoscorp.inventorymanager.desktop.gui.Admin.Products.CategoriesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.branches.BranchesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.employees.EmployeesAdminFrom;
+import pericoscorp.inventorymanager.desktop.gui.admin.providers.ProvidersAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.roles.AdminRolesForm;
 
 /**
@@ -46,6 +47,7 @@ public class Principal extends javax.swing.JFrame {
         menu_Products = new javax.swing.JMenu();
         menu_Categories = new javax.swing.JMenuItem();
         menu_ProductsSubMenu = new javax.swing.JMenuItem();
+        menu_Providers = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(600, 800));
@@ -95,6 +97,14 @@ public class Principal extends javax.swing.JFrame {
 
         AdminMenu.add(menu_Products);
 
+        menu_Providers.setText("Proveedores");
+        menu_Providers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_ProvidersActionPerformed(evt);
+            }
+        });
+        AdminMenu.add(menu_Providers);
+
         menuBar.add(AdminMenu);
 
         setJMenuBar(menuBar);
@@ -137,6 +147,12 @@ public class Principal extends javax.swing.JFrame {
         caf.show();
     }//GEN-LAST:event_menu_CategoriesActionPerformed
 
+    private void menu_ProvidersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_ProvidersActionPerformed
+       ProvidersAdminFrom paf=new ProvidersAdminFrom();
+       this.desktopPane.add(paf);
+       paf.show();
+    }//GEN-LAST:event_menu_ProvidersActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -163,6 +179,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem menu_Categories;
     private javax.swing.JMenu menu_Products;
     private javax.swing.JMenuItem menu_ProductsSubMenu;
+    private javax.swing.JMenuItem menu_Providers;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -4,7 +4,7 @@
      * Copyright(c) 2015 PericosCorp Company, Inc.  All Rights Reserved.
      * This software is the proprietary information of PericosCorp Company.
  */
-package pericoscorp.inventorymanager.desktop.gui.Products;
+package pericoscorp.inventorymanager.desktop.gui.Admin.Products;
 import PericosCorp.InventoryManager.Domain.Dtos.CategoryProductDto;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProductCategoryRepository;
 import java.util.List;
@@ -315,17 +315,36 @@ public class CategoriesAdminFrom extends InternalCenterFrame {
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        int res = pcr.CreateNewProductCategory(this.txt_catoegoryName.getText().trim(), this.txt_categoryDescription.getText().trim());
-        if(res==1)
+        if(!ValidRequiredFields(this.panelAddCategory))
+            return;
+        if(isEditing)
         {
-            JOptionPane.showMessageDialog(panelAddCategory, "Categoria agregada satisfactoriamente");
-            clearFields(this.panelAddCategory);
-            fillTable(pcr.GetAllWithProductsCount(), dtm);
+            int res = pcr.UpdateProductCategory(Integer.parseInt(this.txt_id.getText()), this.txt_catoegoryName.getText().trim(),this.txt_categoryDescription.getText().trim());
+            if(res==1)
+            {
+                JOptionPane.showMessageDialog(panelAddCategory, "Categoria modificada satisfactoriamente");
+                clearFields(this.panelAddCategory);
+                fillTable(pcr.GetAllWithProductsCount(), dtm);
+            }
+             else if(res==0)
+                JOptionPane.showMessageDialog(panelAddCategory, "Debe completar la información requerida (*)");
+            else
+                JOptionPane.showMessageDialog(panelAddCategory, "No se pudo guardar la categoria, favor reintente, si el problema persiste contacte con el administrador del sistema");
         }
-        else if(res==0)
-            JOptionPane.showMessageDialog(panelAddCategory, "Debe completar la información requerida (*)");
         else
-            JOptionPane.showMessageDialog(panelAddCategory, "No se pudo guardar la categoria, favor reintente, si el problema persiste contacte con el administrador del sistema");
+        {
+            int res = pcr.CreateNewProductCategory(this.txt_catoegoryName.getText().trim(), this.txt_categoryDescription.getText().trim());
+            if(res==1)
+            {
+                JOptionPane.showMessageDialog(panelAddCategory, "Categoria agregada satisfactoriamente");
+                clearFields(this.panelAddCategory);
+                fillTable(pcr.GetAllWithProductsCount(), dtm);
+            }
+            else if(res==0)
+                JOptionPane.showMessageDialog(panelAddCategory, "Debe completar la información requerida (*)");
+            else
+                JOptionPane.showMessageDialog(panelAddCategory, "No se pudo guardar la categoria, favor reintente, si el problema persiste contacte con el administrador del sistema");
+        }        
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
@@ -340,12 +359,12 @@ public class CategoriesAdminFrom extends InternalCenterFrame {
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
        if(tbl_categories.getSelectedRow()!=-1)
        {
-           fillRoletoEdit(tbl_categories.getSelectedRow());
+           fillCategorytoEdit(tbl_categories.getSelectedRow());
            isEditing=true;
        }
        else
        {
-           JOptionPane.showMessageDialog(this.getContentPane(), "Debe seleccionar la sucursal que desea modificar");
+           JOptionPane.showMessageDialog(this.getContentPane(), "Debe seleccionar la categoria que desea modificar");
            isEditing=false;
        }
     }//GEN-LAST:event_btn_editActionPerformed
@@ -370,11 +389,11 @@ public class CategoriesAdminFrom extends InternalCenterFrame {
         return tbl_categories.getSelectedRow();
     }
     
-    private void fillRoletoEdit(int branchSelected)
+    private void fillCategorytoEdit(int categorySelected)
     {        
-        this.txt_catoegoryName.setText(this.tbl_categories.getValueAt(branchSelected, 0).toString());
-        this.txt_categoryDescription.setText(this.tbl_categories.getValueAt(branchSelected, 1).toString());        
-        this.txt_id.setText(this.tbl_categories.getValueAt(branchSelected, 3).toString());
+        this.txt_catoegoryName.setText(this.tbl_categories.getValueAt(categorySelected, 0).toString());
+        this.txt_categoryDescription.setText(this.tbl_categories.getValueAt(categorySelected, 1).toString());        
+        this.txt_id.setText(this.tbl_categories.getValueAt(categorySelected, 3).toString());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

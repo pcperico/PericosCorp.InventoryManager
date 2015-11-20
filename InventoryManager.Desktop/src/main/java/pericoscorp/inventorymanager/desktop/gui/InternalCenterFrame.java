@@ -13,9 +13,11 @@ import java.awt.Dimension;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import pericoscorp.swingcustomcontrolls.BaseTextBoxValidated;
 
 /**
  *
@@ -58,5 +60,21 @@ public class InternalCenterFrame extends javax.swing.JInternalFrame  {
                ((JTextField)c).setText("");
             }
         }
+    }
+    
+    protected boolean ValidRequiredFields(Container container)
+    {
+        boolean isValid=true;
+        for (Component c : container.getComponents()) {
+            if (c instanceof BaseTextBoxValidated) { 
+               if(((BaseTextBoxValidated)c).IsRequired&&((BaseTextBoxValidated)c).getText().isEmpty())
+               {
+                 JOptionPane.showMessageDialog(this.getContentPane(), "Debe completar los campos obligatorios (*)");                 
+                 isValid=false;
+                 break;                 
+               }                  
+            }
+        }
+        return isValid;
     }
 }

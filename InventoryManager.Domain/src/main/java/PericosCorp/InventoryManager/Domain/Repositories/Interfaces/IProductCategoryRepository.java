@@ -24,8 +24,7 @@ public interface IProductCategoryRepository extends IRepository<ProductCategory>
 	 * @param description description of the Product Category	 
 	 * @return
 	 * 1 if created and inserted successfully
-	 * 0 \n
-	 * 0 if instances is incomplete therefore isn't saved, \n 
+	 * 0 if instances is incomplete therefore isn't saved,  
 	 * -1 if an error happens
 	 */
 	public int CreateNewProductCategory(String name,String description);
@@ -36,8 +35,8 @@ public interface IProductCategoryRepository extends IRepository<ProductCategory>
 	 * @param name product category name
 	 * @param description product category description	 
 	 * @return 
-	 * 1 if instance was updated successfully, \n
-	 * 0 if instances is incomplete therefore isn't updated, \n 
+	 * 1 if instance was updated successfully, 
+	 * 0 if instances is incomplete therefore isn't updated,  
 	 * -1 if an error happens
 	 */
 	public int UpdateProductCategory(int id,String name,String description);

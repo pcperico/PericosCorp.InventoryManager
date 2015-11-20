@@ -13,4 +13,5 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="IEmployeeService" class="PericosCorp.InventoryManager.Domain.Services.Implementations.EmployeeService" />
     <bean id="IEmployeeStatusRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.EmployeeStatusRepository" />    
     <bean id="IProductCategoryRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.ProductCategoryRepository" />    
+    <bean id="IProviderRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.ProviderRepository" />    
 </beans>

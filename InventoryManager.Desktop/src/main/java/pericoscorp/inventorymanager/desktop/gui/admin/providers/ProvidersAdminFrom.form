@@ -3,7 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Admin Sucursales"/>
+    <Property name="title" type="java.lang.String" value="Admin Proveedores"/>
     <Property name="toolTipText" type="java.lang.String" value=""/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[600, 800]"/>
@@ -66,9 +66,9 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <Component id="panelButtons" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="138" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="panelAddBranch" max="32767" attributes="0"/>
+                  <Component id="panelAddBranch" pref="245" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -78,7 +78,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lb_Find">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Buscar sucursall:"/>
+        <Property name="text" type="java.lang.String" value="Buscar proveedor:"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
@@ -129,14 +129,14 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tbl_branches">
+            <Component class="javax.swing.JTable" name="tbl_providers">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="0" rowCount="4"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbl_branchesMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbl_providersMouseClicked"/>
               </Events>
             </Component>
           </SubComponents>
@@ -157,43 +157,55 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Component id="lb_newRole" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="214" pref="218" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="lb_description" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="lb_name" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="lb_description1" alignment="0" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="lb_newRole" min="-2" max="-2" attributes="0"/>
                       <Group type="102" attributes="0">
-                          <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
-                          <Component id="btn_add" min="-2" pref="73" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btn_clear" min="-2" pref="66" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txt_id" min="-2" pref="38" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Component id="txt_branchPhone" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="txt_branchAddress" alignment="0" pref="200" max="32767" attributes="0"/>
-                                      <Component id="txt_branchName" alignment="0" max="32767" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="lb_description" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      <Component id="lb_description1" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="txt_providerCountry" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Component id="txt_providerAddress" min="-2" pref="200" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="btn_add" min="-2" pref="73" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="btn_clear" min="-2" pref="66" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Component id="lb_name" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txt_id" min="-2" pref="38" max="-2" attributes="0"/>
+                                          <Component id="txt_providerName" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="txt_providerContactName" alignment="0" pref="200" max="32767" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
+                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Component id="txt_providerPhone" max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace pref="23" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -209,24 +221,34 @@
                   <EmptySpace min="-2" pref="4" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lb_name" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_branchName" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_providerName" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_providerContactName" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_providerPhone" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lb_description" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_branchAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_providerAddress" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lb_description1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_branchPhone" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_providerCountry" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="btn_add" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_clear" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -234,7 +256,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="lb_newRole">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Agegar/modificar Sucursales"/>
+            <Property name="text" type="java.lang.String" value="Agegar/modificar Proveedores"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lb_name">
@@ -275,24 +297,46 @@
         </Component>
         <Component class="javax.swing.JLabel" name="lb_description1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="   Tel&#xe9;fono:"/>
+            <Property name="text" type="java.lang.String" value="* Pa&#xed;s:"/>
           </Properties>
         </Component>
-        <Component class="pericoscorp.swingcustomcontrolls.BaseTextBoxValidated" name="txt_branchName">
+        <Component class="pericoscorp.swingcustomcontrolls.BaseTextBoxValidated" name="txt_providerName">
+          <Properties>
+            <Property name="isRequired" type="boolean" value="true"/>
+            <Property name="length" type="int" value="100"/>
+          </Properties>
+        </Component>
+        <Component class="pericoscorp.swingcustomcontrolls.BaseTextBoxValidated" name="txt_providerAddress">
           <Properties>
             <Property name="isRequired" type="boolean" value="true"/>
             <Property name="length" type="int" value="200"/>
           </Properties>
         </Component>
-        <Component class="pericoscorp.swingcustomcontrolls.BaseTextBoxValidated" name="txt_branchAddress">
+        <Component class="pericoscorp.swingcustomcontrolls.BaseTextBoxValidated" name="txt_providerCountry">
+          <Properties>
+            <Property name="isRequired" type="boolean" value="true"/>
+            <Property name="length" type="int" value="100"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel2">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="* Contacto:"/>
+          </Properties>
+        </Component>
+        <Component class="pericoscorp.swingcustomcontrolls.BaseTextBoxValidated" name="txt_providerContactName">
           <Properties>
             <Property name="isRequired" type="boolean" value="true"/>
             <Property name="length" type="int" value="200"/>
           </Properties>
         </Component>
-        <Component class="pericoscorp.swingcustomcontrolls.BaseTextBoxValidated" name="txt_branchPhone">
+        <Component class="javax.swing.JLabel" name="jLabel3">
           <Properties>
-            <Property name="length" type="int" value="20"/>
+            <Property name="text" type="java.lang.String" value="Tel&#xe9;fono:"/>
+          </Properties>
+        </Component>
+        <Component class="pericoscorp.swingcustomcontrolls.NumericTextBox" name="txt_providerPhone">
+          <Properties>
+            <Property name="length" type="int" value="25"/>
           </Properties>
         </Component>
       </SubComponents>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="PericosCorp.InventoryManager.Domain.Entities.Provider" table="provider">    
+   <id column="Id" name="Id" >
+     <generator class="native" />
+   </id> 
+   <property column="Name" name="Name" />
+   <property column="ContactName" name="ContactName" />
+   <property column="Phone" name="Phone" />
+   <property column="Address" name="Address" />
+   <property column="Country" name="Country" />
+ </class>
+ <sql-query name="Provider.FindByName">    
+    <return-scalar column="Id" type="int"/>
+    <return-scalar column="Name" type="string"/>
+    <return-scalar column="ContactName" type="string"/>
+    <return-scalar column="Address" type="string"/>
+    <return-scalar column="Phone" type="string"/>    
+    <return-scalar column="Country" type="string"/>    
+    select *
+        from provider
+        where Name like :name        
+  </sql-query> 
+</hibernate-mapping>

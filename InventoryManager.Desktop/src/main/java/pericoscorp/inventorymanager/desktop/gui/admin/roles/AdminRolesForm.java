@@ -325,6 +325,8 @@ public class AdminRolesForm extends InternalCenterFrame {
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
+        if(!ValidRequiredFields(this.panelAddRole))
+            return;
         if(!isEditing)
         {
             int result= rr.CreateNewRole(this.txt_roleName.getText().trim(),this.txt_roleDescription.getText().trim());
