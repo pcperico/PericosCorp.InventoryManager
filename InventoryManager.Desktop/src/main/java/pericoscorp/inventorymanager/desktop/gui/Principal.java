@@ -12,7 +12,8 @@ import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
 import pericoscorp.inventorymanager.desktop.gui.Admin.Products.CategoriesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.branches.BranchesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.employees.EmployeesAdminFrom;
-import pericoscorp.inventorymanager.desktop.gui.admin.measurementunit.MeasurementUnitAdminFrom;
+import pericoscorp.inventorymanager.desktop.gui.admin.Products.MeasurementUnitAdminFrom;
+import pericoscorp.inventorymanager.desktop.gui.admin.Products.ProductAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.providers.ProvidersAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.roles.AdminRolesForm;
 
@@ -95,6 +96,11 @@ public class Principal extends javax.swing.JFrame {
         menu_Products.add(menu_Categories);
 
         menu_ProductsSubMenu.setText("Productos");
+        menu_ProductsSubMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_ProductsSubMenuActionPerformed(evt);
+            }
+        });
         menu_Products.add(menu_ProductsSubMenu);
 
         menu_units.setText("Unidades de Medida");
@@ -168,6 +174,12 @@ public class Principal extends javax.swing.JFrame {
         this.desktopPane.add(muaf);
         muaf.show();
     }//GEN-LAST:event_menu_unitsActionPerformed
+
+    private void menu_ProductsSubMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_ProductsSubMenuActionPerformed
+        ProductAdminFrom paf = new ProductAdminFrom();
+        this.desktopPane.add(paf);
+        paf.show();
+    }//GEN-LAST:event_menu_ProductsSubMenuActionPerformed
 
     /**
      * @param args the command line arguments

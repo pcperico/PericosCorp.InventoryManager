@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="PericosCorp.InventoryManager.Domain.Entities.Product" table="product">    
+   <id column="Id" name="Id" >
+     <generator class="native" />
+   </id> 
+   <property column="Name" name="Name" type="string" />
+   <property column="Description" name="Description" type="string" />
+   <property column="Brand" name="Brand" type="string"  />
+   <property column="Model" name="Model" type="string"  />
+   <many-to-one name="ProductCategory" class="PericosCorp.InventoryManager.Domain.Entities.ProductCategory" fetch="select" lazy="false">
+            <column name="ProductCategory_Id" not-null="true" />
+   </many-to-one>
+   <many-to-one name="Provider" class="PericosCorp.InventoryManager.Domain.Entities.Provider" lazy="false" fetch="select">
+            <column name="Provider_Id" not-null="true" />
+   </many-to-one>
+   <many-to-one name="MeasurementUnit" class="PericosCorp.InventoryManager.Domain.Entities.MeasurementUnit" lazy="false" fetch="select">
+            <column name="MeasurementUnit_Id" not-null="true" />
+   </many-to-one>
+ </class>
+</hibernate-mapping>

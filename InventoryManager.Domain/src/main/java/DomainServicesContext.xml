@@ -12,4 +12,8 @@
 	<bean id="IEmployeeRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.EmployeeRepository" />
 	<bean id="IEmployeeRoleRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.EmployeeRoleRepository" />
 	<bean id="IEmployeeStatusRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.EmployeeStatusRepository" />
+	<bean id="IProductCategoryRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.ProductCategoryRepository" />
+	<bean id="IProviderRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.ProviderRepository" />
+	<bean id="IMeasurementUnitRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.MeasurementUnitRepository" />
+	<bean id="IProductRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.ProductRepository" />
 </beans>

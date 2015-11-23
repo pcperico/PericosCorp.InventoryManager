@@ -18,6 +18,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import pericoscorp.swingcustomcontrolls.BaseComboBoxValidated;
+import pericoscorp.swingcustomcontrolls.BaseListBoxValidated;
 import pericoscorp.swingcustomcontrolls.BaseTextBoxValidated;
 
 /**
@@ -75,8 +77,21 @@ public class InternalCenterFrame extends javax.swing.JInternalFrame  {
                if(((BaseTextBoxValidated)c).IsRequired&&((BaseTextBoxValidated)c).getText().isEmpty())
                {
                  JOptionPane.showMessageDialog(this.getContentPane(), "Debe completar los campos obligatorios (*)");                 
-                 isValid=false;
-                 break;                 
+                 return false;                           
+               }                  
+            }
+            if (c instanceof BaseListBoxValidated) { 
+               if(((BaseListBoxValidated)c).isRequired && (((BaseListBoxValidated)c).getSelectedIndex()== -1))
+               {
+                 JOptionPane.showMessageDialog(this.getContentPane(), "Debe completar los campos obligatorios (*)");                 
+                 return false;                           
+               }                  
+            }
+            if (c instanceof BaseListBoxValidated) { 
+               if(((BaseComboBoxValidated)c).isRequired && ((((BaseComboBoxValidated)c).getSelectedIndex()==-1)|| ((BaseComboBoxValidated)c).getSelectedIndex()==0))
+               {
+                 JOptionPane.showMessageDialog(this.getContentPane(), "Debe completar los campos obligatorios (*)");                 
+                 return false;                           
                }                  
             }
         }

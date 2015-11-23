@@ -16,7 +16,7 @@
     select pc.*, count(p.Id) as ProductsCount
 	from productcategory pc
 		left join product p
-		on pc.id = p.Category_Id
+		on pc.id = p.ProductCategory_Id
 	where pc.Name like :name
 	group by pc.id
 	order by pc.Name   
@@ -31,7 +31,7 @@
     select pc.*, count(p.Id) as ProductsCount
 	from productcategory pc
 		left join product p
-		on pc.id = p.Category_Id
+		on pc.id = p.ProductCategory_Id
 	group by pc.id
 	order by pc.Name    
   </sql-query> 

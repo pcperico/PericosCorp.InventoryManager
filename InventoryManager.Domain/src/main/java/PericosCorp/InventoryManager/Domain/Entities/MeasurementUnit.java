@@ -45,4 +45,10 @@ public class MeasurementUnit implements Serializable{
 	}
 	private String Name;
 	private String Abbreviation;
+	
+	@Override
+	public String toString()
+	{
+		return Name;
+	}
 }

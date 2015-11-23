@@ -4,7 +4,7 @@
      * Copyright(c) 2015 PericosCorp Company, Inc.  All Rights Reserved.
      * This software is the proprietary information of PericosCorp Company.
  */
-package pericoscorp.inventorymanager.desktop.gui.admin.measurementunit;
+package pericoscorp.inventorymanager.desktop.gui.admin.Products;
 import PericosCorp.InventoryManager.Domain.Entities.MeasurementUnit;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IMeasurementUnitRepository;
 import java.util.List;
