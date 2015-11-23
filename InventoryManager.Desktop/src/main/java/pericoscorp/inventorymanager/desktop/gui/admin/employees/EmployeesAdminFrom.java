@@ -10,6 +10,7 @@ import PericosCorp.Framework.Core.Cryptography;
 import PericosCorp.Framework.Core.StringsHelpers;
 import PericosCorp.InventoryManager.Domain.Entities.Branch;
 import PericosCorp.InventoryManager.Domain.Entities.Employee;
+import PericosCorp.InventoryManager.Domain.Entities.EmployeeRole;
 import PericosCorp.InventoryManager.Domain.Entities.EmployeeStatus;
 import PericosCorp.InventoryManager.Domain.Entities.Role;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IBranchRepository;
@@ -42,6 +43,7 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
     private final DefaultComboBoxModel statuses;
     private final DefaultTableModel dtm;
     private final DefaultListModel roles;
+    private boolean isEditing=false;
 
     /**
      * Creates new form AdminRolesForm
@@ -608,8 +610,32 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
         this.txt_phone.setText(e.getPhone());
         this.txt_position.setText(e.getPosition());
         this.txt_userName.setText(e.getUserName());
-        int x = this.branches.getIndexOf(e.getBranch());
-        this.cmb_branch.setSelectedIndex(this.branches.getIndexOf(e.getBranch()));
+        for(int x = 0 ; x<branches.getSize();x++)
+        {
+            if(((Branch)branches.getElementAt(x)).getId()==e.getBranch().getId())
+                this.cmb_branch.setSelectedIndex(x);
+        }
+        for(int x = 0 ; x<statuses.getSize();x++)
+        {
+            if(((EmployeeStatus)statuses.getElementAt(x)).getId()==e.getEmployeeStatus().getId())
+                this.cmb_status.setSelectedIndex(x);
+        }       
+        
+        int[] selectedRoles = new int[e.getEmployeeRoles().size()];
+        int n = 0;
+        for(EmployeeRole er : e.getEmployeeRoles())
+        {
+            for(int x=0;x<roles.getSize();x++)
+            {
+                if(((Role)roles.getElementAt(x)).getId()== er.getId())
+                {
+                    selectedRoles[n]=x;
+                    n++;
+                    break;
+                }
+            }
+        }
+        this.list_roles.setSelectedIndices(selectedRoles);
     }
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
@@ -619,12 +645,37 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
         if(!ValidRequiredFields(panelAddEmployee))
             return;
-        es.CreateNewEmployee(this.txt_firstName.getText().trim(), this.txt_lastName.getText().trim(), ConvertToDate(this.txt_birthDate.getText().trim()),
+        if(!isEditing)
+        {
+            int res= es.CreateNewEmployee(this.txt_firstName.getText().trim(), this.txt_lastName.getText().trim(), ConvertToDate(this.txt_birthDate.getText().trim()),
                 this.txt_phone.getText().trim(), this.txt_email.getText().trim(), this.txt_position.getText().trim(), ConvertToDate(this.txt_beginDate.getText().trim()),
                 this.txt_dateEnd.getText().isEmpty() ? null : ConvertToDate(this.txt_dateEnd.getText().trim()), this.txt_address.getText().trim(),
                 this.txt_userName.getText().trim(),Cryptography.EncodeBase64(this.txt_password.getText().trim()), GetSelectedRoles(), GetSelectedBranchId(),GetSelectedStatusId());
-
-
+            if(res==1)
+                JOptionPane.showMessageDialog(panelAddEmployee, "Empleado creado correctamente");
+            else if(res==0)
+                JOptionPane.showMessageDialog(panelAddEmployee, "Debe completar todos los campos requeridos (*)");
+            else
+                JOptionPane.showMessageDialog(panelAddEmployee, "Ocurrio un error mientras se guardaba el empleado, favor reintentar o llamar al administrador del sistema");
+        }
+        else
+        {
+            int res =           es.EditEmployee(Integer.parseInt(this.txt_id.getText()), this.txt_firstName.getText().trim(), this.txt_lastName.getText().trim(), ConvertToDate(this.txt_birthDate.getText().trim()),
+                this.txt_phone.getText().trim(), this.txt_email.getText().trim(), this.txt_position.getText().trim(), ConvertToDate(this.txt_beginDate.getText().trim()),
+                this.txt_dateEnd.getText().isEmpty() ? null : ConvertToDate(this.txt_dateEnd.getText().trim()), this.txt_address.getText().trim(),
+                this.txt_userName.getText().trim(),Cryptography.EncodeBase64(this.txt_password.getText().trim()), GetSelectedRoles(), GetSelectedBranchId(),GetSelectedStatusId());
+            if(res==1)
+            {
+                JOptionPane.showMessageDialog(panelAddEmployee, "Empleado modificado correctamente");
+                isEditing=false;
+                clearFields(panelAddEmployee);
+            }
+                
+            else if(res==0)
+                JOptionPane.showMessageDialog(panelAddEmployee, "Debe completar todos los campos requeridos (*)");
+            else
+                JOptionPane.showMessageDialog(panelAddEmployee, "Ocurrio un error mientras se actualizaba el empleado, favor reintentar o llamar al administrador del sistema");
+        }
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
@@ -636,12 +687,23 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
     }//GEN-LAST:event_btn_SearchActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-        fillEmployeetoEdit(GetEmployeeIdSelected());
+        if(this.tbl_employees.getSelectedRow()!=-1)
+        {
+            fillEmployeetoEdit(GetEmployeeIdSelected());
+            isEditing=true;
+            this.txt_firstName.requestFocus();
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this.getContentPane(), "Debe seleccionar el empleado que desea modificar");
+            isEditing=false;
+        }
+        
     }//GEN-LAST:event_btn_editActionPerformed
 
     private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
-
-
+        isEditing=false;
+        clearFields(panelAddEmployee);
     }//GEN-LAST:event_btn_newActionPerformed
 
     private void tbl_employeesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_employeesMouseClicked

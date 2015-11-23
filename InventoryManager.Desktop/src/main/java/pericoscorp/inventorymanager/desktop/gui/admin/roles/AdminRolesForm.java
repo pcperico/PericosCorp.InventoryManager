@@ -376,6 +376,7 @@ public class AdminRolesForm extends InternalCenterFrame {
        {
            fillRoletoEdit(tbl_roles.getSelectedRow());
            isEditing=true;
+           this.txt_roleName.requestFocus();
        }
        else
        {

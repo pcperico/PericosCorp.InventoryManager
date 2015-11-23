@@ -4,9 +4,9 @@
      * Copyright(c) 2015 PericosCorp Company, Inc.  All Rights Reserved.
      * This software is the proprietary information of PericosCorp Company.
  */
-package pericoscorp.inventorymanager.desktop.gui.admin.branches;
-import PericosCorp.InventoryManager.Domain.Entities.Branch;
-import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IBranchRepository;
+package pericoscorp.inventorymanager.desktop.gui.admin.measurementunit;
+import PericosCorp.InventoryManager.Domain.Entities.MeasurementUnit;
+import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IMeasurementUnitRepository;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,20 +16,19 @@ import pericoscorp.inventorymanager.desktop.gui.InternalCenterFrame;
  *
  * @author Arturo E. Salinas
  */
-public class BranchesAdminFrom extends InternalCenterFrame {
-    private IBranchRepository br;
+public class MeasurementUnitAdminFrom extends InternalCenterFrame {
+    private IMeasurementUnitRepository mur;
     DefaultTableModel dtm;
     private boolean  isEditing=false;
     /**
      * Creates new form AdminRolesForm
      */
-    public BranchesAdminFrom() {
+    public MeasurementUnitAdminFrom() {
         initComponents();
-        br= (IBranchRepository)ctx.getBean("IBranchRepository");
+        mur= (IMeasurementUnitRepository)ctx.getBean("IMeasurementUnitRepository");
         dtm = new DefaultTableModel();
         dtm.addColumn("Nombre");
-        dtm.addColumn("Dirección");  
-        dtm.addColumn("Teléfono");  
+        dtm.addColumn("Abreviación");            
         dtm.addColumn("");
         
     }
@@ -43,13 +42,10 @@ public class BranchesAdminFrom extends InternalCenterFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lb_Find = new javax.swing.JLabel();
-        txt_find = new javax.swing.JTextField();
-        btn_Search = new javax.swing.JButton();
         panelRoles = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_branches = new javax.swing.JTable();
-        panelAddBranch = new javax.swing.JPanel();
+        tbl_units = new javax.swing.JTable();
+        panelAddUnits = new javax.swing.JPanel();
         lb_newRole = new javax.swing.JLabel();
         lb_name = new javax.swing.JLabel();
         lb_description = new javax.swing.JLabel();
@@ -57,16 +53,15 @@ public class BranchesAdminFrom extends InternalCenterFrame {
         btn_clear = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         txt_id = new javax.swing.JTextField();
-        lb_description1 = new javax.swing.JLabel();
-        txt_branchName = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
-        txt_branchAddress = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
-        txt_branchPhone = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
+        txt_unitName = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
+        txt_unitAbbreviation = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
         panelButtons = new javax.swing.JPanel();
         btn_edit = new javax.swing.JButton();
         btn_new = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Admin Sucursales");
+        setResizable(true);
+        setTitle("Admin Unidades de Medida");
         setToolTipText("");
         setMinimumSize(new java.awt.Dimension(600, 800));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -87,19 +82,9 @@ public class BranchesAdminFrom extends InternalCenterFrame {
             }
         });
 
-        lb_Find.setText("Buscar sucursall:");
-        lb_Find.setToolTipText("");
-
-        btn_Search.setText("Buscar");
-        btn_Search.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_SearchActionPerformed(evt);
-            }
-        });
-
         panelRoles.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        tbl_branches.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_units.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -110,12 +95,12 @@ public class BranchesAdminFrom extends InternalCenterFrame {
 
             }
         ));
-        tbl_branches.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbl_units.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbl_branchesMouseClicked(evt);
+                tbl_unitsMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tbl_branches);
+        jScrollPane1.setViewportView(tbl_units);
 
         javax.swing.GroupLayout panelRolesLayout = new javax.swing.GroupLayout(panelRoles);
         panelRoles.setLayout(panelRolesLayout);
@@ -134,14 +119,14 @@ public class BranchesAdminFrom extends InternalCenterFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        panelAddBranch.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        panelAddBranch.setEnabled(false);
+        panelAddUnits.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        panelAddUnits.setEnabled(false);
 
-        lb_newRole.setText("Agegar/modificar Sucursales");
+        lb_newRole.setText("Agegar/modificar Unidades");
 
         lb_name.setText("* Nombre:");
 
-        lb_description.setText("* Dirección:");
+        lb_description.setText("* Abreviación:");
 
         btn_add.setText("Guardar");
         btn_add.addActionListener(new java.awt.event.ActionListener() {
@@ -161,72 +146,57 @@ public class BranchesAdminFrom extends InternalCenterFrame {
 
         txt_id.setEditable(false);
 
-        lb_description1.setText("   Teléfono:");
+        txt_unitName.setIsRequired(true);
+        txt_unitName.setLength(200);
 
-        txt_branchName.setIsRequired(true);
-        txt_branchName.setLength(200);
+        txt_unitAbbreviation.setIsRequired(true);
+        txt_unitAbbreviation.setLength(200);
 
-        txt_branchAddress.setIsRequired(true);
-        txt_branchAddress.setLength(200);
-
-        txt_branchPhone.setLength(20);
-
-        javax.swing.GroupLayout panelAddBranchLayout = new javax.swing.GroupLayout(panelAddBranch);
-        panelAddBranch.setLayout(panelAddBranchLayout);
-        panelAddBranchLayout.setHorizontalGroup(
-            panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAddBranchLayout.createSequentialGroup()
-                .addComponent(lb_newRole)
-                .addGap(214, 218, Short.MAX_VALUE))
-            .addGroup(panelAddBranchLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_description)
-                    .addComponent(lb_name)
-                    .addGroup(panelAddBranchLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(jLabel1))
-                    .addComponent(lb_description1))
-                .addGap(18, 18, 18)
-                .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelAddBranchLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(panelAddBranchLayout.createSequentialGroup()
-                        .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout panelAddUnitsLayout = new javax.swing.GroupLayout(panelAddUnits);
+        panelAddUnits.setLayout(panelAddUnitsLayout);
+        panelAddUnitsLayout.setHorizontalGroup(
+            panelAddUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAddUnitsLayout.createSequentialGroup()
+                .addGroup(panelAddUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lb_newRole)
+                    .addGroup(panelAddUnitsLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panelAddUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lb_description)
+                            .addComponent(lb_name)
+                            .addGroup(panelAddUnitsLayout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jLabel1)))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelAddUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelAddUnitsLayout.createSequentialGroup()
+                                .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txt_branchPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txt_branchAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(txt_branchName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addGroup(panelAddUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txt_unitAbbreviation, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                                .addComponent(txt_unitName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
-        panelAddBranchLayout.setVerticalGroup(
-            panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelAddBranchLayout.createSequentialGroup()
+        panelAddUnitsLayout.setVerticalGroup(
+            panelAddUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelAddUnitsLayout.createSequentialGroup()
                 .addComponent(lb_newRole)
                 .addGap(10, 10, 10)
-                .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelAddUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(4, 4, 4)
-                .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelAddUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_name)
-                    .addComponent(txt_branchName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_unitName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(6, 6, 6)
-                .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelAddUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_description)
-                    .addComponent(txt_branchAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_description1)
-                    .addComponent(txt_branchPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_unitAbbreviation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelAddUnitsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_add)
                     .addComponent(btn_clear))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -274,99 +244,85 @@ public class BranchesAdminFrom extends InternalCenterFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lb_Find)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_find, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_Search))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(panelAddBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(panelAddUnits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(panelRoles, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_Find)
-                    .addComponent(txt_find, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_Search))
-                .addGap(18, 18, 18)
                 .addComponent(panelRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(panelAddBranch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(panelAddUnits, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-     private void fillTable(List<Branch> branches,DefaultTableModel model)    
+     private void fillTable(List<MeasurementUnit> units,DefaultTableModel model)    
     {        
         model.setRowCount(0);
-        this.tbl_branches.setModel(model);             
-        this.tbl_branches.getColumnModel().getColumn(3).setMinWidth(0);
-        this.tbl_branches.getColumnModel().getColumn(3).setMaxWidth(0);        
-        Object [] fila = new Object[4];
-        for(Branch b:branches)
+        this.tbl_units.setModel(model);             
+        this.tbl_units.getColumnModel().getColumn(2).setMinWidth(0);
+        this.tbl_units.getColumnModel().getColumn(2).setMaxWidth(0);        
+        Object [] fila = new Object[3];
+        for(MeasurementUnit mu : units)
         {
-           fila[0] = b.getName();
-           fila[1] = b.getAddress();
-           fila[2] = b.getPhone();
-           fila[3] = b.getId();
+           fila[0] = mu.getName();
+           fila[1] = mu.getAbbreviation();           
+           fila[2] = mu.getId();
            model.addRow(fila);
         }            
     }
      
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        fillTable(br.GetAll(), dtm);
+        fillTable(mur.GetAll(), dtm);
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
-        if(!ValidRequiredFields(panelAddBranch))
+        if(!ValidRequiredFields(panelAddUnits))
             return;
         if(!isEditing)
         {
-            int result= br.CreateNewBranch(this.txt_branchName.getText(),this.txt_branchAddress.getText(),this.txt_branchPhone.getText());
+            int result= mur.CreateNewMeasurementUnit(this.txt_unitName.getText().trim(),this.txt_unitAbbreviation.getText().trim());
             if(result==1) 
             {
-               JOptionPane.showMessageDialog(this.getContentPane(), "Sucursal guardada satisfactoriamente");
+               JOptionPane.showMessageDialog(this.getContentPane(), "Unidad guardada satisfactoriamente");
                this.clearFields(btn_add.getParent());
                isEditing=false;
-               fillTable(br.GetAll(), dtm);
+               fillTable(mur.GetAll(), dtm);
             }       
             else if(result==0)
                 JOptionPane.showMessageDialog(this.getContentPane(), "Debe completar los campos obligatorios (*)");
             else
-                JOptionPane.showMessageDialog(this.getContentPane(), "Error al guardar la sucursal, porfavor intente de nuevo, si el problema persiste contactor al administrador del sistema");
+                JOptionPane.showMessageDialog(this.getContentPane(), "Error al guardar la unidad, porfavor intente de nuevo, si el problema persiste contactor al administrador del sistema");
         }
         else
         {
-            int confirm=JOptionPane.showConfirmDialog(this.getContentPane(), "¿Seguro que desea modificar esta sucursal?");
+            int confirm=JOptionPane.showConfirmDialog(this.getContentPane(), "¿Seguro que desea modificar esta unidad?");
             if(confirm!=0)
                 return;
-            int result= br.UpdateBranch(Integer.parseInt(this.txt_id.getText()),this.txt_branchName.getText().trim(),this.txt_branchAddress.getText().trim(),this.txt_branchPhone.getText());
+            int result= mur.UpdateMeasurementUnit(Integer.parseInt(this.txt_id.getText()),this.txt_unitName.getText().trim(), this.txt_unitAbbreviation.getText().trim());
             if(result==1) 
             {
-               JOptionPane.showMessageDialog(this.getContentPane(), "Sucursal actualizada satisfactoriamente");
+               JOptionPane.showMessageDialog(this.getContentPane(), "Unidad actualizada satisfactoriamente");
                this.clearFields(btn_add.getParent());
                isEditing=false;
-               fillTable(br.GetAll(), dtm);
+               fillTable(mur.GetAll(), dtm);
             }       
             else if(result==0)
                 JOptionPane.showMessageDialog(this.getContentPane(), "Debe completar los campos obligatorios (*)");
             else
-                JOptionPane.showMessageDialog(this.getContentPane(), "Error al actualizar la sucursal, porfavor intente de nuevo, si el problema persiste contactor al administrador del sistema");
+                JOptionPane.showMessageDialog(this.getContentPane(), "Error al actualizar la unidad, porfavor intente de nuevo, si el problema persiste contactor al administrador del sistema");
         }
     }//GEN-LAST:event_btn_addActionPerformed
 
@@ -375,16 +331,12 @@ public class BranchesAdminFrom extends InternalCenterFrame {
         isEditing=false;
     }//GEN-LAST:event_btn_clearActionPerformed
 
-    private void btn_SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SearchActionPerformed
-        fillTable(br.FilterByName(this.txt_find.getText()), dtm);
-    }//GEN-LAST:event_btn_SearchActionPerformed
-
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-       if(tbl_branches.getSelectedRow()!=-1)
+       if(tbl_units.getSelectedRow()!=-1)
        {
-           fillRoletoEdit(tbl_branches.getSelectedRow());
+           fillUnittoEdit(tbl_units.getSelectedRow());
            isEditing=true;
-           this.txt_branchName.requestFocus();
+           this.txt_unitName.requestFocus();
        }
        else
        {
@@ -395,53 +347,47 @@ public class BranchesAdminFrom extends InternalCenterFrame {
 
     private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
         isEditing=false;
-        clearFields(panelAddBranch);
-        this.txt_branchName.requestFocus();
+        clearFields(panelAddUnits);
+        this.txt_unitName.requestFocus();
     }//GEN-LAST:event_btn_newActionPerformed
 
-    private void tbl_branchesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_branchesMouseClicked
-        clearFields(panelAddBranch);
-    }//GEN-LAST:event_tbl_branchesMouseClicked
+    private void tbl_unitsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_unitsMouseClicked
+        clearFields(panelAddUnits);
+    }//GEN-LAST:event_tbl_unitsMouseClicked
 
     private boolean isSelectedRow()
     {
-        return tbl_branches.getSelectedRow()!=-1;
+        return tbl_units.getSelectedRow()!=-1;
     }
     
     private int getSelectedRow()
     {
-        return tbl_branches.getSelectedRow();
+        return tbl_units.getSelectedRow();
     }
     
-    private void fillRoletoEdit(int branchSelected)
+    private void fillUnittoEdit(int unitSelected)
     {        
-        this.txt_branchName.setText(this.tbl_branches.getValueAt(branchSelected, 0).toString());
-        this.txt_branchAddress.setText(this.tbl_branches.getValueAt(branchSelected, 1).toString());
-        this.txt_branchPhone.setText(this.tbl_branches.getValueAt(branchSelected, 2).toString());
-        this.txt_id.setText(this.tbl_branches.getValueAt(branchSelected, 3).toString());
+        this.txt_unitName.setText(this.tbl_units.getValueAt(unitSelected, 0).toString());
+        this.txt_unitAbbreviation.setText(this.tbl_units.getValueAt(unitSelected, 1).toString());        
+        this.txt_id.setText(this.tbl_units.getValueAt(unitSelected, 2).toString());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_Search;
     private javax.swing.JButton btn_add;
     private javax.swing.JButton btn_clear;
     private javax.swing.JButton btn_edit;
     private javax.swing.JButton btn_new;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lb_Find;
     private javax.swing.JLabel lb_description;
-    private javax.swing.JLabel lb_description1;
     private javax.swing.JLabel lb_name;
     private javax.swing.JLabel lb_newRole;
-    private javax.swing.JPanel panelAddBranch;
+    private javax.swing.JPanel panelAddUnits;
     private javax.swing.JPanel panelButtons;
     private javax.swing.JPanel panelRoles;
-    private javax.swing.JTable tbl_branches;
-    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_branchAddress;
-    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_branchName;
-    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_branchPhone;
-    private javax.swing.JTextField txt_find;
+    private javax.swing.JTable tbl_units;
     private javax.swing.JTextField txt_id;
+    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_unitAbbreviation;
+    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_unitName;
     // End of variables declaration//GEN-END:variables
 }

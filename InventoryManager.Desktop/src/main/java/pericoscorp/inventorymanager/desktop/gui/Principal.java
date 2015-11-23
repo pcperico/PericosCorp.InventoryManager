@@ -12,6 +12,7 @@ import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
 import pericoscorp.inventorymanager.desktop.gui.Admin.Products.CategoriesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.branches.BranchesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.employees.EmployeesAdminFrom;
+import pericoscorp.inventorymanager.desktop.gui.admin.measurementunit.MeasurementUnitAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.providers.ProvidersAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.roles.AdminRolesForm;
 
@@ -47,6 +48,7 @@ public class Principal extends javax.swing.JFrame {
         menu_Products = new javax.swing.JMenu();
         menu_Categories = new javax.swing.JMenuItem();
         menu_ProductsSubMenu = new javax.swing.JMenuItem();
+        menu_units = new javax.swing.JMenuItem();
         menu_Providers = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -94,6 +96,14 @@ public class Principal extends javax.swing.JFrame {
 
         menu_ProductsSubMenu.setText("Productos");
         menu_Products.add(menu_ProductsSubMenu);
+
+        menu_units.setText("Unidades de Medida");
+        menu_units.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_unitsActionPerformed(evt);
+            }
+        });
+        menu_Products.add(menu_units);
 
         AdminMenu.add(menu_Products);
 
@@ -153,6 +163,12 @@ public class Principal extends javax.swing.JFrame {
        paf.show();
     }//GEN-LAST:event_menu_ProvidersActionPerformed
 
+    private void menu_unitsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_unitsActionPerformed
+        MeasurementUnitAdminFrom muaf = new MeasurementUnitAdminFrom();
+        this.desktopPane.add(muaf);
+        muaf.show();
+    }//GEN-LAST:event_menu_unitsActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -180,6 +196,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu menu_Products;
     private javax.swing.JMenuItem menu_ProductsSubMenu;
     private javax.swing.JMenuItem menu_Providers;
+    private javax.swing.JMenuItem menu_units;
     // End of variables declaration//GEN-END:variables
 
 }

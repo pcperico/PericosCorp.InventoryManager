@@ -46,49 +46,109 @@ public class EmployeeService extends Repository<Employee> implements IEmployeeSe
 	}
 	
 	
-	
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void CreateNewEmployee(String firstName, String lastName,
-			Date birthDate, String phone, String email, String position,
-			Date beginDate, Date endDate, String address, String userName,
-			String password, int[] roleIds, int branchId,int statusId) {
-		
-		Branch branch = branchRepository.Get(branchId);
-		EmployeeStatus status =  employeeStatusRepository.Get(statusId);
-		Employee employee = new Employee(firstName,lastName,birthDate,phone,email,position,beginDate,endDate,address,userName,password,null,branch,status);
-		int id =0;
-        try 
-        { 
-           beginOperation();           
-           employee.setId(id);
-           Set<EmployeeRole>employeeRoles=new HashSet<EmployeeRole>(roleIds.length);           
-           Date date = new Date();
-           id=(Integer) session.save(employee);
-	   	   for(int i=0;i<roleIds.length;i++)
-	   	   {			
-	   			employeeRoles.add(new EmployeeRole(employee,roleRepository.Get(roleIds[i]),date,true));
-	   			//employeeRoleRepository.Save(new EmployeeRole(employee,roleRepository.Get(roleIds[i]),date,true));
-	   	   }
-	   	   employee.setEmployeeRoles(employeeRoles);
-	   	   session.saveOrUpdate(employee);
-        }catch(Exception he) 
-        {         	
-            manageException(he);            
-        }finally 
-        { 
-            finishOperation();
-        } 		
-	}
 	/**
 	 *
 	 * @author Arturo E. Salinas
 	 */
 
-	public void Test() {
-		Role r=  roleRepository.Get(2);
-		System.out.println(r.getName()); 
+	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public int CreateNewEmployee(String firstName, String lastName,
+			Date birthDate, String phone, String email, String position,
+			Date beginDate, Date endDate, String address, String userName,
+			String password, int[] roleIds, int branchId,int statusId) {
+		if(firstName.isEmpty()|| lastName.isEmpty()|| birthDate==null || position.isEmpty() || beginDate==null || userName.isEmpty() || password.isEmpty() || roleIds==null || branchId==0 || statusId==0)
+			return 0;
+		
+		Branch branch = branchRepository.Get(branchId);
+		EmployeeStatus status =  employeeStatusRepository.Get(statusId);
+		Employee employee = new Employee(firstName,lastName,birthDate,phone,email,position,beginDate,endDate,address,userName,password,null,branch,status);		
+        try 
+        { 
+           beginOperation();
+           Set<EmployeeRole>employeeRoles=new HashSet<EmployeeRole>(roleIds.length);           
+           Date date = new Date();
+           session.save(employee);
+	   	   for(int i=0;i<roleIds.length;i++)
+	   	   {			
+	   			employeeRoles.add(new EmployeeRole(employee,roleRepository.Get(roleIds[i]),date,true));
+	   	   }
+	   	   employee.setEmployeeRoles(employeeRoles);
+	   	   session.saveOrUpdate(employee);
+        }catch(Exception he) 
+        {         	
+            manageException(he);   
+            return -1;
+        }finally 
+        { 
+            finishOperation();
+        } 		
+        return 1;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public int EditEmployee(int employeeId,String firstName, String lastName,
+			Date birthDate, String phone, String email, String position,
+			Date beginDate, Date endDate, String address, String userName,
+			String password, int[] roleIds, int branchId,int statusId) {
+		if(employeeId==0||firstName.isEmpty()|| lastName.isEmpty()|| birthDate==null || position.isEmpty() || beginDate==null || userName.isEmpty() || password.isEmpty() || roleIds==null || branchId==0 || statusId==0)
+			return 0;
+		try 
+        { 
+			Employee employee = employeeRepository.Get(employeeId);
+			employee.setFirstName(firstName);
+			employee.setLastName(lastName);
+			employee.setBirthDate(birthDate);
+			employee.setPhone(phone);
+			employee.setEmail(email);
+			employee.setPosition(position);
+			employee.setBeginDate(beginDate);
+			if(endDate!=null)
+				employee.setEndDate(endDate);
+			employee.setAddress(address);
+			employee.setUserName(userName);
+			employee.setPassword(password);
+			Branch branch = branchRepository.Get(branchId);
+			EmployeeStatus status =  employeeStatusRepository.Get(statusId);
+			employee.setBranch(branch);
+			employee.setEmployeeStatus(status);	        
+           beginOperation();
+           Set<EmployeeRole>employeeRoles=new HashSet<EmployeeRole>(roleIds.length);           
+           Date date = new Date();           
+           boolean add=false;
+	   	   for(int i=0;i<roleIds.length;i++)
+	   	   {	
+               add=true;
+	   		   Role r = roleRepository.Get(roleIds[i]);
+	   		   for(EmployeeRole er :employee.getEmployeeRoles())
+	   		   {
+	   			   if(er.getRole().getId()==r.getId())
+	   			   {
+		   				add=false;
+		   				break;
+	   			   }	   				   
+	   		   }
+	   		   if(add)
+	   		   {	   			   
+	   			   employeeRoles.add(new EmployeeRole(employee,r,date,true));	   			   
+	   		   }
+	   	   }
+	   	   if(employeeRoles.size()>0)
+	   		   employee.setEmployeeRoles(employeeRoles);
+	   	   session.saveOrUpdate(employee);
+        }catch(Exception he) 
+        {         	
+            manageException(he);   
+            return -1;
+        }finally 
+        { 
+            finishOperation();
+        } 		
+        return 1;
 	}
 }

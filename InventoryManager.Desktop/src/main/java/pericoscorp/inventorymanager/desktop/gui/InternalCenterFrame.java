@@ -13,6 +13,7 @@ import java.awt.Dimension;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.springframework.context.ApplicationContext;
@@ -58,6 +59,10 @@ public class InternalCenterFrame extends javax.swing.JInternalFrame  {
         for (Component c : container.getComponents()) {
             if (c instanceof JTextField) { 
                ((JTextField)c).setText("");
+            }
+            if(c instanceof JComboBox)
+            {
+                ((JComboBox)c).setSelectedIndex(0);
             }
         }
     }

@@ -361,6 +361,7 @@ public class CategoriesAdminFrom extends InternalCenterFrame {
        {
            fillCategorytoEdit(tbl_categories.getSelectedRow());
            isEditing=true;
+           this.txt_catoegoryName.requestFocus();
        }
        else
        {

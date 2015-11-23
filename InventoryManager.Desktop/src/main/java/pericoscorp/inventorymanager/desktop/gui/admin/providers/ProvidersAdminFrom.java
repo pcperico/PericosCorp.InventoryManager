@@ -423,6 +423,7 @@ public class ProvidersAdminFrom extends InternalCenterFrame {
        {
            fillProvidertoEdit(tbl_providers.getSelectedRow());
            isEditing=true;
+           this.txt_providerName.requestFocus();
        }
        else
        {

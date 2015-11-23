@@ -21,5 +21,6 @@
   <mapping resource="EmployeeStatus.hbm.xml"/>
   <mapping resource="ProductCategory.hbm.xml"/>
   <mapping resource="Provider.hbm.xml"/>
+  <mapping resource="MeasurementUnit.hbm.xml"/>
 </session-factory>
 </hibernate-configuration>
