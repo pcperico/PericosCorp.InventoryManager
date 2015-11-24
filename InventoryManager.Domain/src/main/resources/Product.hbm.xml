@@ -19,4 +19,16 @@
             <column name="MeasurementUnit_Id" not-null="true" />
    </many-to-one>
  </class>
+ <sql-query name="Product.FindByName">    
+    <return-scalar column="Id" type="int"/>
+    <return-scalar column="Name" type="string"/>
+    <return-scalar column="Category" type="string"/>
+    <return-scalar column="Provider" type="string"/>    
+    	select  p.Id , p.Name, pc.Name as Category, prov.Name as Provider
+		from product p inner join productcategory pc
+			on pc.id = p.ProductCategory_Id
+    		inner join provider prov
+    		on prov.id = p.Provider_Id
+		where p.Name like :name        
+  </sql-query>  
 </hibernate-mapping>

@@ -613,12 +613,18 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
         for(int x = 0 ; x<branches.getSize();x++)
         {
             if(((Branch)branches.getElementAt(x)).getId()==e.getBranch().getId())
+            {
                 this.cmb_branch.setSelectedIndex(x);
+                break;
+            }
         }
         for(int x = 0 ; x<statuses.getSize();x++)
         {
             if(((EmployeeStatus)statuses.getElementAt(x)).getId()==e.getEmployeeStatus().getId())
+            {
                 this.cmb_status.setSelectedIndex(x);
+                break;
+            }
         }       
         
         int[] selectedRoles = new int[e.getEmployeeRoles().size()];

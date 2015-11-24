@@ -4,7 +4,7 @@
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
     <Property name="resizable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Admin Sucursales"/>
+    <Property name="title" type="java.lang.String" value="Admin Productos"/>
     <Property name="toolTipText" type="java.lang.String" value=""/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[600, 800]"/>

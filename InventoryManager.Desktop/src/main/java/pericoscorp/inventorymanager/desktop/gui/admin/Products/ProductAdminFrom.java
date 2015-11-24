@@ -5,6 +5,7 @@
      * This software is the proprietary information of PericosCorp Company.
  */
 package pericoscorp.inventorymanager.desktop.gui.admin.Products;
+import PericosCorp.InventoryManager.Domain.Dtos.ProductDto;
 import PericosCorp.InventoryManager.Domain.Entities.MeasurementUnit;
 import PericosCorp.InventoryManager.Domain.Entities.Product;
 import PericosCorp.InventoryManager.Domain.Entities.ProductCategory;
@@ -107,7 +108,7 @@ public class ProductAdminFrom extends InternalCenterFrame {
 
         setClosable(true);
         setResizable(true);
-        setTitle("Admin Sucursales");
+        setTitle("Admin Productos");
         setToolTipText("");
         setMinimumSize(new java.awt.Dimension(600, 800));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -392,7 +393,7 @@ public class ProductAdminFrom extends InternalCenterFrame {
     }// </editor-fold>//GEN-END:initComponents
 
      private void fillTable(List<Product> products,DefaultTableModel model)    
-    {        
+     {        
         model.setRowCount(0);
         this.tbl_products.setModel(model);             
         this.tbl_products.getColumnModel().getColumn(3).setMinWidth(0);
@@ -403,6 +404,23 @@ public class ProductAdminFrom extends InternalCenterFrame {
            fila[0]=p.getName();
            fila[1]=p.getProductCategory().getName();
            fila[2]=p.getProvider().getName();
+           fila[3]=p.getId();
+           model.addRow(fila);
+        }            
+     }
+     
+    private void fillTableSearch(List<ProductDto> products,DefaultTableModel model)    
+    {        
+        model.setRowCount(0);
+        this.tbl_products.setModel(model);             
+        this.tbl_products.getColumnModel().getColumn(3).setMinWidth(0);
+        this.tbl_products.getColumnModel().getColumn(3).setMaxWidth(0);        
+        Object [] fila = new Object[4];
+        for(ProductDto p:products)
+        {
+           fila[0]=p.getName();
+           fila[1]=p.getCategory();
+           fila[2]=p.getProvider();
            fila[3]=p.getId();
            model.addRow(fila);
         }            
@@ -450,24 +468,27 @@ public class ProductAdminFrom extends InternalCenterFrame {
             else
                 JOptionPane.showMessageDialog(this.getContentPane(), "Error al guardar el producto, porfavor intente de nuevo, si el problema persiste contactor al administrador del sistema");
         }
-//        else
-//        {
-//            int confirm=JOptionPane.showConfirmDialog(this.getContentPane(), "¿Seguro que desea modificar esta sucursal?");
-//            if(confirm!=0)
-//                return;
-//            int result= pr.UpdateBranch(Integer.parseInt(this.txt_id.getText()),this.txt_branchName.getText().trim(),this.txt_branchAddress.getText().trim(),this.txt_branchPhone.getText());
-//            if(result==1) 
-//            {
-//               JOptionPane.showMessageDialog(this.getContentPane(), "Sucursal actualizada satisfactoriamente");
-//               this.clearFields(btn_add.getParent());
-//               isEditing=false;
-//               fillTable(pr.GetAll(), dtm);
-//            }       
-//            else if(result==0)
-//                JOptionPane.showMessageDialog(this.getContentPane(), "Debe completar los campos obligatorios (*)");
-//            else
-//                JOptionPane.showMessageDialog(this.getContentPane(), "Error al actualizar la sucursal, porfavor intente de nuevo, si el problema persiste contactor al administrador del sistema");
-//        }
+        else
+        {
+            int confirm=JOptionPane.showConfirmDialog(this.getContentPane(), "¿Seguro que desea modificar este producto?");
+            if(confirm==0)
+            {
+                int result= productService.UpdateProduct(Integer.parseInt(this.txt_id.getText()), GetCategoryIdSelected(), GetProviderIdSelected(), GetMeasurementUnitIdSelected(),
+                    this.txt_productName.getText().trim()
+                    ,this.txt_productDescription.getText().trim(),this.txt_productBrand.getText().trim(), this.txt_productModel.getText().trim());
+                if(result==1) 
+                {
+                   JOptionPane.showMessageDialog(this.getContentPane(), "Producto modificado satisfactoriamente");
+                   this.clearFields(btn_add.getParent());
+                   isEditing=false;
+                   fillTable(pr.GetAll(), dtm);
+                }       
+                else if(result==0)
+                    JOptionPane.showMessageDialog(this.getContentPane(), "Debe completar los campos obligatorios (*)");
+                else
+                    JOptionPane.showMessageDialog(this.getContentPane(), "Error al modificar el producto, porfavor intente de nuevo, si el problema persiste contactor al administrador del sistema");
+                }
+        }
     }//GEN-LAST:event_btn_addActionPerformed
 
     private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
@@ -476,7 +497,7 @@ public class ProductAdminFrom extends InternalCenterFrame {
     }//GEN-LAST:event_btn_clearActionPerformed
 
     private void btn_SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SearchActionPerformed
-//        fillTable(pr.FilterByName(this.txt_find.getText()), dtm);
+        fillTableSearch(pr.FilterByName(this.txt_find.getText()), dtm);
     }//GEN-LAST:event_btn_SearchActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
@@ -522,7 +543,31 @@ public class ProductAdminFrom extends InternalCenterFrame {
             this.txt_id.setText(String.valueOf(p.getId()));
             this.txt_productBrand.setText(p.getBrand());
             this.txt_productDescription.setText(p.getDescription());
-            
+            this.txt_productModel.setText(p.getModel());
+            for(int i=0;i<categories.getSize();i++)
+            {
+                if(((ProductCategory)categories.getElementAt(i)).getId()== p.getProductCategory().getId())
+                {
+                    this.cmb_Categories.setSelectedIndex(i);
+                    break;
+                }
+            }
+            for(int i=0;i<providers.getSize();i++)
+            {
+                if(((Provider)providers.getElementAt(i)).getId()== p.getProvider().getId())
+                {
+                    this.cmb_Providers.setSelectedIndex(i);
+                    break;
+                }
+            }
+            for(int i=0;i<measurements.getSize();i++)
+            {
+                if(((MeasurementUnit)measurements.getElementAt(i)).getId()== p.getMeasurementUnit().getId())
+                {
+                    this.cmb_Units.setSelectedIndex(i);
+                    break;
+                }
+            }
         }
         
     }

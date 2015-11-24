@@ -6,7 +6,10 @@
 */
 package PericosCorp.InventoryManager.Domain.Repositories.Interfaces;
 
+import java.util.List;
+
 import PericosCorp.Framework.Data.IRepository;
+import PericosCorp.InventoryManager.Domain.Dtos.ProductDto;
 import PericosCorp.InventoryManager.Domain.Entities.Product;
 
 public interface IProductRepository extends IRepository<Product>{
@@ -14,4 +17,11 @@ public interface IProductRepository extends IRepository<Product>{
 	 *
 	 * @author Arturo E. Salinas
 	 */
+	/**
+	 * Method to search products by name matches
+	 * @param name param to search on db 
+	 * @return
+	 * List of productDto filtered by name
+	 */
+	public List<ProductDto> FilterByName(String name);
 }
