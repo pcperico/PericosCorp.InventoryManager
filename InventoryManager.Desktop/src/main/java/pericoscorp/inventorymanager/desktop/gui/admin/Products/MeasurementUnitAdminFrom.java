@@ -150,7 +150,7 @@ public class MeasurementUnitAdminFrom extends InternalCenterFrame {
         txt_unitName.setLength(200);
 
         txt_unitAbbreviation.setIsRequired(true);
-        txt_unitAbbreviation.setLength(200);
+        txt_unitAbbreviation.setLength(10);
 
         javax.swing.GroupLayout panelAddUnitsLayout = new javax.swing.GroupLayout(panelAddUnits);
         panelAddUnits.setLayout(panelAddUnitsLayout);

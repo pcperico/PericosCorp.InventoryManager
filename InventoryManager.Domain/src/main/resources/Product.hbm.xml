@@ -9,6 +9,8 @@
    <property column="Description" name="Description" type="string" />
    <property column="Brand" name="Brand" type="string"  />
    <property column="Model" name="Model" type="string"  />
+   <property column="PriceCost" name="PriceCost" type="double"  />
+   <property column="Stock" name="Stock" type="double"  />
    <many-to-one name="ProductCategory" class="PericosCorp.InventoryManager.Domain.Entities.ProductCategory" fetch="select" lazy="false">
             <column name="ProductCategory_Id" not-null="true" />
    </many-to-one>
@@ -30,5 +32,18 @@
     		inner join provider prov
     		on prov.id = p.Provider_Id
 		where p.Name like :name        
+  </sql-query>  
+  
+  <sql-query name="Product.FindByProvider">    
+    <return-scalar column="Id" type="int"/>
+    <return-scalar column="Name" type="string"/>
+    <return-scalar column="Category" type="string"/>
+    <return-scalar column="Provider" type="string"/>    
+    	select  p.Id , p.Name, pc.Name as Category, prov.Name as Provider
+		from product p inner join productcategory pc
+			on pc.id = p.ProductCategory_Id
+    		inner join provider prov
+    		on prov.id = p.Provider_Id
+		where p.Provider_id = :providerId        
   </sql-query>  
 </hibernate-mapping>

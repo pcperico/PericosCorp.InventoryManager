@@ -17,7 +17,6 @@ import PericosCorp.Framework.Core.Services.Interfaces.ILoggerService;
 import PericosCorp.Framework.Data.Repository;
 import PericosCorp.InventoryManager.Domain.Dtos.ProductDto;
 import PericosCorp.InventoryManager.Domain.Entities.Product;
-import PericosCorp.InventoryManager.Domain.Entities.Role;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProductRepository;
 
 public class ProductRepository extends Repository<Product> implements IProductRepository {
@@ -62,4 +61,25 @@ public class ProductRepository extends Repository<Product> implements IProductRe
 	 *
 	 * @author Arturo E. Salinas
 	 */
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<ProductDto> FilterByProvider(int providerId) {
+		
+		try
+        {
+            beginOperation();
+            Query qu = session.getNamedQuery("Product.FindByProvider").setInteger("providerId", providerId); 
+            @SuppressWarnings("unchecked")
+			List<ProductDto> products=  qu.setResultTransformer(Transformers.aliasToBean(ProductDto.class)).list();            
+            session.close();
+            return products;
+        }
+        catch(Exception ex)
+        {			
+        	loggerService.LogSever(ex);
+            return null;
+        }
+	}
 }

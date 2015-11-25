@@ -17,4 +17,5 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="IMeasurementUnitRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.MeasurementUnitRepository" />    
     <bean id="IProductRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.ProductRepository" />    
     <bean id="IProductService" class="PericosCorp.InventoryManager.Domain.Services.Implementations.ProductService" />
+    <bean id="IBuyService" class="PericosCorp.InventoryManager.Domain.Services.Implementations.BuyService" />
 </beans>

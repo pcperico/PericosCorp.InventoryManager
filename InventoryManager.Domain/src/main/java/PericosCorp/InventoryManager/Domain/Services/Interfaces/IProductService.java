@@ -44,4 +44,6 @@ public interface IProductService {
 	 * -1 if an error happens
 	 */
 	public int UpdateProduct(int productId,int productCategoryId, int providerId,int measurementId,String name,String description, String brand,String model);
+	
+	public void UpdatePriceCost(int productId,double quantity, double newPriceCost);
 }

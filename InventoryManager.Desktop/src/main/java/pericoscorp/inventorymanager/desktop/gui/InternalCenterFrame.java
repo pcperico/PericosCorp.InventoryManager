@@ -87,13 +87,13 @@ public class InternalCenterFrame extends javax.swing.JInternalFrame  {
                  return false;                           
                }                  
             }
-            if (c instanceof BaseListBoxValidated) { 
+            if (c instanceof BaseComboBoxValidated) { 
                if(((BaseComboBoxValidated)c).isRequired && ((((BaseComboBoxValidated)c).getSelectedIndex()==-1)|| ((BaseComboBoxValidated)c).getSelectedIndex()==0))
                {
                  JOptionPane.showMessageDialog(this.getContentPane(), "Debe completar los campos obligatorios (*)");                 
                  return false;                           
                }                  
-            }
+            }                        
         }
         return isValid;
     }

@@ -377,7 +377,7 @@ public class ProvidersAdminFrom extends InternalCenterFrame {
                     this.txt_providerPhone.getText().trim(),this.txt_providerAddress.getText().trim(),this.txt_providerCountry.getText().trim());
             if(result==1) 
             {
-               JOptionPane.showMessageDialog(this.getContentPane(), "Proveedro guardado satisfactoriamente");
+               JOptionPane.showMessageDialog(this.getContentPane(), "Proveedor guardado satisfactoriamente");
                this.clearFields(btn_add.getParent());
                isEditing=false;
                fillTable(pr.GetAll(), dtm);

@@ -17,6 +17,15 @@ public class ProductDto implements Serializable{
 	 *
 	 * @author Arturo E. Salinas
 	 */
+	
+	public ProductDto()
+	{		
+	}
+	
+	public ProductDto(String name)
+	{
+		Name=name;
+	}
 	private int Id;
 	public int getId() {
 		return Id;
@@ -45,4 +54,10 @@ public class ProductDto implements Serializable{
 	private String Name;
 	private String Category;
 	private String Provider;
+	
+	@Override
+	public String toString()
+	{
+		return Name;		
+	}
 }

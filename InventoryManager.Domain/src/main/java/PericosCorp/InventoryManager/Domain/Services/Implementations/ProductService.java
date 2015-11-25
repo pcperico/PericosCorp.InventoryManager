@@ -9,6 +9,7 @@ package PericosCorp.InventoryManager.Domain.Services.Implementations;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import PericosCorp.Framework.Core.Services.Interfaces.ILoggerService;
 import PericosCorp.Framework.Data.Repository;
 import PericosCorp.InventoryManager.Domain.Entities.MeasurementUnit;
 import PericosCorp.InventoryManager.Domain.Entities.Product;
@@ -29,7 +30,19 @@ public class ProductService extends Repository<Product> implements IProductServi
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("DomainServicesContext.xml");
 		productCategoryRepository= (IProductCategoryRepository)ctx.getBean("IProductCategoryRepository");
 		providerRepository =(IProviderRepository)ctx.getBean("IProviderRepository");
-		measurementUnitRepository = (IMeasurementUnitRepository)ctx.getBean("IMeasurementUnitRepository");		
+		measurementUnitRepository = (IMeasurementUnitRepository)ctx.getBean("IMeasurementUnitRepository");	
+		setLoggerService();
+	}
+	
+	@Override
+	public void setLoggerService()
+	{
+		if(loggerService==null)
+		{
+			@SuppressWarnings("resource")
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("DomainContext.xml");
+			loggerService = (ILoggerService)ctx.getBean("ILoggerServiceDomain");
+		}
 	}
 
 	/**
@@ -51,7 +64,9 @@ public class ProductService extends Repository<Product> implements IProductServi
 		}
 		catch(Exception ex)
 		{
-			manageException(ex);   
+			tx.rollback();
+	        session.close(); 
+	        loggerService.LogSever(ex);  
 			return -1;
 		}
 		
@@ -84,7 +99,9 @@ public class ProductService extends Repository<Product> implements IProductServi
 		}
 		catch(Exception ex)
 		{
-			manageException(ex);   
+			tx.rollback();
+	        session.close(); 
+	        loggerService.LogSever(ex);  
 			return -1;
 		}
 	}
@@ -92,4 +109,30 @@ public class ProductService extends Repository<Product> implements IProductServi
 	 *
 	 * @author Arturo E. Salinas
 	 */
+
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void UpdatePriceCost(int productId,double quantity, double newPriceCost) {
+		try{
+			Product product = Get(productId);
+			if(product.getPriceCost()==0)
+			{
+				product.setPriceCost(newPriceCost);
+				product.setStock(quantity);
+				SaveUpdate(product);
+			}
+			else
+			{
+				
+			}
+			
+		}
+		catch(Exception ex)
+		{
+			
+		}
+		
+	}
 }

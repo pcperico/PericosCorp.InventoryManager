@@ -24,4 +24,13 @@ public interface IProductRepository extends IRepository<Product>{
 	 * List of productDto filtered by name
 	 */
 	public List<ProductDto> FilterByName(String name);
+	
+	
+	/**
+	 * Method to search products filter by provider
+	 * @param providerId id of provider owner of products to search 
+	 * @return
+	 * List of productDto filtered by provider
+	 */
+	public List<ProductDto> FilterByProvider(int providerId);
 }

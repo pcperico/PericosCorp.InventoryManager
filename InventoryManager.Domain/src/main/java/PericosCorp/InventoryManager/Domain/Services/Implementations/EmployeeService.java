@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
+import PericosCorp.Framework.Core.Services.Interfaces.ILoggerService;
 import PericosCorp.Framework.Data.Repository;
 import PericosCorp.InventoryManager.Domain.Entities.Branch;
 import PericosCorp.InventoryManager.Domain.Entities.Employee;
@@ -43,6 +44,7 @@ public class EmployeeService extends Repository<Employee> implements IEmployeeSe
 		employeeRepository=(IEmployeeRepository)ctx.getBean("IEmployeeRepository");
 		employeeRoleRepository=(IEmployeeRoleRepository)ctx.getBean("IEmployeeRoleRepository");
 		employeeStatusRepository=(IEmployeeStatusRepository)ctx.getBean("IEmployeeStatusRepository");
+		setLoggerService();
 	}
 	
 	
@@ -51,7 +53,16 @@ public class EmployeeService extends Repository<Employee> implements IEmployeeSe
 	 * @author Arturo E. Salinas
 	 */
 
-	
+	@Override
+	public void setLoggerService()
+	{
+		if(loggerService==null)
+		{
+			@SuppressWarnings("resource")
+			ApplicationContext ctx = new ClassPathXmlApplicationContext("DomainContext.xml");
+			loggerService = (ILoggerService)ctx.getBean("ILoggerServiceDomain");
+		}
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -80,7 +91,9 @@ public class EmployeeService extends Repository<Employee> implements IEmployeeSe
 	   	   session.saveOrUpdate(employee);
         }catch(Exception he) 
         {         	
-            manageException(he);   
+        	tx.rollback();
+	        session.close(); 
+	        loggerService.LogSever(he); 
             return -1;
         }finally 
         { 
@@ -143,7 +156,9 @@ public class EmployeeService extends Repository<Employee> implements IEmployeeSe
 	   	   session.saveOrUpdate(employee);
         }catch(Exception he) 
         {         	
-            manageException(he);   
+        	tx.rollback();
+	        session.close(); 
+	        loggerService.LogSever(he); 
             return -1;
         }finally 
         { 

@@ -88,7 +88,25 @@ public class Product implements Serializable{
 	private String Brand;
 	private String Model;
 	
+	private double PriceCost;
+	private double Stock;
 	
+	public double getStock() {
+		return Stock;
+	}
+
+	public void setStock(double stock) {
+		Stock = stock;
+	}
+
+	public double getPriceCost() {
+		return PriceCost;
+	}
+
+	public void setPriceCost(double priceCost) {
+		PriceCost = priceCost;
+	}
+
 	@Override
 	public String toString()
 	{
