@@ -6,13 +6,14 @@
  */
 package pericoscorp.inventorymanager.desktop.gui.Registers;
 
-import PericosCorp.InventoryManager.Domain.Dtos.BuyDetailDto;
-import PericosCorp.InventoryManager.Domain.Dtos.ProductDto;
+//import PericosCorp.InventoryManager.Domain.Dtos.ProductDto;
+import PericosCorp.InventoryManager.Domain.Dtos.SaleDetailDto;
+import PericosCorp.InventoryManager.Domain.Entities.Client;
+import PericosCorp.InventoryManager.Domain.Entities.Product;
 import PericosCorp.InventoryManager.Domain.Entities.Provider;
-import PericosCorp.InventoryManager.Domain.Repositories.Implementations.BuyRepository;
+import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IClientRepository;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProductRepository;
-import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProviderRepository;
-import PericosCorp.InventoryManager.Domain.Services.Interfaces.IBuyService;
+import PericosCorp.InventoryManager.Domain.Services.Interfaces.ISaleService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -24,38 +25,42 @@ import pericoscorp.inventorymanager.desktop.gui.InternalCenterFrame;
  *
  * @author Arturo E. Salinas
  */
-public class InMovementsForm extends InternalCenterFrame {
+public class OutsMovementsForm extends InternalCenterFrame {
     private final IProductRepository productRepository;
-    private final IProviderRepository providerRepository;
-    private final IBuyService buyService;
+    private final IClientRepository clientRepository;
+    private final ISaleService saleService;
     
     private int SelectedRowOnTable=0;
-    private final DefaultTableModel buyDetails;
+    private final DefaultTableModel saleDetails;
     private boolean  isEditing=false;
-    private final DefaultComboBoxModel providers;
+    private final DefaultComboBoxModel clients;
     private DefaultComboBoxModel products;
-    private List<BuyDetailDto>details;
+    private List<SaleDetailDto>details;
     /**
      * Creates new form AdminRolesForm
      */
-    public InMovementsForm() {
+    public OutsMovementsForm() {
         initComponents();
         productRepository= (IProductRepository)ctx.getBean("IProductRepository");
-        providerRepository =(IProviderRepository)ctx.getBean("IProviderRepository");   
-        buyService=(IBuyService)ctx.getBean("IBuyService");
-        providers=new DefaultComboBoxModel(providerRepository.GetAll().toArray());
-        providers.insertElementAt(new Provider("Seleccione un proveedor", "", "", "", ""), 0);
-        cmb_providers.setModel(providers);
-        cmb_providers.setSelectedIndex(0);
-        buyDetails = new DefaultTableModel();
-        buyDetails.addColumn("Producto");
-        buyDetails.addColumn("Precio");  
-        buyDetails.addColumn("Cantidad");  
-        buyDetails.addColumn("");        
-        this.tbl_details.setModel(buyDetails);
+        clientRepository =(IClientRepository)ctx.getBean("IClientRepository");   
+        saleService=(ISaleService)ctx.getBean("ISaleService");
+        clients=new DefaultComboBoxModel(clientRepository.GetAll().toArray());        
+        clients.insertElementAt(new Provider("Seleccione un cliente", "", "", "", ""), 0);                
+        cmb_clients.setModel(clients);
+        cmb_clients.setSelectedIndex(0);
+        products = new DefaultComboBoxModel(productRepository.GetAll().toArray());
+        products.insertElementAt(new Product("Seleccione un produto"),0 );
+        cmb_products.setModel(products);
+        cmb_products.setSelectedIndex(0);
+        saleDetails = new DefaultTableModel();
+        saleDetails.addColumn("Producto");
+        saleDetails.addColumn("Precio");  
+        saleDetails.addColumn("Cantidad");  
+        saleDetails.addColumn("");        
+        this.tbl_details.setModel(saleDetails);
         this.tbl_details.getColumnModel().getColumn(3).setMinWidth(0);
         this.tbl_details.getColumnModel().getColumn(3).setMaxWidth(0);  
-        details= new ArrayList<BuyDetailDto>();
+        details= new ArrayList<SaleDetailDto>();
     }
 
     /**
@@ -73,7 +78,7 @@ public class InMovementsForm extends InternalCenterFrame {
         txt_numRef = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
         txt_date = new pericoscorp.swingcustomcontrolls.DateTextBox();
         jLabel2 = new javax.swing.JLabel();
-        cmb_providers = new pericoscorp.swingcustomcontrolls.BaseComboBoxValidated();
+        cmb_clients = new pericoscorp.swingcustomcontrolls.BaseComboBoxValidated();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_details = new javax.swing.JTable();
@@ -93,7 +98,7 @@ public class InMovementsForm extends InternalCenterFrame {
         btn_clear = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Registro de Entradas");
+        setTitle("Registro de Salidas");
         setToolTipText("");
         setMinimumSize(new java.awt.Dimension(600, 800));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -126,11 +131,11 @@ public class InMovementsForm extends InternalCenterFrame {
 
         txt_date.setIsRequired(true);
 
-        jLabel2.setText("* Proveedor:");
+        jLabel2.setText("* Cliente:");
 
-        cmb_providers.addActionListener(new java.awt.event.ActionListener() {
+        cmb_clients.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmb_providersActionPerformed(evt);
+                cmb_clientsActionPerformed(evt);
             }
         });
 
@@ -148,7 +153,7 @@ public class InMovementsForm extends InternalCenterFrame {
                 .addGroup(panelBuyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txt_numRef, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(txt_date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(cmb_providers, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmb_clients, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         panelBuyLayout.setVerticalGroup(
@@ -165,7 +170,7 @@ public class InMovementsForm extends InternalCenterFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelBuyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(cmb_providers, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmb_clients, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -186,7 +191,7 @@ public class InMovementsForm extends InternalCenterFrame {
         });
         jScrollPane1.setViewportView(tbl_details);
 
-        jLabel1.setText("Detalles de ingreso:");
+        jLabel1.setText("Detalles de venta:");
 
         detailPanel.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
@@ -363,35 +368,26 @@ public class InMovementsForm extends InternalCenterFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     
-    private void GetProductsByProvider()
+    private int GetClientIdSelected()
     {
-        int providerId= ((Provider)providers.getElementAt(cmb_providers.getSelectedIndex())).getId();
-        products = new DefaultComboBoxModel(productRepository.FilterByProvider(providerId).toArray());
-        products.insertElementAt(new ProductDto("Seleccione un producto"), 0);
-        cmb_products.setModel(products);
-        cmb_products.setSelectedIndex(0);
+        return ((Client)this.clients.getElementAt(this.cmb_clients.getSelectedIndex())).getId();
     }
     
     private int GetProductIdSelected()
     {
-        return ((ProductDto)this.products.getElementAt(this.cmb_products.getSelectedIndex())).getId();
-    }
+        return ((Product)this.products.getElementAt(this.cmb_products.getSelectedIndex())).getId();
+    }    
     
-    private int GetProviderIdSelected()
-    {
-        return ((Provider)this.providers.getElementAt(this.cmb_providers.getSelectedIndex())).getId();
-    }
     
     private String GetProductNameSelected()
     {
-      return ((ProductDto)this.products.getElementAt(this.cmb_products.getSelectedIndex())).getName();
+      return ((Product)this.products.getElementAt(this.cmb_products.getSelectedIndex())).getName();
     }
     
     private void AddDetail()
     {
-        for(BuyDetailDto detail:details)
+        for(SaleDetailDto detail:details)
         {
             if(detail.getProductId() == GetProductIdSelected())
             {
@@ -399,7 +395,7 @@ public class InMovementsForm extends InternalCenterFrame {
                 return;                
             }
         }
-        BuyDetailDto detail = new BuyDetailDto();
+        SaleDetailDto detail = new SaleDetailDto();
         detail.setPrice(Double.parseDouble(this.txt_price.getText().trim()));
         detail.setProductId(GetProductIdSelected());
         detail.setQuantity(Double.parseDouble(this.txt_quantity.getText().trim()));
@@ -409,24 +405,24 @@ public class InMovementsForm extends InternalCenterFrame {
         fila[1] = detail.getPrice();
         fila[2] = detail.getQuantity();
         fila[3]=0;
-        buyDetails.addRow(fila);
+        saleDetails.addRow(fila);
     }
     
     private void AddDetailEdited()
     {        
-        BuyDetailDto detail = (BuyDetailDto)details.get(this.tbl_details.getSelectedRow());
+        SaleDetailDto detail = (SaleDetailDto)details.get(this.tbl_details.getSelectedRow());
         details.remove(detail);
         detail.setPrice(Double.parseDouble(this.txt_price.getText().trim()));
         detail.setProductId(GetProductIdSelected());
         detail.setQuantity(Double.parseDouble(this.txt_quantity.getText().trim()));        
         details.add(detail);
-        buyDetails.removeRow(this.tbl_details.getSelectedRow());
+        saleDetails.removeRow(this.tbl_details.getSelectedRow());
         Object [] fila = new Object[4];
         fila[0] = GetProductNameSelected();
         fila[1] = detail.getPrice();
         fila[2] = detail.getQuantity();
         fila[3]=0;
-        buyDetails.addRow(fila);
+        saleDetails.addRow(fila);
     }
  
     private void FillDetailToEdit()
@@ -437,12 +433,12 @@ public class InMovementsForm extends InternalCenterFrame {
         }
         else
         {
-            BuyDetailDto detail =(BuyDetailDto)details.get(this.tbl_details.getSelectedRow());
+           SaleDetailDto detail =(SaleDetailDto)details.get(this.tbl_details.getSelectedRow());
             this.txt_price.setText(String.valueOf(detail.getPrice()));
             this.txt_quantity.setText(String.valueOf(detail.getQuantity()));            
             for(int i=0;i<products.getSize();i++)
             {
-                if(((ProductDto)products.getElementAt(i)).getId()==detail.getProductId())
+                if(((Product)products.getElementAt(i)).getId()==detail.getProductId())
                 {
                     this.cmb_products.setSelectedIndex(i);
                     break;
@@ -473,31 +469,29 @@ public class InMovementsForm extends InternalCenterFrame {
         if(ValidRequiredFields(panelBuy))
         {
             if(details.isEmpty())
-                JOptionPane.showMessageDialog(rootPane,"Debe introducir el detalle de la compra.");
-            int res = buyService.SaveBuy(ConvertToDate(this.txt_date.getText()), this.txt_numRef.getText().trim(),GetProviderIdSelected(), details);
+                JOptionPane.showMessageDialog(rootPane,"Debe introducir el detalle de la venta.");
+            int res = saleService.SaveSale(ConvertToDate(this.txt_date.getText()), this.txt_numRef.getText().trim(),GetClientIdSelected(), details);
             if(res==1)
             {
-                JOptionPane.showMessageDialog(rootPane,"Entrada guardada satisfactoriamente");
+                JOptionPane.showMessageDialog(rootPane,"Venta guardada satisfactoriamente");
                 clearFields(panelBuy);
                 clearFields(detailPanel);
-                buyDetails.setRowCount(0);
+                saleDetails.setRowCount(0);
             }
             else if(res==0)
                 JOptionPane.showMessageDialog(rootPane,"Debe completar los campos obligatorios (*)");                
             else 
-                JOptionPane.showMessageDialog(rootPane, "Ocurrio un error mientras se guardaba la entrada, favor reintente o contactar al administrador del sistema");
+                JOptionPane.showMessageDialog(rootPane, "Ocurrio un error mientras se guardaba la venta, favor reintente o contactar al administrador del sistema");
         }
     }//GEN-LAST:event_btn_saveActionPerformed
 
-    private void cmb_providersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_providersActionPerformed
-        GetProductsByProvider();
-    }//GEN-LAST:event_cmb_providersActionPerformed
+    private void cmb_clientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_clientsActionPerformed
+
+    }//GEN-LAST:event_cmb_clientsActionPerformed
 
     private void btn_removeDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removeDetailActionPerformed
         details.remove(this.tbl_details.getSelectedRow());
-        buyDetails.removeRow(this.tbl_details.getSelectedRow());
-        System.out.println(details.size());
-        
+        saleDetails.removeRow(this.tbl_details.getSelectedRow());
     }//GEN-LAST:event_btn_removeDetailActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
@@ -520,8 +514,8 @@ public class InMovementsForm extends InternalCenterFrame {
     private javax.swing.JButton btn_edit;
     private javax.swing.JButton btn_removeDetail;
     private javax.swing.JButton btn_save;
+    private pericoscorp.swingcustomcontrolls.BaseComboBoxValidated cmb_clients;
     private pericoscorp.swingcustomcontrolls.BaseComboBoxValidated cmb_products;
-    private pericoscorp.swingcustomcontrolls.BaseComboBoxValidated cmb_providers;
     private javax.swing.JPanel detailPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

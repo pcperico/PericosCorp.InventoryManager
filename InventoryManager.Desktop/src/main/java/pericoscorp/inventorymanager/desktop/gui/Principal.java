@@ -8,9 +8,9 @@ package pericoscorp.inventorymanager.desktop.gui;
 
 import javax.swing.UIManager;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessBlueSteelLookAndFeel;
-import org.pushingpixels.substance.api.skin.SubstanceGraphiteLookAndFeel;
 import pericoscorp.inventorymanager.desktop.gui.Admin.Products.CategoriesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.Registers.InMovementsForm;
+import pericoscorp.inventorymanager.desktop.gui.Registers.OutsMovementsForm;
 import pericoscorp.inventorymanager.desktop.gui.admin.branches.BranchesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.employees.EmployeesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.Products.MeasurementUnitAdminFrom;
@@ -54,6 +54,7 @@ public class Principal extends javax.swing.JFrame {
         menu_Providers = new javax.swing.JMenuItem();
         MovementsMenu = new javax.swing.JMenu();
         InMovementsMenu = new javax.swing.JMenuItem();
+        OutMovementsMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(600, 800));
@@ -136,6 +137,14 @@ public class Principal extends javax.swing.JFrame {
         });
         MovementsMenu.add(InMovementsMenu);
 
+        OutMovementsMenu.setText("Salidas");
+        OutMovementsMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                OutMovementsMenuActionPerformed(evt);
+            }
+        });
+        MovementsMenu.add(OutMovementsMenu);
+
         menuBar.add(MovementsMenu);
 
         setJMenuBar(menuBar);
@@ -202,6 +211,12 @@ public class Principal extends javax.swing.JFrame {
         imf.show();
     }//GEN-LAST:event_InMovementsMenuActionPerformed
 
+    private void OutMovementsMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OutMovementsMenuActionPerformed
+        OutsMovementsForm omf=new OutsMovementsForm();
+        this.desktopPane.add(omf);
+        omf.show();
+    }//GEN-LAST:event_OutMovementsMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -223,6 +238,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem BranchesMenu;
     private javax.swing.JMenuItem InMovementsMenu;
     private javax.swing.JMenu MovementsMenu;
+    private javax.swing.JMenuItem OutMovementsMenu;
     private javax.swing.JMenuItem RolesMenu;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem employeesMenu;

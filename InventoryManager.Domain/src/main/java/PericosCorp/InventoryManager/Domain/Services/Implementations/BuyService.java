@@ -19,6 +19,7 @@ import PericosCorp.Framework.Data.Repository;
 import PericosCorp.InventoryManager.Domain.Dtos.BuyDetailDto;
 import PericosCorp.InventoryManager.Domain.Entities.Buy;
 import PericosCorp.InventoryManager.Domain.Entities.BuyDetail;
+import PericosCorp.InventoryManager.Domain.Entities.Product;
 import PericosCorp.InventoryManager.Domain.Entities.Provider;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProductRepository;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProviderRepository;
@@ -64,7 +65,14 @@ public class BuyService extends Repository<Buy> implements IBuyService  {
 			session.save(buy);
 			for(BuyDetailDto bd:details)
 			{
-				buyDetails.add(new BuyDetail(buy,productRepository.Get(bd.getProductId()),bd.getQuantity(),bd.getPrice()));
+				Product prod = productRepository.Get(bd.getProductId());				
+				double actualStock= prod.getPriceCost()*prod.getStock();
+				double stockToAdd=bd.getPrice()*bd.getQuantity();
+				double newTotal=prod.getStock()+bd.getQuantity();
+				prod.setStock(newTotal);
+				prod.setPriceCost((actualStock+stockToAdd)/prod.getStock());				
+				session.update(prod);
+				buyDetails.add(new BuyDetail(buy,prod,bd.getQuantity(),bd.getPrice()));				
 			}			
 			buy.setBuyDetails(buyDetails);
 			session.saveOrUpdate(buy);

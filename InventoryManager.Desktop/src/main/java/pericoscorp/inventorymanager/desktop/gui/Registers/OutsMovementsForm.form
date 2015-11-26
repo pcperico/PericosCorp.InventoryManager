@@ -3,7 +3,7 @@
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JInternalFrameFormInfo">
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Registro de Entradas"/>
+    <Property name="title" type="java.lang.String" value="Registro de Salidas"/>
     <Property name="toolTipText" type="java.lang.String" value=""/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[600, 800]"/>
@@ -90,7 +90,7 @@
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="txt_numRef" alignment="0" max="32767" attributes="0"/>
                       <Component id="txt_date" alignment="0" max="32767" attributes="0"/>
-                      <Component id="cmb_providers" min="-2" pref="200" max="-2" attributes="0"/>
+                      <Component id="cmb_clients" min="-2" pref="200" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -112,7 +112,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="cmb_providers" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="cmb_clients" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
@@ -143,12 +143,12 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="* Proveedor:"/>
+            <Property name="text" type="java.lang.String" value="* Cliente:"/>
           </Properties>
         </Component>
-        <Component class="pericoscorp.swingcustomcontrolls.BaseComboBoxValidated" name="cmb_providers">
+        <Component class="pericoscorp.swingcustomcontrolls.BaseComboBoxValidated" name="cmb_clients">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmb_providersActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmb_clientsActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -221,7 +221,7 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Detalles de ingreso:"/>
+            <Property name="text" type="java.lang.String" value="Detalles de venta:"/>
           </Properties>
         </Component>
         <Container class="javax.swing.JPanel" name="detailPanel">

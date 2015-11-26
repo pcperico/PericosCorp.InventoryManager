@@ -21,6 +21,11 @@ public class Product implements Serializable{
 	public Product()
 	{}
 	
+	public Product(String name)
+	{
+		Name=name;
+	}
+	
 	public Product(ProductCategory productCategory,Provider provider, MeasurementUnit measurementUnit, String name, String description,String brand,String model)
 	{
 		this.ProductCategory=productCategory;

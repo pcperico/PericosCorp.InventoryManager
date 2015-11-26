@@ -125,7 +125,10 @@ public class ProductService extends Repository<Product> implements IProductServi
 			}
 			else
 			{
-				
+				double cost=quantity*newPriceCost;
+				product.setStock(product.getStock()+quantity);
+				product.setPriceCost(product.getStock()/(cost+product.getPriceCost()));
+				SaveUpdate(product);
 			}
 			
 		}
