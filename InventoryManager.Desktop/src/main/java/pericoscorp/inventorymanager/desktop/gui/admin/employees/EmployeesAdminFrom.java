@@ -74,6 +74,7 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
         for (Role r : _roles) 
             roles.addElement(r);        
         this.list_roles.setModel(roles);
+        this.tbl_employees.setModel(dtm);
     }
 
     /**
@@ -658,7 +659,10 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
                 this.txt_dateEnd.getText().isEmpty() ? null : ConvertToDate(this.txt_dateEnd.getText().trim()), this.txt_address.getText().trim(),
                 this.txt_userName.getText().trim(),Cryptography.EncodeBase64(this.txt_password.getText().trim()), GetSelectedRoles(), GetSelectedBranchId(),GetSelectedStatusId());
             if(res==1)
+            {
                 JOptionPane.showMessageDialog(panelAddEmployee, "Empleado creado correctamente");
+                fillTable(er.GetAll(), dtm);            
+            }
             else if(res==0)
                 JOptionPane.showMessageDialog(panelAddEmployee, "Debe completar todos los campos requeridos (*)");
             else
@@ -675,6 +679,7 @@ public class EmployeesAdminFrom extends InternalCenterFrame {
                 JOptionPane.showMessageDialog(panelAddEmployee, "Empleado modificado correctamente");
                 isEditing=false;
                 clearFields(panelAddEmployee);
+                fillTable(er.GetAll(), dtm);
             }
                 
             else if(res==0)

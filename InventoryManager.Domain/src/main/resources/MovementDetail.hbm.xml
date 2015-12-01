@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+ <class name="PericosCorp.InventoryManager.Domain.Entities.MovementDetail" table="movementdetail">    
+   <id column="Id" name="Id" >
+     <generator class="native" />
+   </id> 
+   <property column="Quantity" name="Quantity" type="double" />
+   <property column="Price" name="Price" type="double" />   
+   <many-to-one name="Movement" class="PericosCorp.InventoryManager.Domain.Entities.Movement" fetch="select" lazy="false">
+            <column name="Movement_Id" not-null="true" />
+   </many-to-one>   
+   <many-to-one name="Product" class="PericosCorp.InventoryManager.Domain.Entities.Product" fetch="select" lazy="false">
+            <column name="Product_Id" not-null="true" />
+   </many-to-one>   
+ </class> 
+</hibernate-mapping>

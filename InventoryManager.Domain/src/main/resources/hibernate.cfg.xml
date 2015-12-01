@@ -28,5 +28,7 @@
   <mapping resource="Sale.hbm.xml"/>
   <mapping resource="SaleDetail.hbm.xml"/>
   <mapping resource="Client.hbm.xml"/>
+  <mapping resource="Movement.hbm.xml"/>
+  <mapping resource="MovementDetail.hbm.xml"/>
 </session-factory>
 </hibernate-configuration>

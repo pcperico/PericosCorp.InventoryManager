@@ -6,14 +6,13 @@
  */
 package pericoscorp.inventorymanager.desktop.gui.Registers;
 
-//import PericosCorp.InventoryManager.Domain.Dtos.ProductDto;
-import PericosCorp.InventoryManager.Domain.Dtos.SaleDetailDto;
+import PericosCorp.InventoryManager.Domain.Dtos.MovementDetailDto;
 import PericosCorp.InventoryManager.Domain.Entities.Client;
 import PericosCorp.InventoryManager.Domain.Entities.Product;
 import PericosCorp.InventoryManager.Domain.Entities.Provider;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IClientRepository;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProductRepository;
-import PericosCorp.InventoryManager.Domain.Services.Interfaces.ISaleService;
+import PericosCorp.InventoryManager.Domain.Services.Interfaces.IMovementService;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -28,14 +27,14 @@ import pericoscorp.inventorymanager.desktop.gui.InternalCenterFrame;
 public class OutsMovementsForm extends InternalCenterFrame {
     private final IProductRepository productRepository;
     private final IClientRepository clientRepository;
-    private final ISaleService saleService;
+    private final IMovementService movementService;
     
     private int SelectedRowOnTable=0;
     private final DefaultTableModel saleDetails;
     private boolean  isEditing=false;
     private final DefaultComboBoxModel clients;
     private DefaultComboBoxModel products;
-    private List<SaleDetailDto>details;
+    private List<MovementDetailDto>details;
     /**
      * Creates new form AdminRolesForm
      */
@@ -43,7 +42,7 @@ public class OutsMovementsForm extends InternalCenterFrame {
         initComponents();
         productRepository= (IProductRepository)ctx.getBean("IProductRepository");
         clientRepository =(IClientRepository)ctx.getBean("IClientRepository");   
-        saleService=(ISaleService)ctx.getBean("ISaleService");
+        movementService=(IMovementService)ctx.getBean("IMovementService");
         clients=new DefaultComboBoxModel(clientRepository.GetAll().toArray());        
         clients.insertElementAt(new Provider("Seleccione un cliente", "", "", "", ""), 0);                
         cmb_clients.setModel(clients);
@@ -60,7 +59,7 @@ public class OutsMovementsForm extends InternalCenterFrame {
         this.tbl_details.setModel(saleDetails);
         this.tbl_details.getColumnModel().getColumn(3).setMinWidth(0);
         this.tbl_details.getColumnModel().getColumn(3).setMaxWidth(0);  
-        details= new ArrayList<SaleDetailDto>();
+        details= new ArrayList<MovementDetailDto>();
     }
 
     /**
@@ -387,7 +386,7 @@ public class OutsMovementsForm extends InternalCenterFrame {
     
     private void AddDetail()
     {
-        for(SaleDetailDto detail:details)
+        for(MovementDetailDto detail:details)
         {
             if(detail.getProductId() == GetProductIdSelected())
             {
@@ -395,7 +394,7 @@ public class OutsMovementsForm extends InternalCenterFrame {
                 return;                
             }
         }
-        SaleDetailDto detail = new SaleDetailDto();
+        MovementDetailDto detail = new MovementDetailDto();
         detail.setPrice(Double.parseDouble(this.txt_price.getText().trim()));
         detail.setProductId(GetProductIdSelected());
         detail.setQuantity(Double.parseDouble(this.txt_quantity.getText().trim()));
@@ -410,7 +409,7 @@ public class OutsMovementsForm extends InternalCenterFrame {
     
     private void AddDetailEdited()
     {        
-        SaleDetailDto detail = (SaleDetailDto)details.get(this.tbl_details.getSelectedRow());
+        MovementDetailDto detail = (MovementDetailDto)details.get(this.tbl_details.getSelectedRow());
         details.remove(detail);
         detail.setPrice(Double.parseDouble(this.txt_price.getText().trim()));
         detail.setProductId(GetProductIdSelected());
@@ -433,7 +432,7 @@ public class OutsMovementsForm extends InternalCenterFrame {
         }
         else
         {
-           SaleDetailDto detail =(SaleDetailDto)details.get(this.tbl_details.getSelectedRow());
+           MovementDetailDto detail =(MovementDetailDto)details.get(this.tbl_details.getSelectedRow());
             this.txt_price.setText(String.valueOf(detail.getPrice()));
             this.txt_quantity.setText(String.valueOf(detail.getQuantity()));            
             for(int i=0;i<products.getSize();i++)
@@ -470,7 +469,7 @@ public class OutsMovementsForm extends InternalCenterFrame {
         {
             if(details.isEmpty())
                 JOptionPane.showMessageDialog(rootPane,"Debe introducir el detalle de la venta.");
-            int res = saleService.SaveSale(ConvertToDate(this.txt_date.getText()), this.txt_numRef.getText().trim(),GetClientIdSelected(), details);
+            int res = movementService.SaveMovement(ConvertToDate(this.txt_date.getText()), this.txt_numRef.getText().trim(),0,GetClientIdSelected(), details);
             if(res==1)
             {
                 JOptionPane.showMessageDialog(rootPane,"Venta guardada satisfactoriamente");

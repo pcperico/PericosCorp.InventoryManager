@@ -1,20 +1,17 @@
 /**
- * IBuyRepository.java
- * Created on 24/11/2015
+ * IMovementDetail.java
+ * Created on 26/11/2015
  * Copyright(c) 2015 PericosCorp Company, Inc.  All Rights Reserved.
  * This software is the proprietary information of PericosCorp Company.
 */
 package PericosCorp.InventoryManager.Domain.Repositories.Interfaces;
 
-import java.util.List;
-
 import PericosCorp.Framework.Data.IRepository;
-import PericosCorp.InventoryManager.Domain.Entities.Buy;
+import PericosCorp.InventoryManager.Domain.Entities.MovementDetail;
 
-public interface IBuyRepository extends IRepository<Buy>{
+public interface IMovementDetailRepository extends IRepository<MovementDetail> {
 	/**
 	 *
 	 * @author Arturo E. Salinas
 	 */
-	public List<Buy> GetBuysBuyProduct(int productId);
 }

@@ -16,8 +16,10 @@ import PericosCorp.InventoryManager.Domain.Dtos.ProductDto;
 import PericosCorp.InventoryManager.Domain.Entities.Employee;
 import PericosCorp.InventoryManager.Domain.Repositories.Implementations.BranchRepository;
 import PericosCorp.InventoryManager.Domain.Repositories.Implementations.EmployeeRepository;
+import PericosCorp.InventoryManager.Domain.Repositories.Implementations.MovementRepository;
 import PericosCorp.InventoryManager.Domain.Repositories.Implementations.ProductRepository;
 import PericosCorp.InventoryManager.Domain.Services.Implementations.EmployeeService;
+import PericosCorp.InventoryManager.Domain.Services.Implementations.KardexService;
 
 /**
  * Hello world!
@@ -31,9 +33,12 @@ public class App
 //    	Employee r = rr.Get(2);    	
 //        System.out.println( "Hello World! "+r.getFullName()+" "+r.getBranch().getName()+" "+r.getEmployeeRoles().size()+ " "+r.getEmployeeStatus().getName());
     	
-    	ProductRepository pr = new ProductRepository();
+    	/*ProductRepository pr = new ProductRepository();
     	List<ProductDto> list = pr.FilterByProvider(1);
-    	System.out.println(list.size());
+    	System.out.println(list.size());*/
+    	
+    	MovementRepository mr = new MovementRepository();
+    	mr.GetByProduct(2);
     	
     	/*BranchRepository br = new BranchRepository();
     	br.CreateNewBranch("Branch Test", "addr Test", "phone test");*/    	
