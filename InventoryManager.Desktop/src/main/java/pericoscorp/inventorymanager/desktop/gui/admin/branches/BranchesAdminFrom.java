@@ -60,7 +60,7 @@ public class BranchesAdminFrom extends InternalCenterFrame {
         lb_description1 = new javax.swing.JLabel();
         txt_branchName = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
         txt_branchAddress = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
-        txt_branchPhone = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
+        txt_branchPhone = new pericoscorp.swingcustomcontrolls.NumericTextBox();
         panelButtons = new javax.swing.JPanel();
         btn_edit = new javax.swing.JButton();
         btn_new = new javax.swing.JButton();
@@ -87,7 +87,7 @@ public class BranchesAdminFrom extends InternalCenterFrame {
             }
         });
 
-        lb_Find.setText("Buscar sucursall:");
+        lb_Find.setText("Buscar sucursal:");
         lb_Find.setToolTipText("");
 
         btn_Search.setText("Buscar");
@@ -196,10 +196,10 @@ public class BranchesAdminFrom extends InternalCenterFrame {
                         .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(panelAddBranchLayout.createSequentialGroup()
-                        .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txt_branchPhone, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txt_branchPhone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(txt_branchAddress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
                                     .addComponent(txt_branchName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -229,7 +229,7 @@ public class BranchesAdminFrom extends InternalCenterFrame {
                 .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_add)
                     .addComponent(btn_clear))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         panelButtons.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -440,7 +440,7 @@ public class BranchesAdminFrom extends InternalCenterFrame {
     private javax.swing.JTable tbl_branches;
     private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_branchAddress;
     private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_branchName;
-    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_branchPhone;
+    private pericoscorp.swingcustomcontrolls.NumericTextBox txt_branchPhone;
     private javax.swing.JTextField txt_find;
     private javax.swing.JTextField txt_id;
     // End of variables declaration//GEN-END:variables

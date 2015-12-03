@@ -263,7 +263,7 @@
         <Component class="pericoscorp.swingcustomcontrolls.BaseTextBoxValidated" name="txt_roleDescription">
           <Properties>
             <Property name="isRequired" type="boolean" value="true"/>
-            <Property name="length" type="int" value="100"/>
+            <Property name="length" type="int" value="250"/>
           </Properties>
         </Component>
       </SubComponents>

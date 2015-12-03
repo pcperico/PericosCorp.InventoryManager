@@ -433,7 +433,7 @@
         <Component class="pericoscorp.swingcustomcontrolls.NumericTextBox" name="txt_phone">
           <Properties>
             <Property name="isRequired" type="boolean" value="true"/>
-            <Property name="length" type="int" value="8"/>
+            <Property name="length" type="int" value="20"/>
           </Properties>
         </Component>
         <Component class="pericoscorp.swingcustomcontrolls.BaseTextBoxValidated" name="txt_email">
@@ -466,7 +466,7 @@
         <Component class="pericoscorp.swingcustomcontrolls.BaseTextBoxValidated" name="txt_address">
           <Properties>
             <Property name="isRequired" type="boolean" value="true"/>
-            <Property name="length" type="int" value="250"/>
+            <Property name="length" type="int" value="200"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">

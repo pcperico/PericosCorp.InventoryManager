@@ -10,6 +10,7 @@
    <property column="Phone" name="Phone" />
    <property column="Address" name="Address" />
    <property column="Country" name="Country" />
+   <property column="Nit" name="Nit" />
  </class>
  <sql-query name="Provider.FindByName">    
     <return-scalar column="Id" type="int"/>
@@ -17,7 +18,8 @@
     <return-scalar column="ContactName" type="string"/>
     <return-scalar column="Address" type="string"/>
     <return-scalar column="Phone" type="string"/>    
-    <return-scalar column="Country" type="string"/>    
+    <return-scalar column="Country" type="string"/>
+    <return-scalar column="Nit" type="string"/>    
     select *
         from provider
         where Name like :name        

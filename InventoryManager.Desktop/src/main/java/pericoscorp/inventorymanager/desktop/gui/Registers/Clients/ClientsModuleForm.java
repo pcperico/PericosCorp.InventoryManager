@@ -7,9 +7,15 @@
 package pericoscorp.inventorymanager.desktop.gui.Registers.Clients;
 
 
-import PericosCorp.InventoryManager.Domain.Entities.Provider;
-import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProviderRepository;
+import PericosCorp.InventoryManager.Domain.Entities.Client;
+import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IClientRepository;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import pericoscorp.inventorymanager.desktop.gui.InternalCenterFrame;
@@ -19,7 +25,7 @@ import pericoscorp.inventorymanager.desktop.gui.InternalCenterFrame;
  * @author Arturo E. Salinas
  */
 public class ClientsModuleForm extends InternalCenterFrame {
-    private IProviderRepository pr;
+    private IClientRepository clientRepository;
     DefaultTableModel dtm;
     private boolean  isEditing=false;
     /**
@@ -27,14 +33,17 @@ public class ClientsModuleForm extends InternalCenterFrame {
      */
     public ClientsModuleForm() {
         initComponents();
-        pr= (IProviderRepository)ctx.getBean("IProviderRepository");
+        clientRepository= (IClientRepository)ctx.getBean("IClientRepository");
         dtm = new DefaultTableModel();
         dtm.addColumn("Nombre");
-        dtm.addColumn("Contacto");  
-        dtm.addColumn("Teléfono");  
-        dtm.addColumn("Dirección");
-        dtm.addColumn("País");
-        dtm.addColumn("");        
+        dtm.addColumn("Dirección");  
+        dtm.addColumn("Teléfono");          
+        dtm.addColumn("");   
+        DefaultComboBoxModel genders = new DefaultComboBoxModel();
+        genders.addElement("Seleccione el genero");
+        genders.addElement("M");
+        genders.addElement("F");
+        this.cmb_gender.setModel(genders);
     }
 
     /**
@@ -51,7 +60,7 @@ public class ClientsModuleForm extends InternalCenterFrame {
         btn_Search = new javax.swing.JButton();
         panelRoles = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tbl_providers = new javax.swing.JTable();
+        tbl_clients = new javax.swing.JTable();
         panelAddBranch = new javax.swing.JPanel();
         lb_newRole = new javax.swing.JLabel();
         lb_name = new javax.swing.JLabel();
@@ -61,19 +70,21 @@ public class ClientsModuleForm extends InternalCenterFrame {
         jLabel1 = new javax.swing.JLabel();
         txt_id = new javax.swing.JTextField();
         lb_description1 = new javax.swing.JLabel();
-        txt_providerName = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
-        txt_providerAddress = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
-        txt_providerCountry = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
+        txt_clientFirstName = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
+        txt_address = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
         jLabel2 = new javax.swing.JLabel();
-        txt_providerContactName = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
+        txt_clientLastName = new pericoscorp.swingcustomcontrolls.BaseTextBoxValidated();
         jLabel3 = new javax.swing.JLabel();
-        txt_providerPhone = new pericoscorp.swingcustomcontrolls.NumericTextBox();
+        jLabel4 = new javax.swing.JLabel();
+        txt_clientBirthDate = new pericoscorp.swingcustomcontrolls.DateTextBox();
+        cmb_gender = new pericoscorp.swingcustomcontrolls.BaseComboBoxValidated();
+        txt_clientPhone = new pericoscorp.swingcustomcontrolls.NumericTextBox();
         panelButtons = new javax.swing.JPanel();
         btn_edit = new javax.swing.JButton();
         btn_new = new javax.swing.JButton();
 
         setClosable(true);
-        setTitle("Admin Proveedores");
+        setTitle("Clientes");
         setToolTipText("");
         setMinimumSize(new java.awt.Dimension(600, 800));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -94,7 +105,7 @@ public class ClientsModuleForm extends InternalCenterFrame {
             }
         });
 
-        lb_Find.setText("Buscar proveedor:");
+        lb_Find.setText("Buscar cliente:");
         lb_Find.setToolTipText("");
 
         btn_Search.setText("Buscar");
@@ -106,7 +117,7 @@ public class ClientsModuleForm extends InternalCenterFrame {
 
         panelRoles.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        tbl_providers.setModel(new javax.swing.table.DefaultTableModel(
+        tbl_clients.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -117,12 +128,12 @@ public class ClientsModuleForm extends InternalCenterFrame {
 
             }
         ));
-        tbl_providers.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbl_clients.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbl_providersMouseClicked(evt);
+                tbl_clientsMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tbl_providers);
+        jScrollPane1.setViewportView(tbl_clients);
 
         javax.swing.GroupLayout panelRolesLayout = new javax.swing.GroupLayout(panelRoles);
         panelRoles.setLayout(panelRolesLayout);
@@ -144,11 +155,11 @@ public class ClientsModuleForm extends InternalCenterFrame {
         panelAddBranch.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         panelAddBranch.setEnabled(false);
 
-        lb_newRole.setText("Agegar/modificar Proveedores");
+        lb_newRole.setText("Agegar/modificar Clientes");
 
-        lb_name.setText("* Nombre:");
+        lb_name.setText("* Nombres:");
 
-        lb_description.setText("* Dirección:");
+        lb_description.setText("   Teléfono:");
 
         btn_add.setText("Guardar");
         btn_add.addActionListener(new java.awt.event.ActionListener() {
@@ -168,101 +179,102 @@ public class ClientsModuleForm extends InternalCenterFrame {
 
         txt_id.setEditable(false);
 
-        lb_description1.setText("* País:");
+        lb_description1.setText("   Direccion:");
 
-        txt_providerName.setIsRequired(true);
-        txt_providerName.setLength(100);
+        txt_clientFirstName.setIsRequired(true);
+        txt_clientFirstName.setLength(200);
 
-        txt_providerAddress.setIsRequired(true);
-        txt_providerAddress.setLength(200);
+        txt_address.setLength(200);
 
-        txt_providerCountry.setIsRequired(true);
-        txt_providerCountry.setLength(100);
+        jLabel2.setText("* Apellidos:");
 
-        jLabel2.setText("* Contacto:");
+        txt_clientLastName.setIsRequired(true);
+        txt_clientLastName.setLength(200);
 
-        txt_providerContactName.setIsRequired(true);
-        txt_providerContactName.setLength(200);
+        jLabel3.setText("* Genero:");
 
-        jLabel3.setText("Teléfono:");
+        jLabel4.setText("* Fecha de Nac.:");
 
-        txt_providerPhone.setLength(25);
+        txt_clientBirthDate.setIsRequired(true);
+
+        cmb_gender.setIsRequired(true);
 
         javax.swing.GroupLayout panelAddBranchLayout = new javax.swing.GroupLayout(panelAddBranch);
         panelAddBranch.setLayout(panelAddBranchLayout);
         panelAddBranchLayout.setHorizontalGroup(
             panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAddBranchLayout.createSequentialGroup()
+                .addGap(96, 96, 96)
+                .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 124, Short.MAX_VALUE))
+            .addGroup(panelAddBranchLayout.createSequentialGroup()
                 .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_newRole)
                     .addGroup(panelAddBranchLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lb_name)
                             .addGroup(panelAddBranchLayout.createSequentialGroup()
-                                .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lb_description)
-                                    .addComponent(lb_description1))
-                                .addGap(18, 18, 18)
-                                .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txt_providerCountry, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txt_providerAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(panelAddBranchLayout.createSequentialGroup()
-                                        .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(panelAddBranchLayout.createSequentialGroup()
-                                    .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lb_name)
-                                        .addGroup(panelAddBranchLayout.createSequentialGroup()
-                                            .addGap(9, 9, 9)
-                                            .addComponent(jLabel1))
-                                        .addComponent(jLabel2))
-                                    .addGap(17, 17, 17)
-                                    .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(txt_providerName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(txt_providerContactName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)))
-                                .addGroup(panelAddBranchLayout.createSequentialGroup()
-                                    .addGap(10, 10, 10)
-                                    .addComponent(jLabel3)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txt_providerPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
-                .addContainerGap(23, Short.MAX_VALUE))
+                                .addGap(9, 9, 9)
+                                .addComponent(jLabel1))
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel3)
+                            .addComponent(lb_description)
+                            .addComponent(lb_description1))
+                        .addGap(30, 30, 30)
+                        .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_clientFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txt_clientLastName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txt_clientBirthDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmb_gender, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txt_address, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txt_clientPhone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(lb_newRole))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelAddBranchLayout.setVerticalGroup(
             panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelAddBranchLayout.createSequentialGroup()
                 .addComponent(lb_newRole)
-                .addGap(10, 10, 10)
+                .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelAddBranchLayout.createSequentialGroup()
+                        .addGap(13, 13, 13)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lb_name)
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel2))
+                    .addGroup(panelAddBranchLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txt_clientFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(4, 4, 4)
+                        .addComponent(txt_clientLastName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(3, 3, 3)
                 .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(4, 4, 4)
-                .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_name)
-                    .addComponent(txt_providerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(txt_providerContactName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4)
+                    .addComponent(txt_clientBirthDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txt_providerPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmb_gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_description)
-                    .addComponent(txt_providerAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
+                    .addComponent(txt_clientPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lb_description1)
-                    .addComponent(txt_providerCountry, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txt_address, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(panelAddBranchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_add)
                     .addComponent(btn_clear))
-                .addGap(42, 42, 42))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         panelButtons.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -315,11 +327,11 @@ public class ClientsModuleForm extends InternalCenterFrame {
                         .addComponent(txt_find, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_Search))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(panelAddBranch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(panelRoles, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(panelRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(24, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -330,43 +342,51 @@ public class ClientsModuleForm extends InternalCenterFrame {
                     .addComponent(lb_Find)
                     .addComponent(txt_find, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_Search))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(30, 30, 30)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 138, Short.MAX_VALUE))
-                    .addComponent(panelAddBranch, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(panelAddBranch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-     private void fillTable(List<Provider> providers,DefaultTableModel model)    
+     private void fillTable(List<Client> clients,DefaultTableModel model)    
     {        
         model.setRowCount(0);
-        this.tbl_providers.setModel(model);             
-        this.tbl_providers.getColumnModel().getColumn(5).setMinWidth(0);
-        this.tbl_providers.getColumnModel().getColumn(5).setMaxWidth(0);        
-        Object [] fila = new Object[6];
-        for(Provider p:providers)
+        this.tbl_clients.setModel(model);             
+        this.tbl_clients.getColumnModel().getColumn(3).setMinWidth(0);
+        this.tbl_clients.getColumnModel().getColumn(3).setMaxWidth(0);        
+        Object [] fila = new Object[4];
+        for(Client c:clients)
         {
-           fila[0] = p.getName();           
-           fila[1] = p.getContactName();           
-           fila[2] = p.getPhone();           
-           fila[3] = p.getAddress();           
-           fila[4] = p.getCountry();
-           fila[5] = p.getId();           
+           fila[0]=c.getFullName();
+           fila[1]=c.getAddress();
+           fila[2]=c.getPhone();
+           fila[3]=c.getId();
            model.addRow(fila);
-           
-           
         }            
     }
      
+    private void fillProvidertoEdit(int clientSelected)
+    {   
+        this.txt_id.setText(this.tbl_clients.getValueAt(clientSelected, 3).toString());
+        Client client = clientRepository.Get(Integer.parseInt(this.txt_id.getText()));
+        this.txt_clientFirstName.setText(client.getFirstName());
+        this.txt_clientLastName.setText(client.getLastName());
+        this.txt_clientBirthDate.setText(client.getDateString());
+        this.txt_address.setText(client.getAddress());
+        this.txt_clientPhone.setText(client.getPhone());
+        this.cmb_gender.setSelectedItem(client.getGender());
+    }
+     
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        fillTable(pr.GetAll(), dtm);
+        fillTable(clientRepository.GetAll(), dtm);
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
@@ -374,39 +394,52 @@ public class ClientsModuleForm extends InternalCenterFrame {
             return;
         if(!isEditing)
         {
-            int result= pr.CreateNewProvider(this.txt_providerName.getText().trim(),this.txt_providerContactName.getText().trim(),
-                    this.txt_providerPhone.getText().trim(),this.txt_providerAddress.getText().trim(),this.txt_providerCountry.getText().trim());
+            SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date birthDate=null;
+            try {
+                birthDate = formatter.parse(this.txt_clientBirthDate.getText());
+            } catch (ParseException ex) {
+                Logger.getLogger(ClientsModuleForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            int result= clientRepository.CreateNewClient(this.txt_clientFirstName.getText().trim(), this.txt_clientLastName.getText().trim(),
+                    birthDate, this.cmb_gender.getSelectedItem().toString(), this.txt_clientPhone.getText().trim(),this.txt_address.getText().trim());
             if(result==1) 
             {
-               JOptionPane.showMessageDialog(this.getContentPane(), "Proveedor guardado satisfactoriamente");
+               JOptionPane.showMessageDialog(this.getContentPane(), "Cliente guardado satisfactoriamente");
                this.clearFields(btn_add.getParent());
                isEditing=false;
-               fillTable(pr.GetAll(), dtm);
+               fillTable(clientRepository.GetAll(), dtm);
             }       
             else if(result==0)
                 JOptionPane.showMessageDialog(this.getContentPane(), "Debe completar los campos obligatorios (*)");
             else
-                JOptionPane.showMessageDialog(this.getContentPane(), "Error al guardar el proveedor, porfavor intente de nuevo, si el problema persiste contactor al administrador del sistema");
+                JOptionPane.showMessageDialog(this.getContentPane(), "Error al guardar el cliente, porfavor intente de nuevo, si el problema persiste contactor al administrador del sistema");
         }
         else
         {
-            int confirm=JOptionPane.showConfirmDialog(this.getContentPane(), "¿Seguro que desea modificar proveedor?");
+             SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            Date birthDate=null;
+            try {
+                birthDate = formatter.parse(this.txt_clientBirthDate.getText());
+            } catch (ParseException ex) {
+                Logger.getLogger(ClientsModuleForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            int confirm=JOptionPane.showConfirmDialog(this.getContentPane(), "¿Seguro que desea modificar este cliente?");
             if(confirm!=0)
                 return;
-            int result= pr.UpdateProvider(Integer.parseInt(this.txt_id.getText()),this.txt_providerName.getText().trim(),
-                    this.txt_providerContactName.getText().trim(),this.txt_providerPhone.getText().trim(),
-                    this.txt_providerAddress.getText().trim(),this.txt_providerCountry.getText().trim());
+            int result= clientRepository.UpdateClient(Integer.parseInt(this.txt_id.getText()),this.txt_clientFirstName.getText().trim(), this.txt_clientLastName.getText().trim(),
+                    birthDate, this.cmb_gender.getSelectedItem().toString(), this.txt_clientPhone.getText().trim(),this.txt_address.getText().trim());
             if(result==1) 
             {
-               JOptionPane.showMessageDialog(this.getContentPane(), "Proveedor actualizado satisfactoriamente");
+               JOptionPane.showMessageDialog(this.getContentPane(), "Cliente actualizado satisfactoriamente");
                this.clearFields(btn_add.getParent());
                isEditing=false;
-               fillTable(pr.GetAll(), dtm);
+               fillTable(clientRepository.GetAll(), dtm);
             }       
             else if(result==0)
                 JOptionPane.showMessageDialog(this.getContentPane(), "Debe completar los campos obligatorios (*)");
             else
-                JOptionPane.showMessageDialog(this.getContentPane(), "Error al actualizar el proveedor, porfavor intente de nuevo, si el problema persiste contactor al administrador del sistema");
+                JOptionPane.showMessageDialog(this.getContentPane(), "Error al actualizar el cliente, porfavor intente de nuevo, si el problema persiste contactor al administrador del sistema");
         }
     }//GEN-LAST:event_btn_addActionPerformed
 
@@ -416,15 +449,15 @@ public class ClientsModuleForm extends InternalCenterFrame {
     }//GEN-LAST:event_btn_clearActionPerformed
 
     private void btn_SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SearchActionPerformed
-        fillTable(pr.FilterByName(this.txt_find.getText()), dtm);
+//        fillTable(clientRepository.FilterByName(this.txt_find.getText()), dtm);
     }//GEN-LAST:event_btn_SearchActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-       if(tbl_providers.getSelectedRow()!=-1)
+       if(tbl_clients.getSelectedRow()!=-1)
        {
-           fillProvidertoEdit(tbl_providers.getSelectedRow());
+           fillProvidertoEdit(tbl_clients.getSelectedRow());
            isEditing=true;
-           this.txt_providerName.requestFocus();
+           this.txt_clientFirstName.requestFocus();
        }
        else
        {
@@ -436,32 +469,14 @@ public class ClientsModuleForm extends InternalCenterFrame {
     private void btn_newActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_newActionPerformed
         isEditing=false;
         clearFields(panelAddBranch);
-        this.txt_providerName.requestFocus();
+        this.txt_clientFirstName.requestFocus();
     }//GEN-LAST:event_btn_newActionPerformed
 
-    private void tbl_providersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_providersMouseClicked
+    private void tbl_clientsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_clientsMouseClicked
         clearFields(panelAddBranch);
-    }//GEN-LAST:event_tbl_providersMouseClicked
+    }//GEN-LAST:event_tbl_clientsMouseClicked
+ 
 
-    private boolean isSelectedRow()
-    {
-        return tbl_providers.getSelectedRow()!=-1;
-    }
-    
-    private int getSelectedRow()
-    {
-        return tbl_providers.getSelectedRow();
-    }
-    
-    private void fillProvidertoEdit(int providerSelected)
-    {        
-        this.txt_providerName.setText(this.tbl_providers.getValueAt(providerSelected, 0).toString());
-        this.txt_providerContactName.setText(this.tbl_providers.getValueAt(providerSelected, 1).toString());
-        this.txt_providerPhone.setText(this.tbl_providers.getValueAt(providerSelected, 2).toString());
-        this.txt_providerAddress.setText(this.tbl_providers.getValueAt(providerSelected, 3).toString());
-        this.txt_providerCountry.setText(this.tbl_providers.getValueAt(providerSelected, 4).toString());
-        this.txt_id.setText(this.tbl_providers.getValueAt(providerSelected, 5).toString());
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Search;
@@ -469,9 +484,11 @@ public class ClientsModuleForm extends InternalCenterFrame {
     private javax.swing.JButton btn_clear;
     private javax.swing.JButton btn_edit;
     private javax.swing.JButton btn_new;
+    private pericoscorp.swingcustomcontrolls.BaseComboBoxValidated cmb_gender;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lb_Find;
     private javax.swing.JLabel lb_description;
@@ -481,13 +498,13 @@ public class ClientsModuleForm extends InternalCenterFrame {
     private javax.swing.JPanel panelAddBranch;
     private javax.swing.JPanel panelButtons;
     private javax.swing.JPanel panelRoles;
-    private javax.swing.JTable tbl_providers;
+    private javax.swing.JTable tbl_clients;
+    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_address;
+    private pericoscorp.swingcustomcontrolls.DateTextBox txt_clientBirthDate;
+    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_clientFirstName;
+    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_clientLastName;
+    private pericoscorp.swingcustomcontrolls.NumericTextBox txt_clientPhone;
     private javax.swing.JTextField txt_find;
     private javax.swing.JTextField txt_id;
-    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_providerAddress;
-    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_providerContactName;
-    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_providerCountry;
-    private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_providerName;
-    private pericoscorp.swingcustomcontrolls.NumericTextBox txt_providerPhone;
     // End of variables declaration//GEN-END:variables
 }

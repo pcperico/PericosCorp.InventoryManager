@@ -147,7 +147,7 @@ public class MeasurementUnitAdminFrom extends InternalCenterFrame {
         txt_id.setEditable(false);
 
         txt_unitName.setIsRequired(true);
-        txt_unitName.setLength(200);
+        txt_unitName.setLength(100);
 
         txt_unitAbbreviation.setIsRequired(true);
         txt_unitAbbreviation.setLength(10);

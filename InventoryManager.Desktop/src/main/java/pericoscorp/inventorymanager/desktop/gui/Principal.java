@@ -9,6 +9,7 @@ package pericoscorp.inventorymanager.desktop.gui;
 import javax.swing.UIManager;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessBlueSteelLookAndFeel;
 import pericoscorp.inventorymanager.desktop.gui.Admin.Products.CategoriesAdminFrom;
+import pericoscorp.inventorymanager.desktop.gui.Registers.Clients.ClientsModuleForm;
 import pericoscorp.inventorymanager.desktop.gui.Registers.InMovementsForm;
 import pericoscorp.inventorymanager.desktop.gui.Registers.OutsMovementsForm;
 import pericoscorp.inventorymanager.desktop.gui.admin.branches.BranchesAdminFrom;
@@ -55,6 +56,7 @@ public class Principal extends javax.swing.JFrame {
         MovementsMenu = new javax.swing.JMenu();
         InMovementsMenu = new javax.swing.JMenuItem();
         OutMovementsMenu = new javax.swing.JMenuItem();
+        ClientsMenu = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(600, 800));
@@ -129,7 +131,7 @@ public class Principal extends javax.swing.JFrame {
 
         MovementsMenu.setText("Registros");
 
-        InMovementsMenu.setText("Entradas");
+        InMovementsMenu.setText("Compras");
         InMovementsMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 InMovementsMenuActionPerformed(evt);
@@ -137,13 +139,21 @@ public class Principal extends javax.swing.JFrame {
         });
         MovementsMenu.add(InMovementsMenu);
 
-        OutMovementsMenu.setText("Salidas");
+        OutMovementsMenu.setText("Ventas");
         OutMovementsMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 OutMovementsMenuActionPerformed(evt);
             }
         });
         MovementsMenu.add(OutMovementsMenu);
+
+        ClientsMenu.setText("Clientes");
+        ClientsMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClientsMenuActionPerformed(evt);
+            }
+        });
+        MovementsMenu.add(ClientsMenu);
 
         menuBar.add(MovementsMenu);
 
@@ -217,6 +227,12 @@ public class Principal extends javax.swing.JFrame {
         omf.show();
     }//GEN-LAST:event_OutMovementsMenuActionPerformed
 
+    private void ClientsMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClientsMenuActionPerformed
+        ClientsModuleForm cmf = new ClientsModuleForm();
+        this.desktopPane.add(cmf);
+        cmf.show();
+    }//GEN-LAST:event_ClientsMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -236,6 +252,7 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu AdminMenu;
     private javax.swing.JMenuItem BranchesMenu;
+    private javax.swing.JMenuItem ClientsMenu;
     private javax.swing.JMenuItem InMovementsMenu;
     private javax.swing.JMenu MovementsMenu;
     private javax.swing.JMenuItem OutMovementsMenu;

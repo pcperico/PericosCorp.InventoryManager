@@ -231,7 +231,7 @@
         <Component class="pericoscorp.swingcustomcontrolls.BaseTextBoxValidated" name="txt_unitName">
           <Properties>
             <Property name="isRequired" type="boolean" value="true"/>
-            <Property name="length" type="int" value="200"/>
+            <Property name="length" type="int" value="100"/>
           </Properties>
         </Component>
         <Component class="pericoscorp.swingcustomcontrolls.BaseTextBoxValidated" name="txt_unitAbbreviation">

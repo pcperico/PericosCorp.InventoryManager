@@ -83,7 +83,7 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="InMovementsMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Entradas"/>
+                <Property name="text" type="java.lang.String" value="Compras"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InMovementsMenuActionPerformed"/>
@@ -91,10 +91,18 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="OutMovementsMenu">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Salidas"/>
+                <Property name="text" type="java.lang.String" value="Ventas"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="OutMovementsMenuActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="ClientsMenu">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Clientes"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ClientsMenuActionPerformed"/>
               </Events>
             </MenuItem>
           </SubComponents>

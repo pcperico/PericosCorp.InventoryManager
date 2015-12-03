@@ -78,7 +78,7 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="lb_Find">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Buscar sucursall:"/>
+        <Property name="text" type="java.lang.String" value="Buscar sucursal:"/>
         <Property name="toolTipText" type="java.lang.String" value=""/>
       </Properties>
     </Component>
@@ -180,12 +180,12 @@
                           <Component id="btn_clear" min="-2" pref="66" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txt_id" min="-2" pref="38" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Component id="txt_branchPhone" min="-2" pref="200" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="txt_branchPhone" alignment="0" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="txt_id" min="-2" pref="38" max="-2" attributes="0"/>
+                                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                       <Component id="txt_branchAddress" alignment="0" pref="200" max="32767" attributes="0"/>
                                       <Component id="txt_branchName" alignment="0" max="32767" attributes="0"/>
                                   </Group>
@@ -226,7 +226,7 @@
                       <Component id="btn_add" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="btn_clear" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="15" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -290,7 +290,7 @@
             <Property name="length" type="int" value="200"/>
           </Properties>
         </Component>
-        <Component class="pericoscorp.swingcustomcontrolls.BaseTextBoxValidated" name="txt_branchPhone">
+        <Component class="pericoscorp.swingcustomcontrolls.NumericTextBox" name="txt_branchPhone">
           <Properties>
             <Property name="length" type="int" value="20"/>
           </Properties>

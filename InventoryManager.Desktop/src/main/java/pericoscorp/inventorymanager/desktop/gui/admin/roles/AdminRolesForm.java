@@ -165,7 +165,7 @@ public class AdminRolesForm extends InternalCenterFrame {
         txt_roleName.setLength(50);
 
         txt_roleDescription.setIsRequired(true);
-        txt_roleDescription.setLength(100);
+        txt_roleDescription.setLength(250);
 
         javax.swing.GroupLayout panelAddRoleLayout = new javax.swing.GroupLayout(panelAddRole);
         panelAddRole.setLayout(panelAddRoleLayout);

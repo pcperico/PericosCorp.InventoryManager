@@ -7,7 +7,11 @@
 package PericosCorp.InventoryManager.Domain.Entities;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+
+
 
 public class Client implements Serializable {
 	/**
@@ -81,4 +85,14 @@ public class Client implements Serializable {
 		return FirstName +" "+LastName;		
 	}
 	
+	public String getFullName()
+	{
+		return FirstName + " "+LastName;
+	}
+	
+	public String getDateString()
+	{
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		return df.format(BirthDate);
+	}
 }

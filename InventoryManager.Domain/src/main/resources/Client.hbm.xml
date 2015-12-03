@@ -13,4 +13,13 @@
    <property column="Address" name="Address" type="string" />
    <property column="ClientSince" name="ClientSince" type="date" />
  </class> 
+  <sql-query name="Client.FindByName">    
+    <return-scalar column="Id" type="int"/>
+    <return-scalar column="Name" type="string"/>
+    <return-scalar column="Description" type="string"/>
+    <return-scalar column="Status" type="java.lang.Boolean"/>    
+    select *
+        from client
+        where Name like :name        
+  </sql-query>    
 </hibernate-mapping>

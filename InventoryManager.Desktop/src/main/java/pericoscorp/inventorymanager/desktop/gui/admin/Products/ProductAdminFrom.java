@@ -214,7 +214,7 @@ public class ProductAdminFrom extends InternalCenterFrame {
 
         jLabel2.setText("   Modelo:");
 
-        txt_productModel.setLength(100);
+        txt_productModel.setLength(200);
 
         jLabel3.setText("* Categoria:");
 

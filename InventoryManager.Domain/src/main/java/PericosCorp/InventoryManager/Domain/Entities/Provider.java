@@ -65,7 +65,14 @@ public class Provider implements Serializable{
 	private String Phone;
 	private String Address;
 	private String Country;
+	private String Nit;
 	
+	public String getNit() {
+		return Nit;
+	}
+	public void setNit(String nit) {
+		Nit = nit;
+	}
 	@Override
 	public String toString()
 	{
