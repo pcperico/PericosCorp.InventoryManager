@@ -524,16 +524,6 @@ public class ProductAdminFrom extends InternalCenterFrame {
         clearFields(panelAddProduct);
     }//GEN-LAST:event_tbl_productsMouseClicked
 
-    private boolean isSelectedRow()
-    {
-        return tbl_products.getSelectedRow()!=-1;
-    }
-    
-    private int getSelectedRow()
-    {
-        return tbl_products.getSelectedRow();
-    }
-    
     private void fillProducttoEdit(int productSelected)
     {        
         if(this.tbl_products.getSelectedRow()!=-1)

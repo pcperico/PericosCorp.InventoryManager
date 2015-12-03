@@ -403,16 +403,6 @@ public class BranchesAdminFrom extends InternalCenterFrame {
         clearFields(panelAddBranch);
     }//GEN-LAST:event_tbl_branchesMouseClicked
 
-    private boolean isSelectedRow()
-    {
-        return tbl_branches.getSelectedRow()!=-1;
-    }
-    
-    private int getSelectedRow()
-    {
-        return tbl_branches.getSelectedRow();
-    }
-    
     private void fillRoletoEdit(int branchSelected)
     {        
         this.txt_branchName.setText(this.tbl_branches.getValueAt(branchSelected, 0).toString());

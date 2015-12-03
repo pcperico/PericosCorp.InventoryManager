@@ -461,7 +461,7 @@ public class ClientsModuleForm extends InternalCenterFrame {
        }
        else
        {
-           JOptionPane.showMessageDialog(this.getContentPane(), "Debe seleccionar el proveedor que desea modificar");
+           JOptionPane.showMessageDialog(this.getContentPane(), "Debe seleccionar el cliente que desea modificar");
            isEditing=false;
        }
     }//GEN-LAST:event_btn_editActionPerformed

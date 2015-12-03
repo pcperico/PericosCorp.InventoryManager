@@ -16,6 +16,7 @@ import pericoscorp.inventorymanager.desktop.gui.admin.branches.BranchesAdminFrom
 import pericoscorp.inventorymanager.desktop.gui.admin.employees.EmployeesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.Products.MeasurementUnitAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.Products.ProductAdminFrom;
+import pericoscorp.inventorymanager.desktop.gui.admin.employees.status.AdminEmployeeStatusForm;
 import pericoscorp.inventorymanager.desktop.gui.admin.providers.ProvidersAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.roles.AdminRolesForm;
 
@@ -47,7 +48,9 @@ public class Principal extends javax.swing.JFrame {
         AdminMenu = new javax.swing.JMenu();
         RolesMenu = new javax.swing.JMenuItem();
         BranchesMenu = new javax.swing.JMenuItem();
-        employeesMenu = new javax.swing.JMenuItem();
+        EmployeesMenu = new javax.swing.JMenu();
+        AdminEmployeesMenu = new javax.swing.JMenuItem();
+        StatusEmployeesMenu = new javax.swing.JMenuItem();
         menu_Products = new javax.swing.JMenu();
         menu_Categories = new javax.swing.JMenuItem();
         menu_ProductsSubMenu = new javax.swing.JMenuItem();
@@ -83,13 +86,25 @@ public class Principal extends javax.swing.JFrame {
         });
         AdminMenu.add(BranchesMenu);
 
-        employeesMenu.setText("Empleados");
-        employeesMenu.addActionListener(new java.awt.event.ActionListener() {
+        EmployeesMenu.setText("Empleados");
+
+        AdminEmployeesMenu.setText("Empleados");
+        AdminEmployeesMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                employeesMenuActionPerformed(evt);
+                AdminEmployeesMenuActionPerformed(evt);
             }
         });
-        AdminMenu.add(employeesMenu);
+        EmployeesMenu.add(AdminEmployeesMenu);
+
+        StatusEmployeesMenu.setText("Estados");
+        StatusEmployeesMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                StatusEmployeesMenuActionPerformed(evt);
+            }
+        });
+        EmployeesMenu.add(StatusEmployeesMenu);
+
+        AdminMenu.add(EmployeesMenu);
 
         menu_Products.setText("Productos");
 
@@ -185,12 +200,6 @@ public class Principal extends javax.swing.JFrame {
         baf.show();
     }//GEN-LAST:event_BranchesMenuActionPerformed
 
-    private void employeesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeesMenuActionPerformed
-        EmployeesAdminFrom eaf = new EmployeesAdminFrom();
-        this.desktopPane.add(eaf);
-        eaf.show();
-    }//GEN-LAST:event_employeesMenuActionPerformed
-
     private void menu_CategoriesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menu_CategoriesActionPerformed
         CategoriesAdminFrom caf = new CategoriesAdminFrom();
         this.desktopPane.add(caf);
@@ -233,6 +242,18 @@ public class Principal extends javax.swing.JFrame {
         cmf.show();
     }//GEN-LAST:event_ClientsMenuActionPerformed
 
+    private void AdminEmployeesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminEmployeesMenuActionPerformed
+        EmployeesAdminFrom eaf =new EmployeesAdminFrom();
+        this.desktopPane.add(eaf);
+        eaf.show();
+    }//GEN-LAST:event_AdminEmployeesMenuActionPerformed
+
+    private void StatusEmployeesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_StatusEmployeesMenuActionPerformed
+        AdminEmployeeStatusForm aesf = new AdminEmployeeStatusForm();
+        this.desktopPane.add(aesf);
+        aesf.show();
+    }//GEN-LAST:event_StatusEmployeesMenuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -250,15 +271,17 @@ public class Principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem AdminEmployeesMenu;
     private javax.swing.JMenu AdminMenu;
     private javax.swing.JMenuItem BranchesMenu;
     private javax.swing.JMenuItem ClientsMenu;
+    private javax.swing.JMenu EmployeesMenu;
     private javax.swing.JMenuItem InMovementsMenu;
     private javax.swing.JMenu MovementsMenu;
     private javax.swing.JMenuItem OutMovementsMenu;
     private javax.swing.JMenuItem RolesMenu;
+    private javax.swing.JMenuItem StatusEmployeesMenu;
     private javax.swing.JDesktopPane desktopPane;
-    private javax.swing.JMenuItem employeesMenu;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menu_Categories;
     private javax.swing.JMenu menu_Products;

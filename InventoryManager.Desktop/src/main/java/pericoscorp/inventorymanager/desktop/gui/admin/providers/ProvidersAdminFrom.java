@@ -450,17 +450,7 @@ public class ProvidersAdminFrom extends InternalCenterFrame {
     private void tbl_providersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_providersMouseClicked
         clearFields(panelAddBranch);
     }//GEN-LAST:event_tbl_providersMouseClicked
-
-    private boolean isSelectedRow()
-    {
-        return tbl_providers.getSelectedRow()!=-1;
-    }
-    
-    private int getSelectedRow()
-    {
-        return tbl_providers.getSelectedRow();
-    }
-    
+ 
     private void fillProvidertoEdit(int providerSelected)
     {        
         this.txt_providerName.setText(this.tbl_providers.getValueAt(providerSelected, 0).toString());

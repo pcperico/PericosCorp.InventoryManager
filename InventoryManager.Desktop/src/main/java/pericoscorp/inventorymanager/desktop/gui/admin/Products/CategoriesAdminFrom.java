@@ -379,16 +379,6 @@ public class CategoriesAdminFrom extends InternalCenterFrame {
     private void tbl_categoriesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_categoriesMouseClicked
         clearFields(panelAddCategory);
     }//GEN-LAST:event_tbl_categoriesMouseClicked
-
-    private boolean isSelectedRow()
-    {
-        return tbl_categories.getSelectedRow()!=-1;
-    }
-    
-    private int getSelectedRow()
-    {
-        return tbl_categories.getSelectedRow();
-    }
     
     private void fillCategorytoEdit(int categorySelected)
     {        

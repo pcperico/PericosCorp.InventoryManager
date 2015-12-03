@@ -354,17 +354,7 @@ public class MeasurementUnitAdminFrom extends InternalCenterFrame {
     private void tbl_unitsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_unitsMouseClicked
         clearFields(panelAddUnits);
     }//GEN-LAST:event_tbl_unitsMouseClicked
-
-    private boolean isSelectedRow()
-    {
-        return tbl_units.getSelectedRow()!=-1;
-    }
-    
-    private int getSelectedRow()
-    {
-        return tbl_units.getSelectedRow();
-    }
-    
+ 
     private void fillUnittoEdit(int unitSelected)
     {        
         this.txt_unitName.setText(this.tbl_units.getValueAt(unitSelected, 0).toString());
