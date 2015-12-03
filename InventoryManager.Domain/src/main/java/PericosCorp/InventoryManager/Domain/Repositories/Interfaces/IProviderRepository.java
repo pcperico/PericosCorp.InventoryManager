@@ -30,7 +30,7 @@ public interface IProviderRepository extends IRepository<Provider> {
 	 * -1 if an error happens
 	 */
 	
-	public int CreateNewProvider(String name,String contactName,String phone,String address,String country);
+	public int CreateNewProvider(String name,String contactName,String phone,String address,String country,String nit);
 	
 	/**
 	 * Update existing provider on bd.
@@ -46,7 +46,7 @@ public interface IProviderRepository extends IRepository<Provider> {
 	 * -1 if an error happens
 	 */
 	
-	public int UpdateProvider(int id,String name,String contactName,String phone,String address,String country);
+	public int UpdateProvider(int id,String name,String contactName,String phone,String address,String country,String nit);
 	
 	/**
 	 * Method to find provider by name matches

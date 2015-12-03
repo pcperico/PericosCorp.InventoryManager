@@ -15,11 +15,15 @@
  </class> 
   <sql-query name="Client.FindByName">    
     <return-scalar column="Id" type="int"/>
-    <return-scalar column="Name" type="string"/>
-    <return-scalar column="Description" type="string"/>
-    <return-scalar column="Status" type="java.lang.Boolean"/>    
-    select *
-        from client
-        where Name like :name        
+    <return-scalar column="FirstName" type="string"/>
+    <return-scalar column="LastName" type="string"/>
+    <return-scalar column="BirthDate" type="date"/>
+    <return-scalar column="Gender" type="string"/>
+    <return-scalar column="Phone" type="string"/>
+    <return-scalar column="Address" type="string"/>
+	<return-scalar column="ClientSince" type="date"/>
+		select * 
+		from  client
+		where concat(firstname, ' ',lastname) like :name    
   </sql-query>    
 </hibernate-mapping>

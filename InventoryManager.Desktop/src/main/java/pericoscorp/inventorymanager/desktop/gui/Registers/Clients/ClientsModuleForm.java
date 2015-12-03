@@ -37,7 +37,8 @@ public class ClientsModuleForm extends InternalCenterFrame {
         dtm = new DefaultTableModel();
         dtm.addColumn("Nombre");
         dtm.addColumn("Dirección");  
-        dtm.addColumn("Teléfono");          
+        dtm.addColumn("Teléfono");  
+        dtm.addColumn("Cliente desde");
         dtm.addColumn("");   
         DefaultComboBoxModel genders = new DefaultComboBoxModel();
         genders.addElement("Seleccione el genero");
@@ -360,22 +361,23 @@ public class ClientsModuleForm extends InternalCenterFrame {
     {        
         model.setRowCount(0);
         this.tbl_clients.setModel(model);             
-        this.tbl_clients.getColumnModel().getColumn(3).setMinWidth(0);
-        this.tbl_clients.getColumnModel().getColumn(3).setMaxWidth(0);        
-        Object [] fila = new Object[4];
+        this.tbl_clients.getColumnModel().getColumn(4).setMinWidth(0);
+        this.tbl_clients.getColumnModel().getColumn(4).setMaxWidth(0);        
+        Object [] fila = new Object[5];
         for(Client c:clients)
         {
            fila[0]=c.getFullName();
            fila[1]=c.getAddress();
            fila[2]=c.getPhone();
-           fila[3]=c.getId();
+           fila[3]=c.getClientSinceString();
+           fila[4]=c.getId();
            model.addRow(fila);
         }            
     }
      
     private void fillProvidertoEdit(int clientSelected)
     {   
-        this.txt_id.setText(this.tbl_clients.getValueAt(clientSelected, 3).toString());
+        this.txt_id.setText(this.tbl_clients.getValueAt(clientSelected, 4).toString());
         Client client = clientRepository.Get(Integer.parseInt(this.txt_id.getText()));
         this.txt_clientFirstName.setText(client.getFirstName());
         this.txt_clientLastName.setText(client.getLastName());
@@ -449,7 +451,7 @@ public class ClientsModuleForm extends InternalCenterFrame {
     }//GEN-LAST:event_btn_clearActionPerformed
 
     private void btn_SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SearchActionPerformed
-//        fillTable(clientRepository.FilterByName(this.txt_find.getText()), dtm);
+        fillTable(clientRepository.FilterByName(this.txt_find.getText()), dtm);
     }//GEN-LAST:event_btn_SearchActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed

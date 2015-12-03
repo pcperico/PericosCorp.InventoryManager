@@ -43,7 +43,7 @@ public class InMovementsForm extends InternalCenterFrame {
         providerRepository =(IProviderRepository)ctx.getBean("IProviderRepository");   
         movementService=(IMovementService)ctx.getBean("IMovementService");
         providers=new DefaultComboBoxModel(providerRepository.GetAll().toArray());
-        providers.insertElementAt(new Provider("Seleccione un proveedor", "", "", "", ""), 0);
+        providers.insertElementAt(new Provider("Seleccione un proveedor", "", "", "", "",""), 0);
         cmb_providers.setModel(providers);
         cmb_providers.setSelectedIndex(0);
         buyDetails = new DefaultTableModel();

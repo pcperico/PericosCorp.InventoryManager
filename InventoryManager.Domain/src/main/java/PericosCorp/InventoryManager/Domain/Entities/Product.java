@@ -26,7 +26,7 @@ public class Product implements Serializable{
 		Name=name;
 	}
 	
-	public Product(ProductCategory productCategory,Provider provider, MeasurementUnit measurementUnit, String name, String description,String brand,String model)
+	public Product(ProductCategory productCategory,Provider provider, MeasurementUnit measurementUnit, String name, String description,String brand,String model,double priceSale)
 	{
 		this.ProductCategory=productCategory;
 		this.Provider=provider;
@@ -35,6 +35,7 @@ public class Product implements Serializable{
 		this.Description = description;
 		this.Brand=brand;
 		this.Model=model;		
+		this.PriceSale = priceSale;
 	}
 	private int Id;
 	public int getId() {
@@ -96,6 +97,16 @@ public class Product implements Serializable{
 	private double PriceCost;
 	private double Stock;
 	
+	private double PriceSale;
+	
+	public double getPriceSale() {
+		return PriceSale;
+	}
+
+	public void setPriceSale(double priceSale) {
+		PriceSale = priceSale;
+	}
+
 	public double getStock() {
 		return Stock;
 	}

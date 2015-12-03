@@ -22,13 +22,10 @@
   <mapping resource="ProductCategory.hbm.xml"/>
   <mapping resource="Provider.hbm.xml"/>
   <mapping resource="MeasurementUnit.hbm.xml"/>
-  <mapping resource="Product.hbm.xml"/>
-  <mapping resource="Buy.hbm.xml"/>
-  <mapping resource="BuyDetail.hbm.xml"/>
-  <mapping resource="Sale.hbm.xml"/>
-  <mapping resource="SaleDetail.hbm.xml"/>
+  <mapping resource="Product.hbm.xml"/>  
   <mapping resource="Client.hbm.xml"/>
   <mapping resource="Movement.hbm.xml"/>
   <mapping resource="MovementDetail.hbm.xml"/>
+  <mapping resource="PriceSaleHistory.hbm.xml"/>
 </session-factory>
 </hibernate-configuration>

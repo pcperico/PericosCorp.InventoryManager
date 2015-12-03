@@ -32,6 +32,7 @@ public class ProvidersAdminFrom extends InternalCenterFrame {
         dtm.addColumn("Contacto");  
         dtm.addColumn("Teléfono");  
         dtm.addColumn("Dirección");
+        dtm.addColumn("Nit");
         dtm.addColumn("País");
         dtm.addColumn("");        
     }
@@ -356,17 +357,18 @@ public class ProvidersAdminFrom extends InternalCenterFrame {
     {        
         model.setRowCount(0);
         this.tbl_providers.setModel(model);             
-        this.tbl_providers.getColumnModel().getColumn(5).setMinWidth(0);
-        this.tbl_providers.getColumnModel().getColumn(5).setMaxWidth(0);        
-        Object [] fila = new Object[6];
+        this.tbl_providers.getColumnModel().getColumn(6).setMinWidth(0);
+        this.tbl_providers.getColumnModel().getColumn(6).setMaxWidth(0);        
+        Object [] fila = new Object[7];
         for(Provider p:providers)
         {
            fila[0] = p.getName();           
            fila[1] = p.getContactName();           
            fila[2] = p.getPhone();           
            fila[3] = p.getAddress();           
-           fila[4] = p.getCountry();
-           fila[5] = p.getId();           
+           fila[4] = p.getNit();
+           fila[5] = p.getCountry();
+           fila[6] = p.getId();           
            model.addRow(fila);
            
            
@@ -383,7 +385,7 @@ public class ProvidersAdminFrom extends InternalCenterFrame {
         if(!isEditing)
         {
             int result= pr.CreateNewProvider(this.txt_providerName.getText().trim(),this.txt_providerContactName.getText().trim(),
-                    this.txt_providerPhone.getText().trim(),this.txt_providerAddress.getText().trim(),this.txt_providerCountry.getText().trim());
+                    this.txt_providerPhone.getText().trim(),this.txt_providerAddress.getText().trim(),this.txt_providerCountry.getText().trim(),this.txt_providerNit.getText());
             if(result==1) 
             {
                JOptionPane.showMessageDialog(this.getContentPane(), "Proveedor guardado satisfactoriamente");
@@ -403,7 +405,7 @@ public class ProvidersAdminFrom extends InternalCenterFrame {
                 return;
             int result= pr.UpdateProvider(Integer.parseInt(this.txt_id.getText()),this.txt_providerName.getText().trim(),
                     this.txt_providerContactName.getText().trim(),this.txt_providerPhone.getText().trim(),
-                    this.txt_providerAddress.getText().trim(),this.txt_providerCountry.getText().trim());
+                    this.txt_providerAddress.getText().trim(),this.txt_providerCountry.getText().trim(),this.txt_providerNit.getText());
             if(result==1) 
             {
                JOptionPane.showMessageDialog(this.getContentPane(), "Proveedor actualizado satisfactoriamente");
@@ -457,8 +459,9 @@ public class ProvidersAdminFrom extends InternalCenterFrame {
         this.txt_providerContactName.setText(this.tbl_providers.getValueAt(providerSelected, 1).toString());
         this.txt_providerPhone.setText(this.tbl_providers.getValueAt(providerSelected, 2).toString());
         this.txt_providerAddress.setText(this.tbl_providers.getValueAt(providerSelected, 3).toString());
-        this.txt_providerCountry.setText(this.tbl_providers.getValueAt(providerSelected, 4).toString());
-        this.txt_id.setText(this.tbl_providers.getValueAt(providerSelected, 5).toString());
+        this.txt_providerNit.setText(this.tbl_providers.getValueAt(providerSelected, 4).toString());        
+        this.txt_providerCountry.setText(this.tbl_providers.getValueAt(providerSelected, 5).toString());        
+        this.txt_id.setText(this.tbl_providers.getValueAt(providerSelected, 6).toString());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

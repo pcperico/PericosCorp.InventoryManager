@@ -14,13 +14,14 @@ public class Provider implements Serializable{
 	 * @author Arturo E. Salinas
 	 */
 	public Provider(){};
-	public Provider(String name, String contactName,String phone, String address,String country)
+	public Provider(String name, String contactName,String phone, String address,String country,String nit)
 	{
 		Name=name;
 		ContactName=contactName;
 		Phone=phone;
 		Address=address;
 		Country = country;
+		Nit = nit;
 	}
 	private static final long serialVersionUID = 1L;
 	private int Id;

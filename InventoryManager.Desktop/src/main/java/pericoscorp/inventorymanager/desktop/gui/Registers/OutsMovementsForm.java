@@ -44,7 +44,7 @@ public class OutsMovementsForm extends InternalCenterFrame {
         clientRepository =(IClientRepository)ctx.getBean("IClientRepository");   
         movementService=(IMovementService)ctx.getBean("IMovementService");
         clients=new DefaultComboBoxModel(clientRepository.GetAll().toArray());        
-        clients.insertElementAt(new Provider("Seleccione un cliente", "", "", "", ""), 0);                
+        clients.insertElementAt(new Provider("Seleccione un cliente", "", "", "", "",""), 0);                
         cmb_clients.setModel(clients);
         cmb_clients.setSelectedIndex(0);
         products = new DefaultComboBoxModel(productRepository.GetAll().toArray());

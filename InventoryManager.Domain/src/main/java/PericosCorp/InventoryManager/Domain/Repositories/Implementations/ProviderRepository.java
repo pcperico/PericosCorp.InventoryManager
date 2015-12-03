@@ -43,12 +43,12 @@ public class ProviderRepository extends Repository<Provider> implements IProvide
 	 * {@inheritDoc}
 	 */
 	public int CreateNewProvider(String name, String contactName, String phone,
-			String address, String country) {
-		if(name.isEmpty() || contactName.isEmpty() || address.isEmpty() || country.isEmpty())
+			String address, String country,String nit) {
+		if(name.isEmpty() || contactName.isEmpty() || address.isEmpty() || country.isEmpty() || nit.isEmpty())
 			return 0;
 		try
 		{				
-			Provider p = new Provider(name,contactName,phone.isEmpty()?"":phone,address,country);
+			Provider p = new Provider(name,contactName,phone.isEmpty()?"":phone,address,country,nit);
 			Save(p);
 			return 1;	
 		}
@@ -63,8 +63,8 @@ public class ProviderRepository extends Repository<Provider> implements IProvide
 	 * {@inheritDoc}
 	 */
 	public int UpdateProvider(int id, String name, String contactName,
-			String phone, String address, String country) {
-		if(name.isEmpty() || contactName.isEmpty() || address.isEmpty() || country.isEmpty())
+			String phone, String address, String country,String nit) {
+		if(name.isEmpty() || contactName.isEmpty() || address.isEmpty() || country.isEmpty()|| nit.isEmpty())
 			return 0;
 		try
 		{				
@@ -74,6 +74,7 @@ public class ProviderRepository extends Repository<Provider> implements IProvide
 			p.setPhone(phone);
 			p.setAddress(address);
 			p.setCountry(country.toUpperCase());
+			p.setNit(nit);
 			SaveUpdate(p);
 			return 1;	
 		}
@@ -94,9 +95,9 @@ public class ProviderRepository extends Repository<Provider> implements IProvide
             beginOperation();
             Query qu = session.getNamedQuery("Provider.FindByName").setString("name","%"+ name+"%"); 
             @SuppressWarnings("unchecked")
-			List<Provider> roles=  qu.setResultTransformer(Transformers.aliasToBean(Provider.class)).list();            
+			List<Provider> providers=  qu.setResultTransformer(Transformers.aliasToBean(Provider.class)).list();            
             session.close();            
-            return roles;
+            return providers;
         }
         catch(Exception ex)
         {        	

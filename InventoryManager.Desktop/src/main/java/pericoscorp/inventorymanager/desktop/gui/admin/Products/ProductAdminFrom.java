@@ -26,8 +26,8 @@ import pericoscorp.inventorymanager.desktop.gui.InternalCenterFrame;
  * @author Arturo E. Salinas
  */
 public class ProductAdminFrom extends InternalCenterFrame {
-    private IProductRepository pr;
-    private IProductCategoryRepository pcr;
+    
+    private IProductCategoryRepository productCategoryRepository;
     private IMeasurementUnitRepository measurementUnitRepository;
     private IProviderRepository providerRepository;
     private IProductService productService;
@@ -41,24 +41,23 @@ public class ProductAdminFrom extends InternalCenterFrame {
      * Creates new form AdminRolesForm
      */
     public ProductAdminFrom() {
-        initComponents();
-        pr= (IProductRepository)ctx.getBean("IProductRepository");
+        initComponents();        
         productService = (IProductService)ctx.getBean("IProductService");
         measurementUnitRepository=(IMeasurementUnitRepository)ctx.getBean("IMeasurementUnitRepository");
         providerRepository = (IProviderRepository)ctx.getBean("IProviderRepository");
         productRepository = (IProductRepository)ctx.getBean("IProductRepository");
-        pcr = (IProductCategoryRepository)ctx.getBean("IProductCategoryRepository");
+        productCategoryRepository = (IProductCategoryRepository)ctx.getBean("IProductCategoryRepository");
         dtm = new DefaultTableModel();
         dtm.addColumn("Nombre");
         dtm.addColumn("Categoria");  
         dtm.addColumn("Proveedor");          
         dtm.addColumn("");        
-        categories = new DefaultComboBoxModel(pcr.GetAll().toArray());
+        categories = new DefaultComboBoxModel(productCategoryRepository.GetAll().toArray());
         categories.insertElementAt(new ProductCategory("Seleccione una categoria",""), 0);        
         this.cmb_Categories.setModel(categories);
         this.cmb_Categories.setSelectedIndex(0);
         providers = new DefaultComboBoxModel(providerRepository.GetAll().toArray());
-        providers.insertElementAt(new Provider("Seleccione un proveedor","","","",""), 0);        
+        providers.insertElementAt(new Provider("Seleccione un proveedor","","","","",""), 0);        
         this.cmb_Providers.setModel(providers);
         this.cmb_Providers.setSelectedIndex(0);
         measurements = new DefaultComboBoxModel(measurementUnitRepository.GetAll().toArray());
@@ -102,6 +101,8 @@ public class ProductAdminFrom extends InternalCenterFrame {
         cmb_Providers = new pericoscorp.swingcustomcontrolls.BaseComboBoxValidated();
         jLabel5 = new javax.swing.JLabel();
         cmb_Units = new pericoscorp.swingcustomcontrolls.BaseComboBoxValidated();
+        jLabel6 = new javax.swing.JLabel();
+        txt_salePrice = new pericoscorp.swingcustomcontrolls.NumericTextBox();
         panelButtons = new javax.swing.JPanel();
         btn_edit = new javax.swing.JButton();
         btn_new = new javax.swing.JButton();
@@ -226,6 +227,11 @@ public class ProductAdminFrom extends InternalCenterFrame {
 
         jLabel5.setText("* Unidad de Medida:");
 
+        jLabel6.setText("* Precio de Venta:");
+
+        txt_salePrice.setIsRequired(true);
+        txt_salePrice.setLength(100);
+
         javax.swing.GroupLayout panelAddProductLayout = new javax.swing.GroupLayout(panelAddProduct);
         panelAddProduct.setLayout(panelAddProductLayout);
         panelAddProductLayout.setHorizontalGroup(
@@ -244,21 +250,15 @@ public class ProductAdminFrom extends InternalCenterFrame {
                     .addComponent(lb_description1))
                 .addGap(18, 18, 18)
                 .addGroup(panelAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panelAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(txt_productBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(panelAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(txt_productDescription, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txt_productName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(24, 24, 24)
+                .addGroup(panelAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelAddProductLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(panelAddProductLayout.createSequentialGroup()
-                        .addGroup(panelAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txt_id, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(panelAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txt_productBrand, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(panelAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txt_productDescription, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                                    .addComponent(txt_productName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(24, 24, 24)
                         .addGroup(panelAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addComponent(jLabel3)
@@ -269,8 +269,18 @@ public class ProductAdminFrom extends InternalCenterFrame {
                             .addComponent(txt_productModel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cmb_Categories, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cmb_Providers, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                            .addComponent(cmb_Units, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 26, Short.MAX_VALUE))))
+                            .addComponent(cmb_Units, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(panelAddProductLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(txt_salePrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(26, 26, 26))
+            .addGroup(panelAddProductLayout.createSequentialGroup()
+                .addGap(200, 200, 200)
+                .addComponent(btn_add, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_clear, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         panelAddProductLayout.setVerticalGroup(
             panelAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,9 +312,13 @@ public class ProductAdminFrom extends InternalCenterFrame {
                     .addComponent(cmb_Units, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(panelAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txt_salePrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addGroup(panelAddProductLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_add)
                     .addComponent(btn_clear))
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         panelButtons.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
@@ -351,21 +365,22 @@ public class ProductAdminFrom extends InternalCenterFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(panelRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(20, 20, 20)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(panelAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                                .addGap(0, 686, Short.MAX_VALUE)
                                 .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lb_Find)
                                 .addGap(10, 10, 10)
                                 .addComponent(txt_find, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(315, 315, 315)
-                                .addComponent(btn_Search)))))
+                                .addComponent(btn_Search))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(panelAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(panelRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -386,7 +401,7 @@ public class ProductAdminFrom extends InternalCenterFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(panelButtons, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(panelAddProduct, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         pack();
@@ -445,7 +460,7 @@ public class ProductAdminFrom extends InternalCenterFrame {
      }
      
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        fillTable(pr.GetAll(), dtm);
+        fillTable(productRepository.GetAll(), dtm);
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btn_addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addActionPerformed
@@ -455,13 +470,14 @@ public class ProductAdminFrom extends InternalCenterFrame {
         {
             int result= productService.CreateNewProduct(GetCategoryIdSelected(), GetProviderIdSelected(), GetMeasurementUnitIdSelected(),
                     this.txt_productName.getText().trim()
-                    ,this.txt_productDescription.getText().trim(),this.txt_productBrand.getText().trim(), this.txt_productModel.getText().trim());
+                    ,this.txt_productDescription.getText().trim(),this.txt_productBrand.getText().trim(), this.txt_productModel.getText().trim(),
+                    Double.parseDouble(this.txt_salePrice.getText()));
             if(result==1) 
             {
                JOptionPane.showMessageDialog(this.getContentPane(), "Producto guardado satisfactoriamente");
                this.clearFields(btn_add.getParent());
                isEditing=false;
-               fillTable(pr.GetAll(), dtm);
+               fillTable(productRepository.GetAll(), dtm);
             }       
             else if(result==0)
                 JOptionPane.showMessageDialog(this.getContentPane(), "Debe completar los campos obligatorios (*)");
@@ -475,13 +491,14 @@ public class ProductAdminFrom extends InternalCenterFrame {
             {
                 int result= productService.UpdateProduct(Integer.parseInt(this.txt_id.getText()), GetCategoryIdSelected(), GetProviderIdSelected(), GetMeasurementUnitIdSelected(),
                     this.txt_productName.getText().trim()
-                    ,this.txt_productDescription.getText().trim(),this.txt_productBrand.getText().trim(), this.txt_productModel.getText().trim());
+                    ,this.txt_productDescription.getText().trim(),this.txt_productBrand.getText().trim(), this.txt_productModel.getText().trim(),
+                    Double.parseDouble(this.txt_salePrice.getText()));
                 if(result==1) 
                 {
                    JOptionPane.showMessageDialog(this.getContentPane(), "Producto modificado satisfactoriamente");
                    this.clearFields(btn_add.getParent());
                    isEditing=false;
-                   fillTable(pr.GetAll(), dtm);
+                   fillTable(productRepository.GetAll(), dtm);
                 }       
                 else if(result==0)
                     JOptionPane.showMessageDialog(this.getContentPane(), "Debe completar los campos obligatorios (*)");
@@ -497,7 +514,7 @@ public class ProductAdminFrom extends InternalCenterFrame {
     }//GEN-LAST:event_btn_clearActionPerformed
 
     private void btn_SearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SearchActionPerformed
-        fillTableSearch(pr.FilterByName(this.txt_find.getText()), dtm);
+        fillTableSearch(productRepository.FilterByName(this.txt_find.getText()), dtm);
     }//GEN-LAST:event_btn_SearchActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
@@ -534,6 +551,7 @@ public class ProductAdminFrom extends InternalCenterFrame {
             this.txt_productBrand.setText(p.getBrand());
             this.txt_productDescription.setText(p.getDescription());
             this.txt_productModel.setText(p.getModel());
+            this.txt_salePrice.setText(String.valueOf( p.getPriceSale()));
             for(int i=0;i<categories.getSize();i++)
             {
                 if(((ProductCategory)categories.getElementAt(i)).getId()== p.getProductCategory().getId())
@@ -576,6 +594,7 @@ public class ProductAdminFrom extends InternalCenterFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lb_Find;
     private javax.swing.JLabel lb_description;
@@ -592,5 +611,6 @@ public class ProductAdminFrom extends InternalCenterFrame {
     private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_productDescription;
     private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_productModel;
     private pericoscorp.swingcustomcontrolls.BaseTextBoxValidated txt_productName;
+    private pericoscorp.swingcustomcontrolls.NumericTextBox txt_salePrice;
     // End of variables declaration//GEN-END:variables
 }

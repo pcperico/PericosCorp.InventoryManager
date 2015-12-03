@@ -11,6 +11,7 @@
    <property column="Model" name="Model" type="string"  />
    <property column="PriceCost" name="PriceCost" type="double"  />
    <property column="Stock" name="Stock" type="double"  />
+   <property column="PriceSale" name="PriceSale" type="double"  />
    <many-to-one name="ProductCategory" class="PericosCorp.InventoryManager.Domain.Entities.ProductCategory" fetch="select" lazy="false">
             <column name="ProductCategory_Id" not-null="true" />
    </many-to-one>

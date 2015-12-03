@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
- <class name="PericosCorp.InventoryManager.Domain.Entities.SaleDetail" table="saledetail">    
+ <class name="PericosCorp.InventoryManager.Domain.Entities.PriceSaleHistory" table="pricesalehistory">    
    <id column="Id" name="Id" >
      <generator class="native" />
    </id> 
-   <property column="Quantity" name="Quantity" type="double" />
-   <property column="Price" name="Price" type="double" />   
-   <many-to-one name="Sale" class="PericosCorp.InventoryManager.Domain.Entities.Sale" fetch="select" lazy="false">
-            <column name="Sale_Id" not-null="true" />
-   </many-to-one>   
+   <property column="PriceSale" name="PriceSale" type="double" />   
+   <property column="BeginDate" name="BeginDate" type="date"  />
+   <property column="EndDate" name="EndDate" type="date"  />
+   
    <many-to-one name="Product" class="PericosCorp.InventoryManager.Domain.Entities.Product" fetch="select" lazy="false">
             <column name="Product_Id" not-null="true" />
    </many-to-one>   
- </class> 
+
+ </class>
 </hibernate-mapping>

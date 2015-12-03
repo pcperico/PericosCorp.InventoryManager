@@ -41,7 +41,8 @@ public class ClientRepository extends Repository<Client> implements IClientRepos
 			Date birthDate, String gender, String phone, String address) {
 		if(firtsName.isEmpty() || lastName.isEmpty() || birthDate==null)
 			return 0;
-		try{
+		try{			
+			Date date = new Date();
 			Client client = new Client();
 			client.setFirstName(firtsName);
 			client.setLastName(lastName);
@@ -49,6 +50,7 @@ public class ClientRepository extends Repository<Client> implements IClientRepos
 			client.setGender(gender);
 			client.setPhone(phone);
 			client.setAddress(address);
+			client.setClientSince(date);
 			Save(client);
 			return 1;
 		}

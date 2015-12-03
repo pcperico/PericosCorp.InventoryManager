@@ -95,4 +95,10 @@ public class Client implements Serializable {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		return df.format(BirthDate);
 	}
+	
+	public String getClientSinceString()
+	{
+		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		return df.format(ClientSince);
+	}
 }

@@ -8,18 +8,7 @@ package PericosCorp.InventoryManager.Domain;
 
 
 
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-
-import PericosCorp.InventoryManager.Domain.Dtos.ProductDto;
-import PericosCorp.InventoryManager.Domain.Entities.Employee;
-import PericosCorp.InventoryManager.Domain.Repositories.Implementations.BranchRepository;
-import PericosCorp.InventoryManager.Domain.Repositories.Implementations.EmployeeRepository;
 import PericosCorp.InventoryManager.Domain.Repositories.Implementations.MovementRepository;
-import PericosCorp.InventoryManager.Domain.Repositories.Implementations.ProductRepository;
-import PericosCorp.InventoryManager.Domain.Services.Implementations.EmployeeService;
-import PericosCorp.InventoryManager.Domain.Services.Implementations.KardexService;
 
 /**
  * Hello world!

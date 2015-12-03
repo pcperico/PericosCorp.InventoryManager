@@ -26,7 +26,7 @@ public interface IProductService {
 	 * 0 if instances is incomplete therefore isn't saved,  
 	 * -1 if an error happens
 	 */
-	public int CreateNewProduct(int productCategoryId, int providerId,int measurementId,String name,String description, String brand,String model);
+	public int CreateNewProduct(int productCategoryId, int providerId,int measurementId,String name,String description, String brand,String model,double salePrice);
 	
 	/**
 	 * Method to update a  product
@@ -43,7 +43,7 @@ public interface IProductService {
 	 * 0 if instances is incomplete therefore isn't saved,  
 	 * -1 if an error happens
 	 */
-	public int UpdateProduct(int productId,int productCategoryId, int providerId,int measurementId,String name,String description, String brand,String model);
+	public int UpdateProduct(int productId,int productCategoryId, int providerId,int measurementId,String name,String description, String brand,String model,double salePrice);
 	
 	public void UpdatePriceCost(int productId,double quantity, double newPriceCost);
 }
