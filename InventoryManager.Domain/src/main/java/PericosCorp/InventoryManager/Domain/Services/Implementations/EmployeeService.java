@@ -85,7 +85,7 @@ public class EmployeeService extends Repository<Employee> implements IEmployeeSe
            session.save(employee);
 	   	   for(int i=0;i<roleIds.length;i++)
 	   	   {			
-	   			employeeRoles.add(new EmployeeRole(employee,roleRepository.Get(roleIds[i]),date,true));
+	   			employeeRoles.add(new EmployeeRole(employee,(Role) session.get(Role.class, roleIds[i]),date,true));
 	   	   }
 	   	   employee.setEmployeeRoles(employeeRoles);
 	   	   session.saveOrUpdate(employee);
@@ -97,7 +97,10 @@ public class EmployeeService extends Repository<Employee> implements IEmployeeSe
             return -1;
         }finally 
         { 
-            finishOperation();
+        	session.flush();
+    		tx.commit();
+    		session.clear();
+    		session.close();
         } 		
         return 1;
 	}
@@ -137,7 +140,7 @@ public class EmployeeService extends Repository<Employee> implements IEmployeeSe
 	   	   for(int i=0;i<roleIds.length;i++)
 	   	   {	
                add=true;
-	   		   Role r = roleRepository.Get(roleIds[i]);
+	   		   Role r = (Role)session.get(Role.class,roleIds[i]);
 	   		   for(EmployeeRole er :employee.getEmployeeRoles())
 	   		   {
 	   			   if(er.getRole().getId()==r.getId())
@@ -155,14 +158,18 @@ public class EmployeeService extends Repository<Employee> implements IEmployeeSe
 	   		   employee.setEmployeeRoles(employeeRoles);
 	   	   session.saveOrUpdate(employee);
         }catch(Exception he) 
-        {         	
+        {         
+        	session.flush();
         	tx.rollback();
 	        session.close(); 
 	        loggerService.LogSever(he); 
             return -1;
         }finally 
         { 
-            finishOperation();
+        	session.flush();
+    		tx.commit();
+    		session.clear();
+    		session.close();
         } 		
         return 1;
 	}

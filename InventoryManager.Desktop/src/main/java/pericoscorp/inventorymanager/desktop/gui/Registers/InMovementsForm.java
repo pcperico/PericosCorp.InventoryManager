@@ -8,6 +8,7 @@ package pericoscorp.inventorymanager.desktop.gui.Registers;
 
 import PericosCorp.InventoryManager.Domain.Dtos.MovementDetailDto;
 import PericosCorp.InventoryManager.Domain.Dtos.ProductDto;
+import PericosCorp.InventoryManager.Domain.Entities.Product;
 import PericosCorp.InventoryManager.Domain.Entities.Provider;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProductRepository;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProviderRepository;
@@ -96,8 +97,6 @@ public class InMovementsForm extends InternalCenterFrame {
         setToolTipText("");
         setMinimumSize(new java.awt.Dimension(600, 800));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
-            }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
@@ -110,6 +109,8 @@ public class InMovementsForm extends InternalCenterFrame {
             }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameOpened(evt);
+            }
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
         });
 
@@ -307,6 +308,11 @@ public class InMovementsForm extends InternalCenterFrame {
         });
 
         btn_clear.setText("Limpiar");
+        btn_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -433,6 +439,7 @@ public class InMovementsForm extends InternalCenterFrame {
         if(this.tbl_details.getSelectedRow()==-1)
         {
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar el detalle a modificar");
+            isEditing=false;
         }
         else
         {
@@ -447,6 +454,7 @@ public class InMovementsForm extends InternalCenterFrame {
                     break;
                 }
             }
+            isEditing=true;
         }
     }
      
@@ -475,11 +483,12 @@ public class InMovementsForm extends InternalCenterFrame {
                 JOptionPane.showMessageDialog(rootPane,"Debe introducir el detalle de la compra.");
             int res = movementService.SaveMovement(ConvertToDate(this.txt_date.getText()), this.txt_numRef.getText().trim(),GetProviderIdSelected(),0, details);
             if(res==1)
-            {
+            {                
                 JOptionPane.showMessageDialog(rootPane,"Entrada guardada satisfactoriamente");
                 clearFields(panelBuy);
                 clearFields(detailPanel);
                 buyDetails.setRowCount(0);
+                details.clear();
             }
             else if(res==0)
                 JOptionPane.showMessageDialog(rootPane,"Debe completar los campos obligatorios (*)");                
@@ -493,15 +502,18 @@ public class InMovementsForm extends InternalCenterFrame {
     }//GEN-LAST:event_cmb_providersActionPerformed
 
     private void btn_removeDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removeDetailActionPerformed
+        if(this.tbl_details.getSelectedRow()==-1)
+        {
+            JOptionPane.showMessageDialog(rootPane,"Debe seleccionar el detalle a eliminar");
+            return;
+        }
         details.remove(this.tbl_details.getSelectedRow());
         buyDetails.removeRow(this.tbl_details.getSelectedRow());
         System.out.println(details.size());
-        
     }//GEN-LAST:event_btn_removeDetailActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-        FillDetailToEdit();
-        isEditing=true;
+        FillDetailToEdit();        
     }//GEN-LAST:event_btn_editActionPerformed
 
     private void tbl_detailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_detailsMouseClicked
@@ -512,6 +524,14 @@ public class InMovementsForm extends InternalCenterFrame {
             isEditing=false;
         }
     }//GEN-LAST:event_tbl_detailsMouseClicked
+
+    private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
+        clearFields(panelBuy);
+        clearFields(detailPanel);
+        buyDetails.setRowCount(0);
+        details.clear();
+        isEditing=false;
+    }//GEN-LAST:event_btn_clearActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_addDetail;

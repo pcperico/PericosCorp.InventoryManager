@@ -14,7 +14,9 @@ import java.util.Set;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import PericosCorp.Framework.Core.NumberHelpers;
 import PericosCorp.Framework.Core.Services.Interfaces.ILoggerService;
+import PericosCorp.Framework.Data.HibernateUtil;
 import PericosCorp.Framework.Data.Repository;
 import PericosCorp.InventoryManager.Domain.Dtos.MovementDetailDto;
 import PericosCorp.InventoryManager.Domain.Entities.Client;
@@ -22,22 +24,11 @@ import PericosCorp.InventoryManager.Domain.Entities.Movement;
 import PericosCorp.InventoryManager.Domain.Entities.MovementDetail;
 import PericosCorp.InventoryManager.Domain.Entities.Product;
 import PericosCorp.InventoryManager.Domain.Entities.Provider;
-import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IClientRepository;
-import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProductRepository;
-import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProviderRepository;
 import PericosCorp.InventoryManager.Domain.Services.Interfaces.IMovementService;
 
 public class MovementService extends Repository<Movement> implements IMovementService {
-	private IProductRepository productRepository;
-	private IProviderRepository providerRepository;
-	private IClientRepository clientRepository;
 	public MovementService()
-	{		
-		@SuppressWarnings("resource")
-		ApplicationContext ctx = new ClassPathXmlApplicationContext("DomainServicesContext.xml");	
-		productRepository =(IProductRepository)ctx.getBean("IProductRepository");		
-		providerRepository=(IProviderRepository)ctx.getBean("IProviderRepository");
-		clientRepository=(IClientRepository)ctx.getBean("IClientRepository");
+	{	
 		setLoggerService();
 		
 	}
@@ -61,39 +52,44 @@ public class MovementService extends Repository<Movement> implements IMovementSe
 			return 0;
 		try
 		{		
-			beginOperation();
+			session = HibernateUtil.getSessionFactory().openSession();
+            tx = session.beginTransaction();
 			Movement movement = null;
 			if(providerId>0)
 			{
-				Provider provider= providerRepository.Get(providerId);
+				Provider provider= (Provider)session.get(Provider.class,providerId);
 				movement = new Movement(date,numRef,provider);	
 			}
 			else if(clientId>0)
 			{
-				Client client= clientRepository.Get(clientId);
+				Client client=(Client) session.get(Client.class, clientId);
 				movement = new Movement(date,numRef,client);	
 			}
 			Set<MovementDetail> movementDetails=new HashSet<MovementDetail>(details.size());						
 			session.save(movement);
 			for(MovementDetailDto md:details)
 			{
-				Product prod = productRepository.Get(md.getProductId());				
+				Product prod =(Product) session.get(Product.class,md.getProductId());				
 				double actualStock= prod.getPriceCost()*prod.getStock();
 				double stockToAdd=md.getPrice()*md.getQuantity();
 				double newTotal=prod.getStock()+md.getQuantity();
 				prod.setStock(newTotal);
-				prod.setPriceCost((actualStock+stockToAdd)/prod.getStock());				
-				session.update(prod);
+				prod.setPriceCost(NumberHelpers.RoundTo2Decimals(((actualStock+stockToAdd)/prod.getStock())));				
+				session.saveOrUpdate(prod);
 				movementDetails.add(new MovementDetail(movement,prod,md.getQuantity(),md.getPrice()));				
 			}			
 			movement.setMovementDetails(movementDetails);
 			session.saveOrUpdate(movement);
-			finishOperation();
+			session.flush();
+    		tx.commit();
+    		session.clear();
+    		session.close();
 			return 1;
 				
 		}
 		catch(Exception ex)
 		{
+			session.flush();
 		    tx.rollback();
 		    session.close(); 
             loggerService.LogSever(ex);

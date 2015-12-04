@@ -8,7 +8,15 @@ package PericosCorp.InventoryManager.Domain;
 
 
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import PericosCorp.InventoryManager.Domain.Dtos.MovementDetailDto;
+import PericosCorp.InventoryManager.Domain.Entities.Product;
 import PericosCorp.InventoryManager.Domain.Repositories.Implementations.MovementRepository;
+import PericosCorp.InventoryManager.Domain.Repositories.Implementations.ProductRepository;
+import PericosCorp.InventoryManager.Domain.Services.Implementations.MovementService;
 
 /**
  * Hello world!
@@ -18,24 +26,17 @@ public class App
 {
     public static void main( String[] args )
     {
-//    	EmployeeRepository rr = new EmployeeRepository();
-//    	Employee r = rr.Get(2);    	
-//        System.out.println( "Hello World! "+r.getFullName()+" "+r.getBranch().getName()+" "+r.getEmployeeRoles().size()+ " "+r.getEmployeeStatus().getName());
-    	
-    	/*ProductRepository pr = new ProductRepository();
-    	List<ProductDto> list = pr.FilterByProvider(1);
-    	System.out.println(list.size());*/
-    	
-    	MovementRepository mr = new MovementRepository();
-    	mr.GetByProduct(2);
-    	
-    	/*BranchRepository br = new BranchRepository();
-    	br.CreateNewBranch("Branch Test", "addr Test", "phone test");*/    	
-    	
-    	
-    	
-    	/*EmployeeService es = new EmployeeService();
-    	es.CreateNewEmployee("firstName", "lastName", new Date(), "phone", "email", "position", new Date(),new Date(), "address", "userName", "password", new int[]{1,2,3}, 1);
-    	System.out.println("done");*/  	
+    	 List<MovementDetailDto>details = new ArrayList<MovementDetailDto>();
+    	 MovementDetailDto detail = new MovementDetailDto();
+         detail.setPrice(23);
+         detail.setProductId(11);
+         detail.setQuantity(10);
+         details.add(detail);    	 
+    	MovementService movementService = new MovementService();
+    	ProductRepository productRepository = new ProductRepository();
+    	int res = movementService.SaveMovement(new Date(), "1323456",6,0, details);
+    	Product p = productRepository.Get(11);
+    	System.out.println(p.getStock());
+
     }
 }

@@ -26,8 +26,11 @@
     <return-scalar column="Id" type="int"/>
     <return-scalar column="Name" type="string"/>
     <return-scalar column="Category" type="string"/>
-    <return-scalar column="Provider" type="string"/>    
-    	select  p.Id , p.Name, pc.Name as Category, prov.Name as Provider
+    <return-scalar column="Provider" type="string"/>
+    <return-scalar column="Stock" type="double"/>
+    <return-scalar column="PriceCost" type="double"/>    
+    <return-scalar column="PriceSale" type="double"/>    
+    	select  p.Id , p.Name, pc.Name as Category, prov.Name as Provider, p.Stock,p.PriceCost,p.PriceSale
 		from product p inner join productcategory pc
 			on pc.id = p.ProductCategory_Id
     		inner join provider prov
@@ -40,7 +43,10 @@
     <return-scalar column="Name" type="string"/>
     <return-scalar column="Category" type="string"/>
     <return-scalar column="Provider" type="string"/>    
-    	select  p.Id , p.Name, pc.Name as Category, prov.Name as Provider
+    <return-scalar column="Stock" type="double"/>
+    <return-scalar column="PriceCost" type="double"/>    
+    <return-scalar column="PriceSale" type="double"/>    
+    	select  p.Id , p.Name, pc.Name as Category, prov.Name as Provider, p.Stock,p.PriceCost,p.PriceSale
 		from product p inner join productcategory pc
 			on pc.id = p.ProductCategory_Id
     		inner join provider prov

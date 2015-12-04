@@ -95,20 +95,24 @@ public class ProductService extends Repository<Product> implements IProductServi
 			Provider prov= providerRepository.Get(providerId);
 			MeasurementUnit mu = measurementUnitRepository.Get(measurementId);		
 			Product p = Get(productId);
+			double stock= p.getStock();
+			double costPrice=p.getPriceCost();
 			p.setBrand(brand);
 			p.setDescription(description);
 			p.setMeasurementUnit(mu);			
 			p.setModel(model);
 			p.setName(name);
 			p.setProductCategory(pc);
-			p.setProvider(prov);			
+			p.setProvider(prov);	
+			p.setStock(stock);
+			p.setPriceCost(costPrice);
 			if(p.getPriceSale() != salePrice)
 			{
 				PriceSaleHistory priceSaleHistory = new PriceSaleHistory(p,salePrice,new Date());
 				priceSaleHistoryRepository.Save(priceSaleHistory);
 			}
 			p.setPriceSale(salePrice);			
-			Update(p);			
+			SaveUpdate(p);			
 			return 1;
 		}
 		catch(Exception ex)

@@ -54,6 +54,32 @@ public class ProductDto implements Serializable{
 	private String Name;
 	private String Category;
 	private String Provider;
+	private double PriceCost;
+	public double getPriceCost() {
+		return PriceCost;
+	}
+
+	public void setPriceCost(double priceCost) {
+		PriceCost = priceCost;
+	}
+
+	public double getStock() {
+		return Stock;
+	}
+
+	public void setStock(double stock) {
+		Stock = stock;
+	}
+
+	public double getPriceSale() {
+		return PriceSale;
+	}
+
+	public void setPriceSale(double priceSale) {
+		PriceSale = priceSale;
+	}
+	private double Stock;
+	private double PriceSale;
 	
 	@Override
 	public String toString()
