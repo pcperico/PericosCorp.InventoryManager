@@ -27,5 +27,6 @@
   <mapping resource="Movement.hbm.xml"/>
   <mapping resource="MovementDetail.hbm.xml"/>
   <mapping resource="PriceSaleHistory.hbm.xml"/>
+  <mapping resource="InitialInventory.hbm.xml"/>
 </session-factory>
 </hibernate-configuration>

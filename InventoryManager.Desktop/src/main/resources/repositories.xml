@@ -21,4 +21,5 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="ISaleService" class="PericosCorp.InventoryManager.Domain.Services.Implementations.SaleService" />-->
     <bean id="IMovementService" class="PericosCorp.InventoryManager.Domain.Services.Implementations.MovementService" />
     <bean id="IClientRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.ClientRepository" />
+    <bean id="IMovementRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.MovementRepository" />
 </beans>

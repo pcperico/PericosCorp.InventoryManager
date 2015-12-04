@@ -11,6 +11,7 @@ import org.pushingpixels.substance.api.skin.SubstanceBusinessBlueSteelLookAndFee
 import pericoscorp.inventorymanager.desktop.gui.Admin.Products.CategoriesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.Registers.Clients.ClientsModuleForm;
 import pericoscorp.inventorymanager.desktop.gui.Registers.InMovementsForm;
+import pericoscorp.inventorymanager.desktop.gui.Registers.KardexForm;
 import pericoscorp.inventorymanager.desktop.gui.Registers.OutsMovementsForm;
 import pericoscorp.inventorymanager.desktop.gui.admin.branches.BranchesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.employees.EmployeesAdminFrom;
@@ -60,6 +61,7 @@ public class Principal extends javax.swing.JFrame {
         InMovementsMenu = new javax.swing.JMenuItem();
         OutMovementsMenu = new javax.swing.JMenuItem();
         ClientsMenu = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(600, 800));
@@ -170,6 +172,14 @@ public class Principal extends javax.swing.JFrame {
         });
         MovementsMenu.add(ClientsMenu);
 
+        jMenuItem1.setText("Kardex");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        MovementsMenu.add(jMenuItem1);
+
         menuBar.add(MovementsMenu);
 
         setJMenuBar(menuBar);
@@ -254,6 +264,12 @@ public class Principal extends javax.swing.JFrame {
         aesf.show();
     }//GEN-LAST:event_StatusEmployeesMenuActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        KardexForm kf = new KardexForm();
+        this.desktopPane.add(kf);
+        kf.show();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -282,6 +298,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem RolesMenu;
     private javax.swing.JMenuItem StatusEmployeesMenu;
     private javax.swing.JDesktopPane desktopPane;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem menu_Categories;
     private javax.swing.JMenu menu_Products;

@@ -101,8 +101,6 @@ public class OutsMovementsForm extends InternalCenterFrame {
         setToolTipText("");
         setMinimumSize(new java.awt.Dimension(600, 800));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
-            }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
@@ -115,6 +113,8 @@ public class OutsMovementsForm extends InternalCenterFrame {
             }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameOpened(evt);
+            }
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
         });
 
@@ -312,6 +312,11 @@ public class OutsMovementsForm extends InternalCenterFrame {
         });
 
         btn_clear.setText("Limpiar");
+        btn_clear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -429,6 +434,7 @@ public class OutsMovementsForm extends InternalCenterFrame {
         if(this.tbl_details.getSelectedRow()==-1)
         {
             JOptionPane.showMessageDialog(rootPane, "Debe seleccionar el detalle a modificar");
+            isEditing=false;
         }
         else
         {
@@ -443,6 +449,7 @@ public class OutsMovementsForm extends InternalCenterFrame {
                     break;
                 }
             }
+            isEditing=true;
         }
     }
      
@@ -476,6 +483,7 @@ public class OutsMovementsForm extends InternalCenterFrame {
                 clearFields(panelBuy);
                 clearFields(detailPanel);
                 saleDetails.setRowCount(0);
+                details.clear();
             }
             else if(res==0)
                 JOptionPane.showMessageDialog(rootPane,"Debe completar los campos obligatorios (*)");                
@@ -489,13 +497,18 @@ public class OutsMovementsForm extends InternalCenterFrame {
     }//GEN-LAST:event_cmb_clientsActionPerformed
 
     private void btn_removeDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removeDetailActionPerformed
+         if(this.tbl_details.getSelectedRow()==-1)
+        {
+            JOptionPane.showMessageDialog(rootPane,"Debe seleccionar el detalle a eliminar");
+            return;
+        }
         details.remove(this.tbl_details.getSelectedRow());
         saleDetails.removeRow(this.tbl_details.getSelectedRow());
+        System.out.println(details.size());
     }//GEN-LAST:event_btn_removeDetailActionPerformed
 
     private void btn_editActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_editActionPerformed
-        FillDetailToEdit();
-        isEditing=true;
+        FillDetailToEdit();     
     }//GEN-LAST:event_btn_editActionPerformed
 
     private void tbl_detailsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_detailsMouseClicked
@@ -506,6 +519,14 @@ public class OutsMovementsForm extends InternalCenterFrame {
             isEditing=false;
         }
     }//GEN-LAST:event_tbl_detailsMouseClicked
+
+    private void btn_clearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clearActionPerformed
+        clearFields(panelBuy);
+        clearFields(detailPanel);
+        saleDetails.setRowCount(0);
+        details.clear();
+        isEditing=false;
+    }//GEN-LAST:event_btn_clearActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_addDetail;

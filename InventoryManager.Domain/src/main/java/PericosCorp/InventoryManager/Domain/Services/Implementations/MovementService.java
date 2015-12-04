@@ -6,11 +6,13 @@
 */
 package PericosCorp.InventoryManager.Domain.Services.Implementations;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.Query;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -20,6 +22,7 @@ import PericosCorp.Framework.Data.HibernateUtil;
 import PericosCorp.Framework.Data.Repository;
 import PericosCorp.InventoryManager.Domain.Dtos.MovementDetailDto;
 import PericosCorp.InventoryManager.Domain.Entities.Client;
+import PericosCorp.InventoryManager.Domain.Entities.InitialInventory;
 import PericosCorp.InventoryManager.Domain.Entities.Movement;
 import PericosCorp.InventoryManager.Domain.Entities.MovementDetail;
 import PericosCorp.InventoryManager.Domain.Entities.Product;
@@ -69,14 +72,26 @@ public class MovementService extends Repository<Movement> implements IMovementSe
 			session.save(movement);
 			for(MovementDetailDto md:details)
 			{
-				Product prod =(Product) session.get(Product.class,md.getProductId());				
+				Product prod =(Product) session.get(Product.class,md.getProductId());
 				double actualStock= prod.getPriceCost()*prod.getStock();
 				double stockToAdd=md.getPrice()*md.getQuantity();
 				double newTotal=prod.getStock()+md.getQuantity();
 				prod.setStock(newTotal);
 				prod.setPriceCost(NumberHelpers.RoundTo2Decimals(((actualStock+stockToAdd)/prod.getStock())));				
 				session.saveOrUpdate(prod);
-				movementDetails.add(new MovementDetail(movement,prod,md.getQuantity(),md.getPrice()));				
+				movementDetails.add(new MovementDetail(movement,prod,md.getQuantity(),md.getPrice()));			
+				String hql ="select ii \n"+
+						"from InitialInventory as ii  \n"+											    
+						"where ii.Product.Id="+prod.getId()+"\n"+
+						"And ii.Year="+Calendar.getInstance().get(Calendar.YEAR);
+				Query query = session.createQuery(hql);
+				@SuppressWarnings("unchecked")
+				List<InitialInventory> initialInventoryList = query.list();
+				if(initialInventoryList.isEmpty())
+				{
+					InitialInventory initialInventory = new InitialInventory(prod, Calendar.getInstance().get(Calendar.YEAR), new Date(), prod.getStock(), prod.getPriceCost());
+					session.save(initialInventory);
+				}
 			}			
 			movement.setMovementDetails(movementDetails);
 			session.saveOrUpdate(movement);
@@ -97,6 +112,8 @@ public class MovementService extends Repository<Movement> implements IMovementSe
 		}		
 		
 	}
+	
+	
 	/**
 	 *
 	 * @author Arturo E. Salinas

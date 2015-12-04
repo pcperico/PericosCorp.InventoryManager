@@ -9,6 +9,7 @@ package PericosCorp.InventoryManager.Domain.Repositories.Interfaces;
 import java.util.List;
 
 import PericosCorp.Framework.Data.IRepository;
+import PericosCorp.InventoryManager.Domain.Dtos.MovementDetailDto;
 import PericosCorp.InventoryManager.Domain.Entities.Movement;
 
 public interface IMovementRepository extends IRepository<Movement> {
@@ -18,4 +19,6 @@ public interface IMovementRepository extends IRepository<Movement> {
 	 */
 	
 	List<Movement>GetByProduct(int productId);
+	
+	List<MovementDetailDto>GetMovementsByProductAndYear(int productId,int year);
 }

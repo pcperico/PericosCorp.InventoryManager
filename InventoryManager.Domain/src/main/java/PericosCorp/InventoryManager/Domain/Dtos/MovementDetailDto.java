@@ -7,6 +7,7 @@
 package PericosCorp.InventoryManager.Domain.Dtos;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class MovementDetailDto implements Serializable{
 	/**
@@ -17,6 +18,17 @@ public class MovementDetailDto implements Serializable{
 	 *
 	 * @author Arturo E. Salinas
 	 */
+	public MovementDetailDto()
+	{}
+	
+	public MovementDetailDto(int productId, double quantity, double price, int movementType,Date operationDate)
+	{
+		ProductId = productId;
+		Quantity = quantity;
+		Price=price;
+		MovementType = movementType;
+		OperationDate = operationDate;
+	}
 	private int ProductId;	
 	
 	public int getProductId() {
@@ -39,4 +51,20 @@ public class MovementDetailDto implements Serializable{
 	}
 	private double Quantity;
 	private double Price;
+	private int MovementType;
+	private Date OperationDate;
+	public Date getOperationDate() {
+		return OperationDate;
+	}
+
+	public void setOperationDate(Date operationDate) {
+		OperationDate = operationDate;
+	}
+
+	public int getMovementType() {
+		return MovementType;
+	}
+	public void setMovementType(int movementType) {
+		MovementType = movementType;
+	}
 }
