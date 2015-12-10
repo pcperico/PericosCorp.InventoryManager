@@ -6,6 +6,7 @@
  */
 package pericoscorp.inventorymanager.desktop.gui.Registers;
 
+import PericosCorp.Framework.Core.NumberHelpers;
 import PericosCorp.Framework.Core.StringsHelpers;
 import PericosCorp.InventoryManager.Domain.Dtos.MovementDetailDto;
 import PericosCorp.InventoryManager.Domain.Entities.InitialInventory;
@@ -173,33 +174,37 @@ public class KardexForm extends InternalCenterFrame {
         model.addColumn("Movimiento");
         model.addColumn("Cantidad");
         model.addColumn("Precio Unitario");
+        model.addColumn("Total");
         InitialInventory initialInventory = initialInventoryRepository.FindByProductAndYear(GetSelectedProduct(), Calendar.getInstance().get(Calendar.YEAR));
-        Object[] row = new Object[4];
+        Object[] row = new Object[5];
         if(initialInventory!=null)
         {        
             row[0] =StringsHelpers.GetStringofDate(initialInventory.getCreationDate());
             row[1] = "Inventario Inicial";
             row[2] = initialInventory.getStock();
             row[3] = initialInventory.getPriceCost();
+            row[4]=  NumberHelpers.RoundTo2Decimals(initialInventory.getStock() * initialInventory.getPriceCost());
             model.addRow(row);
             for (MovementDetailDto md : movements) {
                 if(md.getProductId() == GetSelectedProduct() && md.getMovementId() != initialInventory.getMovement_Id() )
                 {
-                    row = new Object[4];
+                    //row = new Object[4];
                     row[0] = StringsHelpers.GetStringofDate(md.getOperationDate());
                     row[1] = md.getMovementType() == 1 ? "Venta" : "Compra";
                     row[2] = md.getQuantity();
                     row[3] = md.getPrice();
+                    row[4] = NumberHelpers.RoundTo2Decimals(md.getQuantity()*md.getPrice());
                     model.addRow(row);
                 }
             }
         }        
         Product p= productRepository.Get(GetSelectedProduct());
-        row = new Object[4];
+        //row = new Object[4];
         row[0] = StringsHelpers.GetStringofDate(new Date());
         row[1] = "Saldo";
         row[2] = p.getStock();
         row[3] = p.getPriceCost();
+        row[4] = NumberHelpers.RoundTo2Decimals(p.getStock()*p.getPriceCost());
         model.addRow(row);
         this.tbl_movements.setModel(model);
     }

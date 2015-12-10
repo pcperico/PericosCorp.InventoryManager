@@ -72,14 +72,25 @@ public class MovementService extends Repository<Movement> implements IMovementSe
 			session.save(movement);			
 			for(MovementDetailDto md:details)
 			{
-				Product prod =(Product) session.get(Product.class,md.getProductId());			
-				double actualStock= prod.getPriceCost()*prod.getStock();
-				double stockToAdd=md.getPrice()*md.getQuantity();
-				double newTotal=prod.getStock()+md.getQuantity();
-				prod.setStock(newTotal);
-				prod.setPriceCost(NumberHelpers.RoundTo2Decimals(((actualStock+stockToAdd)/prod.getStock())));				
+				Product prod =(Product) session.get(Product.class,md.getProductId());
+				if(movement.getProvider()!=null)
+				{
+					double actualStock= prod.getPriceCost()*prod.getStock();
+					double stockToAdd=md.getPrice()*md.getQuantity();
+					double newTotal=prod.getStock()+md.getQuantity();
+					prod.setStock(newTotal);
+					prod.setPriceCost(NumberHelpers.RoundTo2Decimals(((actualStock+stockToAdd)/prod.getStock())));
+					movementDetails.add(new MovementDetail(movement,prod,md.getQuantity(),md.getPrice(),0));
+				}
+				else if(movement.getClient()!=null)
+				{										
+					double newTotal=prod.getStock()-md.getQuantity();
+					prod.setStock(newTotal);					
+					movementDetails.add(new MovementDetail(movement,prod,md.getQuantity(),prod.getPriceCost(),md.getPrice()));
+				}
+								
 				session.saveOrUpdate(prod);
-				movementDetails.add(new MovementDetail(movement,prod,md.getQuantity(),md.getPrice()));			
+							
 				String hql ="select ii \n"+
 						"from InitialInventory as ii  \n"+											    
 						"where ii.Product.Id="+prod.getId()+"\n"+

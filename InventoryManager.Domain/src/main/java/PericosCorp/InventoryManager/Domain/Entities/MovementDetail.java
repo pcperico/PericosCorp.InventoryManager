@@ -20,12 +20,13 @@ public class MovementDetail implements Serializable{
 	public MovementDetail()
 	{}
 	
-	public MovementDetail(Movement movement,Product product, double quantity, double price)
+	public MovementDetail(Movement movement,Product product, double quantity, double price,double priceSale)
 	{
 		Movement = movement;
 		Product = product;
 		Quantity=quantity;
 		Price=price;
+		PriceSale = priceSale;
 	}
 	private int Id;
 	public int getId() {
@@ -62,4 +63,12 @@ public class MovementDetail implements Serializable{
 	private Product Product;
 	private double Quantity;
 	private double Price;
+	private double PriceSale;
+	public double getPriceSale() {
+		return PriceSale;
+	}
+
+	public void setPriceSale(double priceSale) {
+		PriceSale = priceSale;
+	}
 }
