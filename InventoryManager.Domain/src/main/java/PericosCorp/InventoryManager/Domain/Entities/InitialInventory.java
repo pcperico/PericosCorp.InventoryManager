@@ -21,13 +21,14 @@ public class InitialInventory implements Serializable {
 	public InitialInventory()
 	{}
 	
-	public InitialInventory (Product product, int year, Date creationDate, double stock,double priceCost)
+	public InitialInventory (Product product, int year, Date creationDate, double stock,double priceCost,int movementId)
 	{
 		Product = product;
 		Year= year;
 		CreationDate = creationDate;
 		Stock = stock;
 		PriceCost = priceCost;
+		Movement_Id = movementId;
 	}
 	private int Id;
 	public int getId() {
@@ -71,4 +72,12 @@ public class InitialInventory implements Serializable {
 	private Date CreationDate;
 	private double Stock;
 	private double PriceCost;
+	private int Movement_Id;
+	public int getMovement_Id() {
+		return Movement_Id;
+	}
+
+	public void setMovement_Id(int movement_Id) {
+		Movement_Id = movement_Id;
+	}
 }

@@ -6,8 +6,6 @@
 */
 package PericosCorp.InventoryManager.Domain.Repositories.Interfaces;
 
-import java.util.List;
-
 import PericosCorp.Framework.Data.IRepository;
 import PericosCorp.InventoryManager.Domain.Entities.InitialInventory;
 
@@ -16,5 +14,5 @@ public interface IInitialInventoryRepository extends IRepository<InitialInventor
 	 *
 	 * @author Arturo E. Salinas
 	 */
-	public List<InitialInventory>FindByProductAndYear(int productId, int year);
+	public InitialInventory FindByProductAndYear(int productId, int year);
 }

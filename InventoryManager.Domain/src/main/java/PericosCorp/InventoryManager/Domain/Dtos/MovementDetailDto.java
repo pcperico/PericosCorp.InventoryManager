@@ -21,13 +21,14 @@ public class MovementDetailDto implements Serializable{
 	public MovementDetailDto()
 	{}
 	
-	public MovementDetailDto(int productId, double quantity, double price, int movementType,Date operationDate)
+	public MovementDetailDto(int productId, double quantity, double price, int movementType,Date operationDate,int movementId)
 	{
 		ProductId = productId;
 		Quantity = quantity;
 		Price=price;
 		MovementType = movementType;
 		OperationDate = operationDate;
+		MovementId = movementId;
 	}
 	private int ProductId;	
 	
@@ -53,6 +54,15 @@ public class MovementDetailDto implements Serializable{
 	private double Price;
 	private int MovementType;
 	private Date OperationDate;
+	private int MovementId;
+	public int getMovementId() {
+		return MovementId;
+	}
+
+	public void setMovementId(int movementId) {
+		MovementId = movementId;
+	}
+
 	public Date getOperationDate() {
 		return OperationDate;
 	}

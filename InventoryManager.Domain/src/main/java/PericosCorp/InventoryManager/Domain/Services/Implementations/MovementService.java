@@ -69,10 +69,10 @@ public class MovementService extends Repository<Movement> implements IMovementSe
 				movement = new Movement(date,numRef,client);	
 			}
 			Set<MovementDetail> movementDetails=new HashSet<MovementDetail>(details.size());						
-			session.save(movement);
+			session.save(movement);			
 			for(MovementDetailDto md:details)
 			{
-				Product prod =(Product) session.get(Product.class,md.getProductId());
+				Product prod =(Product) session.get(Product.class,md.getProductId());			
 				double actualStock= prod.getPriceCost()*prod.getStock();
 				double stockToAdd=md.getPrice()*md.getQuantity();
 				double newTotal=prod.getStock()+md.getQuantity();
@@ -89,7 +89,7 @@ public class MovementService extends Repository<Movement> implements IMovementSe
 				List<InitialInventory> initialInventoryList = query.list();
 				if(initialInventoryList.isEmpty())
 				{
-					InitialInventory initialInventory = new InitialInventory(prod, Calendar.getInstance().get(Calendar.YEAR), new Date(), prod.getStock(), prod.getPriceCost());
+					InitialInventory initialInventory = new InitialInventory(prod, Calendar.getInstance().get(Calendar.YEAR), new Date(), prod.getStock(), prod.getPriceCost(),movement.getId());
 					session.save(initialInventory);
 				}
 			}			

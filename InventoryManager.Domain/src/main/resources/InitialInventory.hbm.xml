@@ -8,7 +8,8 @@
    <property column="PriceCost" name="PriceCost" type="double"  />
    <property column="Stock" name="Stock" type="double"  />
    <property column="Year" name="Year" type="integer"  />
-   <property column="CreationDate" name="CreationDate" type="date"  />   
+   <property column="CreationDate" name="CreationDate" type="date"  />
+   <property column="Movement_Id" name="Movement_Id" type="integer"  />   
    <many-to-one name="Product" class="PericosCorp.InventoryManager.Domain.Entities.Product" fetch="select" lazy="false">
             <column name="Product_Id" not-null="true" />
    </many-to-one>

@@ -13,7 +13,9 @@ import java.util.Date;
 import java.util.List;
 
 import PericosCorp.InventoryManager.Domain.Dtos.MovementDetailDto;
+import PericosCorp.InventoryManager.Domain.Entities.InitialInventory;
 import PericosCorp.InventoryManager.Domain.Entities.Product;
+import PericosCorp.InventoryManager.Domain.Repositories.Implementations.InitialInventoryRepository;
 import PericosCorp.InventoryManager.Domain.Repositories.Implementations.MovementRepository;
 import PericosCorp.InventoryManager.Domain.Repositories.Implementations.ProductRepository;
 import PericosCorp.InventoryManager.Domain.Services.Implementations.MovementService;
@@ -26,17 +28,9 @@ public class App
 {
     public static void main( String[] args )
     {
-    	 List<MovementDetailDto>details = new ArrayList<MovementDetailDto>();
-    	 MovementDetailDto detail = new MovementDetailDto();
-         detail.setPrice(23);
-         detail.setProductId(11);
-         detail.setQuantity(10);
-         details.add(detail);    	 
-    	MovementService movementService = new MovementService();
-    	ProductRepository productRepository = new ProductRepository();
-    	int res = movementService.SaveMovement(new Date(), "1323456",6,0, details);
-    	Product p = productRepository.Get(11);
-    	System.out.println(p.getStock());
+    	 InitialInventoryRepository ii = new InitialInventoryRepository();    	 
+    	
+    	System.out.println(ii.FindByProductAndYear(11, 2015).getStock());
 
     }
 }
