@@ -8,7 +8,7 @@ package pericoscorp.inventorymanager.desktop.gui;
 
 import javax.swing.UIManager;
 import org.pushingpixels.substance.api.skin.SubstanceBusinessBlueSteelLookAndFeel;
-import pericoscorp.inventorymanager.desktop.gui.Admin.Products.CategoriesAdminFrom;
+import pericoscorp.inventorymanager.desktop.gui.admin.Products.CategoriesAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.Registers.Clients.ClientsModuleForm;
 import pericoscorp.inventorymanager.desktop.gui.Registers.InMovementsForm;
 import pericoscorp.inventorymanager.desktop.gui.Registers.KardexForm;
@@ -20,6 +20,7 @@ import pericoscorp.inventorymanager.desktop.gui.admin.Products.ProductAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.employees.status.AdminEmployeeStatusForm;
 import pericoscorp.inventorymanager.desktop.gui.admin.providers.ProvidersAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.roles.AdminRolesForm;
+import pericoscorp.inventorymanager.desktop.gui.reports.GenerateReports;
 
 /**
  *
@@ -47,6 +48,7 @@ public class Principal extends javax.swing.JFrame {
         desktopPane = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
         AdminMenu = new javax.swing.JMenu();
+        menu_Providers = new javax.swing.JMenuItem();
         RolesMenu = new javax.swing.JMenuItem();
         BranchesMenu = new javax.swing.JMenuItem();
         EmployeesMenu = new javax.swing.JMenu();
@@ -56,12 +58,13 @@ public class Principal extends javax.swing.JFrame {
         menu_Categories = new javax.swing.JMenuItem();
         menu_ProductsSubMenu = new javax.swing.JMenuItem();
         menu_units = new javax.swing.JMenuItem();
-        menu_Providers = new javax.swing.JMenuItem();
         MovementsMenu = new javax.swing.JMenu();
         InMovementsMenu = new javax.swing.JMenuItem();
         OutMovementsMenu = new javax.swing.JMenuItem();
         ClientsMenu = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
+        ReportsMenu = new javax.swing.JMenu();
+        ProvidersReport = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setSize(new java.awt.Dimension(600, 800));
@@ -70,6 +73,14 @@ public class Principal extends javax.swing.JFrame {
 
         AdminMenu.setMnemonic('f');
         AdminMenu.setText("Administración");
+
+        menu_Providers.setText("Proveedores");
+        menu_Providers.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menu_ProvidersActionPerformed(evt);
+            }
+        });
+        AdminMenu.add(menu_Providers);
 
         RolesMenu.setMnemonic('o');
         RolesMenu.setText("Roles");
@@ -136,14 +147,6 @@ public class Principal extends javax.swing.JFrame {
 
         AdminMenu.add(menu_Products);
 
-        menu_Providers.setText("Proveedores");
-        menu_Providers.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                menu_ProvidersActionPerformed(evt);
-            }
-        });
-        AdminMenu.add(menu_Providers);
-
         menuBar.add(AdminMenu);
 
         MovementsMenu.setText("Registros");
@@ -181,6 +184,18 @@ public class Principal extends javax.swing.JFrame {
         MovementsMenu.add(jMenuItem1);
 
         menuBar.add(MovementsMenu);
+
+        ReportsMenu.setText("Reportes");
+
+        ProvidersReport.setText("Proveedores");
+        ProvidersReport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ProvidersReportActionPerformed(evt);
+            }
+        });
+        ReportsMenu.add(ProvidersReport);
+
+        menuBar.add(ReportsMenu);
 
         setJMenuBar(menuBar);
 
@@ -270,6 +285,12 @@ public class Principal extends javax.swing.JFrame {
         kf.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void ProvidersReportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ProvidersReportActionPerformed
+        GenerateReports gr = new GenerateReports();
+        this.desktopPane.add(gr);
+        gr.show();
+    }//GEN-LAST:event_ProvidersReportActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -295,6 +316,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem InMovementsMenu;
     private javax.swing.JMenu MovementsMenu;
     private javax.swing.JMenuItem OutMovementsMenu;
+    private javax.swing.JMenuItem ProvidersReport;
+    private javax.swing.JMenu ReportsMenu;
     private javax.swing.JMenuItem RolesMenu;
     private javax.swing.JMenuItem StatusEmployeesMenu;
     private javax.swing.JDesktopPane desktopPane;

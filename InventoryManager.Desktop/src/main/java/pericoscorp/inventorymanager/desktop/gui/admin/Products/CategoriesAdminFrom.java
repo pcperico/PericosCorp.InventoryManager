@@ -4,7 +4,7 @@
      * Copyright(c) 2015 PericosCorp Company, Inc.  All Rights Reserved.
      * This software is the proprietary information of PericosCorp Company.
  */
-package pericoscorp.inventorymanager.desktop.gui.Admin.Products;
+package pericoscorp.inventorymanager.desktop.gui.admin.Products;
 import PericosCorp.InventoryManager.Domain.Dtos.CategoryProductDto;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProductCategoryRepository;
 import java.util.List;
