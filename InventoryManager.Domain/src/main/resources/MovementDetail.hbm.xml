@@ -6,7 +6,7 @@
      <generator class="native" />
    </id> 
    <property column="Quantity" name="Quantity" type="double" />
-   <property column="Price" name="Price" type="double" />
+   <property column="PriceCost" name="PriceCost" type="double" />
    <property column="PriceSale" name="PriceSale" type="double" />   
    <many-to-one name="Movement" class="PericosCorp.InventoryManager.Domain.Entities.Movement" fetch="select" lazy="false">
             <column name="Movement_Id" not-null="true" />

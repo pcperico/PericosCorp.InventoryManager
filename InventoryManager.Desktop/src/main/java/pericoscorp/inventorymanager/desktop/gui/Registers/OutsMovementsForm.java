@@ -101,6 +101,8 @@ public class OutsMovementsForm extends InternalCenterFrame {
         setToolTipText("");
         setMinimumSize(new java.awt.Dimension(600, 800));
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
             public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
@@ -113,8 +115,6 @@ public class OutsMovementsForm extends InternalCenterFrame {
             }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
                 formInternalFrameOpened(evt);
-            }
-            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
             }
         });
 
@@ -131,12 +131,6 @@ public class OutsMovementsForm extends InternalCenterFrame {
         txt_date.setIsRequired(true);
 
         jLabel2.setText("* Cliente:");
-
-        cmb_clients.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmb_clientsActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout panelBuyLayout = new javax.swing.GroupLayout(panelBuy);
         panelBuy.setLayout(panelBuyLayout);
@@ -458,17 +452,20 @@ public class OutsMovementsForm extends InternalCenterFrame {
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btn_addDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addDetailActionPerformed
-        if(isEditing)
+        if(ValidRequiredFields(this.detailPanel))
         {
-            AddDetailEdited();
-            clearFields(detailPanel);        
+            if(isEditing)
+            {
+                AddDetailEdited();
+                clearFields(detailPanel);
+                isEditing=false;
+            }
+            else
+            {
+                AddDetail();
+                clearFields(detailPanel);        
+            }
         }
-        else
-        {
-            AddDetail();
-            clearFields(detailPanel);        
-        }
-        
     }//GEN-LAST:event_btn_addDetailActionPerformed
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
@@ -476,25 +473,25 @@ public class OutsMovementsForm extends InternalCenterFrame {
         {
             if(details.isEmpty())
                 JOptionPane.showMessageDialog(rootPane,"Debe introducir el detalle de la venta.");
-            int res = movementService.SaveMovement(ConvertToDate(this.txt_date.getText()), this.txt_numRef.getText().trim(),0,GetClientIdSelected(), details);
-            if(res==1)
+            int x = JOptionPane.showConfirmDialog(rootPane, "Seguro que desea guardar este regsitro?");
+            if(x== JOptionPane.YES_OPTION)
             {
-                JOptionPane.showMessageDialog(rootPane,"Venta guardada satisfactoriamente");
-                clearFields(panelBuy);
-                clearFields(detailPanel);
-                saleDetails.setRowCount(0);
-                details.clear();
+                int res = movementService.SaveMovement(ConvertToDate(this.txt_date.getText()), this.txt_numRef.getText().trim(),0,GetClientIdSelected(), details);
+                if(res==1)
+                {
+                    JOptionPane.showMessageDialog(rootPane,"Venta guardada satisfactoriamente");
+                    clearFields(panelBuy);
+                    clearFields(detailPanel);
+                    saleDetails.setRowCount(0);
+                    details.clear();
+                }
+                else if(res==0)
+                    JOptionPane.showMessageDialog(rootPane,"Debe completar los campos obligatorios (*)");                
+                else 
+                    JOptionPane.showMessageDialog(rootPane, "Ocurrio un error mientras se guardaba la venta, favor reintente o contactar al administrador del sistema");
             }
-            else if(res==0)
-                JOptionPane.showMessageDialog(rootPane,"Debe completar los campos obligatorios (*)");                
-            else 
-                JOptionPane.showMessageDialog(rootPane, "Ocurrio un error mientras se guardaba la venta, favor reintente o contactar al administrador del sistema");
         }
     }//GEN-LAST:event_btn_saveActionPerformed
-
-    private void cmb_clientsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmb_clientsActionPerformed
-
-    }//GEN-LAST:event_cmb_clientsActionPerformed
 
     private void btn_removeDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_removeDetailActionPerformed
          if(this.tbl_details.getSelectedRow()==-1)

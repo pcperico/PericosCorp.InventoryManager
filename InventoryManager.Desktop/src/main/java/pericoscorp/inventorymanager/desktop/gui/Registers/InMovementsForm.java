@@ -8,7 +8,6 @@ package pericoscorp.inventorymanager.desktop.gui.Registers;
 
 import PericosCorp.InventoryManager.Domain.Dtos.MovementDetailDto;
 import PericosCorp.InventoryManager.Domain.Dtos.ProductDto;
-import PericosCorp.InventoryManager.Domain.Entities.Product;
 import PericosCorp.InventoryManager.Domain.Entities.Provider;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProductRepository;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProviderRepository;
@@ -463,17 +462,20 @@ public class InMovementsForm extends InternalCenterFrame {
     }//GEN-LAST:event_formInternalFrameOpened
 
     private void btn_addDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addDetailActionPerformed
-        if(isEditing)
+        if(ValidRequiredFields(this.detailPanel))
         {
-            AddDetailEdited();
-            clearFields(detailPanel);        
+            if(isEditing)
+            {
+                AddDetailEdited();
+                clearFields(detailPanel);   
+                isEditing=false;
+            }
+            else
+            {
+                AddDetail();
+                clearFields(detailPanel);        
+            }
         }
-        else
-        {
-            AddDetail();
-            clearFields(detailPanel);        
-        }
-        
     }//GEN-LAST:event_btn_addDetailActionPerformed
 
     private void btn_saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_saveActionPerformed
@@ -481,19 +483,23 @@ public class InMovementsForm extends InternalCenterFrame {
         {
             if(details.isEmpty())
                 JOptionPane.showMessageDialog(rootPane,"Debe introducir el detalle de la compra.");
-            int res = movementService.SaveMovement(ConvertToDate(this.txt_date.getText()), this.txt_numRef.getText().trim(),GetProviderIdSelected(),0, details);
-            if(res==1)
-            {                
-                JOptionPane.showMessageDialog(rootPane,"Entrada guardada satisfactoriamente");
-                clearFields(panelBuy);
-                clearFields(detailPanel);
-                buyDetails.setRowCount(0);
-                details.clear();
+            int x = JOptionPane.showConfirmDialog(rootPane, "Desea guardar este registro?");
+            if(x==JOptionPane.YES_OPTION)
+            {
+                int res = movementService.SaveMovement(ConvertToDate(this.txt_date.getText()), this.txt_numRef.getText().trim(),GetProviderIdSelected(),0, details);
+                if(res==1)
+                {                
+                    JOptionPane.showMessageDialog(rootPane,"Entrada guardada satisfactoriamente");
+                    clearFields(panelBuy);
+                    clearFields(detailPanel);
+                    buyDetails.setRowCount(0);
+                    details.clear();
+                }
+                else if(res==0)
+                    JOptionPane.showMessageDialog(rootPane,"Debe completar los campos obligatorios (*)");                
+                else 
+                    JOptionPane.showMessageDialog(rootPane, "Ocurrio un error mientras se guardaba la entrada, favor reintente o contactar al administrador del sistema");
             }
-            else if(res==0)
-                JOptionPane.showMessageDialog(rootPane,"Debe completar los campos obligatorios (*)");                
-            else 
-                JOptionPane.showMessageDialog(rootPane, "Ocurrio un error mientras se guardaba la entrada, favor reintente o contactar al administrador del sistema");
         }
     }//GEN-LAST:event_btn_saveActionPerformed
 

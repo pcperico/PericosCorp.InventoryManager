@@ -91,7 +91,7 @@ public class MovementService extends Repository<Movement> implements IMovementSe
 								
 				session.saveOrUpdate(prod);
 							
-				String hql ="select ii \n"+
+				/*String hql ="select ii \n"+
 						"from InitialInventory as ii  \n"+											    
 						"where ii.Product.Id="+prod.getId()+"\n"+
 						"And ii.Year="+Calendar.getInstance().get(Calendar.YEAR);
@@ -102,7 +102,7 @@ public class MovementService extends Repository<Movement> implements IMovementSe
 				{
 					InitialInventory initialInventory = new InitialInventory(prod, Calendar.getInstance().get(Calendar.YEAR), new Date(), prod.getStock(), prod.getPriceCost(),movement.getId());
 					session.save(initialInventory);
-				}
+				}*/
 			}			
 			movement.setMovementDetails(movementDetails);
 			session.saveOrUpdate(movement);
@@ -115,7 +115,7 @@ public class MovementService extends Repository<Movement> implements IMovementSe
 		}
 		catch(Exception ex)
 		{
-			session.flush();
+			//session.flush();
 		    tx.rollback();
 		    session.close(); 
             loggerService.LogSever(ex);

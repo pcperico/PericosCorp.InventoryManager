@@ -88,7 +88,7 @@ public class MovementRepository extends Repository<Movement> implements IMovemen
 				for(MovementDetail md : m.getMovementDetails())
 				{
 					//movementType 1 sale, 2 buy
-					res.add(new MovementDetailDto(md.getProduct().getId(),md.getQuantity(),md.getPrice(),md.getMovement().getProvider()==null?1:2,md.getMovement().getDate(),m.getId()));
+					res.add(new MovementDetailDto(md.getProduct().getId(),md.getQuantity(),md.getPriceCost(),md.getMovement().getProvider()==null?1:2,md.getMovement().getDate(),m.getId()));
 				}
 			}
 			

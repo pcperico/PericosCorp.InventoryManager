@@ -25,7 +25,7 @@ public class MovementDetail implements Serializable{
 		Movement = movement;
 		Product = product;
 		Quantity=quantity;
-		Price=price;
+		PriceCost=price;
 		PriceSale = priceSale;
 	}
 	private int Id;
@@ -53,16 +53,16 @@ public class MovementDetail implements Serializable{
 	public void setQuantity(double quantity) {
 		Quantity = quantity;
 	}
-	public double getPrice() {
-		return Price;
+	public double getPriceCost() {
+		return PriceCost;
 	}
-	public void setPrice(double price) {
-		Price = price;
+	public void setPriceCost(double price) {
+		PriceCost = price;
 	}
 	private Movement Movement;
 	private Product Product;
 	private double Quantity;
-	private double Price;
+	private double PriceCost;
 	private double PriceSale;
 	public double getPriceSale() {
 		return PriceSale;
