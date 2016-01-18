@@ -20,8 +20,7 @@ import PericosCorp.InventoryManager.Domain.Entities.Movement;
 import PericosCorp.InventoryManager.Domain.Entities.MovementDetail;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IMovementRepository;
 
-public class MovementRepository extends Repository<Movement> implements IMovementRepository {
-
+public class MovementRepository extends Repository<Movement> implements IMovementRepository {	
 	public MovementRepository()
 	{
 		setLoggerService();		
@@ -34,8 +33,8 @@ public class MovementRepository extends Repository<Movement> implements IMovemen
 		{
 			@SuppressWarnings("resource")
 			ApplicationContext ctx = new ClassPathXmlApplicationContext("DomainContext.xml");
-			loggerService = (ILoggerService)ctx.getBean("ILoggerServiceDomain");
-		}
+			loggerService = (ILoggerService)ctx.getBean("ILoggerServiceDomain");			
+		}		
 	}
 	/**
 	 * {@inheritDoc}
@@ -50,14 +49,7 @@ public class MovementRepository extends Repository<Movement> implements IMovemen
 						"where md.Product.Id="+productId;
 			Query query = session.createQuery(hql);
 			@SuppressWarnings("unchecked")
-			List<Movement> results = query.list();
-			for(Movement m : results)
-			{
-				for(MovementDetail md : m.getMovementDetails())
-				{
-					System.out.println(md.getQuantity());
-				}
-			}
+			List<Movement> results = query.list();	
 			finishOperation();
 			return results;	
 		}
@@ -70,7 +62,7 @@ public class MovementRepository extends Repository<Movement> implements IMovemen
 		
 	}
 	
-	public List<MovementDetailDto>GetMovementsByProductAndYear(int productId,int year)
+	public List<MovementDetailDto>GetMovementsByProductAndYear(int productId,int year)	
 	{
 		try
 		{
@@ -78,7 +70,9 @@ public class MovementRepository extends Repository<Movement> implements IMovemen
 			String hql ="select m \n"+
 						"from Movement as m \n"+
 						"   join m.MovementDetails as md \n"+					    
-						"where md.Product.Id="+productId;
+						"where md.Product.Id="+productId +
+						"\n and year(m.Date)="+year +"\n"+
+						"order by m.Id, md.Id desc";
 			Query query = session.createQuery(hql);
 			@SuppressWarnings("unchecked")
 			List<Movement> results = query.list();
@@ -88,11 +82,11 @@ public class MovementRepository extends Repository<Movement> implements IMovemen
 				for(MovementDetail md : m.getMovementDetails())
 				{
 					//movementType 1 sale, 2 buy
-					res.add(new MovementDetailDto(md.getProduct().getId(),md.getQuantity(),md.getPriceCost(),md.getMovement().getProvider()==null?1:2,md.getMovement().getDate(),m.getId()));
+					if(md.getProduct().getId()==productId)
+						res.add(new MovementDetailDto(md.getProduct().getId(),md.getQuantity(),md.getPriceCost(),md.getMovement().getProvider()==null?1:2,md.getMovement().getDate(),m.getId()));
 				}
-			}
-			
-			finishOperation();
+			}	
+			finishOperation();			
 			return res;	
 		}
 		catch(Exception ex)

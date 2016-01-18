@@ -18,6 +18,7 @@ import pericoscorp.inventorymanager.desktop.gui.admin.employees.EmployeesAdminFr
 import pericoscorp.inventorymanager.desktop.gui.admin.Products.MeasurementUnitAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.Products.ProductAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.employees.status.AdminEmployeeStatusForm;
+import pericoscorp.inventorymanager.desktop.gui.admin.initialInventory.CloseInventory;
 import pericoscorp.inventorymanager.desktop.gui.admin.providers.ProvidersAdminFrom;
 import pericoscorp.inventorymanager.desktop.gui.admin.roles.AdminRolesForm;
 import pericoscorp.inventorymanager.desktop.gui.reports.GenerateReports;
@@ -58,6 +59,7 @@ public class Principal extends javax.swing.JFrame {
         menu_Categories = new javax.swing.JMenuItem();
         menu_ProductsSubMenu = new javax.swing.JMenuItem();
         menu_units = new javax.swing.JMenuItem();
+        closeInventory_menu = new javax.swing.JMenuItem();
         MovementsMenu = new javax.swing.JMenu();
         InMovementsMenu = new javax.swing.JMenuItem();
         OutMovementsMenu = new javax.swing.JMenuItem();
@@ -146,6 +148,14 @@ public class Principal extends javax.swing.JFrame {
         menu_Products.add(menu_units);
 
         AdminMenu.add(menu_Products);
+
+        closeInventory_menu.setText("Cierre Inventario");
+        closeInventory_menu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                closeInventory_menuActionPerformed(evt);
+            }
+        });
+        AdminMenu.add(closeInventory_menu);
 
         menuBar.add(AdminMenu);
 
@@ -291,6 +301,12 @@ public class Principal extends javax.swing.JFrame {
         gr.show();
     }//GEN-LAST:event_ProvidersReportActionPerformed
 
+    private void closeInventory_menuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeInventory_menuActionPerformed
+        CloseInventory ci = new CloseInventory();
+        this.desktopPane.add(ci);
+        ci.show();
+    }//GEN-LAST:event_closeInventory_menuActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -320,6 +336,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenu ReportsMenu;
     private javax.swing.JMenuItem RolesMenu;
     private javax.swing.JMenuItem StatusEmployeesMenu;
+    private javax.swing.JMenuItem closeInventory_menu;
     private javax.swing.JDesktopPane desktopPane;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuBar menuBar;

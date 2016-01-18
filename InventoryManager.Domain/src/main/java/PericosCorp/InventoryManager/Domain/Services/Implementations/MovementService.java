@@ -6,13 +6,11 @@
 */
 package PericosCorp.InventoryManager.Domain.Services.Implementations;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.Query;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -22,7 +20,6 @@ import PericosCorp.Framework.Data.HibernateUtil;
 import PericosCorp.Framework.Data.Repository;
 import PericosCorp.InventoryManager.Domain.Dtos.MovementDetailDto;
 import PericosCorp.InventoryManager.Domain.Entities.Client;
-import PericosCorp.InventoryManager.Domain.Entities.InitialInventory;
 import PericosCorp.InventoryManager.Domain.Entities.Movement;
 import PericosCorp.InventoryManager.Domain.Entities.MovementDetail;
 import PericosCorp.InventoryManager.Domain.Entities.Product;

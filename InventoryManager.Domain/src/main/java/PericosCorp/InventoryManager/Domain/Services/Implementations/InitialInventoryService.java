@@ -6,19 +6,21 @@
 */
 package PericosCorp.InventoryManager.Domain.Services.Implementations;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.hibernate.Query;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import PericosCorp.Framework.Core.NumberHelpers;
 import PericosCorp.Framework.Core.Services.Interfaces.ILoggerService;
-import PericosCorp.Framework.Data.HibernateUtil;
 import PericosCorp.Framework.Data.Repository;
+import PericosCorp.InventoryManager.Domain.Dtos.MovementDetailDto;
 import PericosCorp.InventoryManager.Domain.Entities.InitialInventory;
 import PericosCorp.InventoryManager.Domain.Entities.Product;
+import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IInitialInventoryRepository;
+import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IMovementRepository;
+import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProductRepository;
 import PericosCorp.InventoryManager.Domain.Services.Interfaces.IInitialInventoryService;
 
 public class InitialInventoryService extends Repository<InitialInventory> implements IInitialInventoryService {
@@ -26,9 +28,22 @@ public class InitialInventoryService extends Repository<InitialInventory> implem
 	 *
 	 * @author Arturo E. Salinas
 	 */
-	
+	private IProductRepository productRepository;
+	private IMovementRepository movementRepository;
+	private IInitialInventoryRepository initialInventoryRepository;
 	public InitialInventoryService()
 	{
+		@SuppressWarnings("resource")
+		ApplicationContext ctx = new ClassPathXmlApplicationContext("DomainServicesContext.xml");
+		productRepository =(IProductRepository)ctx.getBean("IProductRepository");
+		movementRepository=(IMovementRepository)ctx.getBean("IMovementRepository");
+		initialInventoryRepository = (IInitialInventoryRepository)ctx.getBean("IInitialInventoryRepository");
+		setLoggerService();
+	}
+	
+	@Override
+	public void setLoggerService()
+	{		
 		if(loggerService==null)
 		{
 			@SuppressWarnings("resource")
@@ -40,39 +55,32 @@ public class InitialInventoryService extends Repository<InitialInventory> implem
 	/**
 	 * {@inheritDoc}
 	 */
-	public void CloseYear(int year, int productId) {
-		try{
-			session = HibernateUtil.getSessionFactory().openSession();
-	        tx = session.beginTransaction();
-	        Product prod = (Product)session.get(Product.class, productId);
-	        String hql ="select ii \n"+
-					"from InitialInventory as ii  \n"+											    
-					"where ii.Product.Id="+prod.getId()+"\n"+
-					"And ii.Year="+Calendar.getInstance().get(Calendar.YEAR);
-			Query query = session.createQuery(hql);
-			@SuppressWarnings("unchecked")
-			List<InitialInventory> initialInventoryList = query.list();
-			if(initialInventoryList.isEmpty())
-			{
-				InitialInventory initialInventory = new InitialInventory(prod, Calendar.getInstance().get(Calendar.YEAR), new Date(), prod.getStock(), prod.getPriceCost(),0);
-				session.save(initialInventory);
-			}
-			else
-			{
-				for(InitialInventory ii: initialInventoryList)
-				{
-					ii.setCreationDate( new Date());
-					ii.setStock(prod.getStock());
-					ii.setPriceCost(prod.getPriceCost());
-					session.update(ii);
-					break;
-				}
-			}
-			session.flush();
-			tx.commit();
-    		session.clear();
-    		session.close();
-	        
+	public void CloseYear(int year) {
+		try{		
+	        List<Product> products = productRepository.GetAll();
+	        for(Product prod:products)
+	        {
+	        	InitialInventory initialInventory =initialInventoryRepository.FindByProductAndYear(prod.getId(), year-1);
+	        	List<MovementDetailDto>movements = movementRepository.GetMovementsByProductAndYear(prod.getId(), year);
+	        	double Stock=initialInventory==null? 0:initialInventory.getStock();
+	        	double PriceCost=initialInventory==null? 0:initialInventory.getPriceCost();	    
+	        	double aux=0;	        		        		
+	        	for(MovementDetailDto mov:movements)
+		        {
+		        	if(mov.getMovementType()==2)
+		        	{		        			
+		        		aux= (Stock * PriceCost)+(mov.getQuantity()*mov.getPrice());
+		        		Stock+=mov.getQuantity();
+		        		PriceCost = NumberHelpers.RoundTo2Decimals(aux / Stock);
+		        	}
+		        	else
+		        	{
+		        		Stock-= mov.getQuantity();
+		        	}		        		
+		        }
+				initialInventory = new InitialInventory(prod, year+1, new Date(), Stock, PriceCost,0);
+				Save(initialInventory);
+	        }
 		}
 		catch(Exception ex)
 		{
@@ -83,6 +91,58 @@ public class InitialInventoryService extends Repository<InitialInventory> implem
 		}
 		
 		
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<MovementDetailDto> GenerateKardex(int productId, int year) {
+		try
+		{	
+		
+			List<MovementDetailDto> res = movementRepository.GetMovementsByProductAndYear(productId, year);
+			InitialInventory initialInventory = initialInventoryRepository.FindByProductAndYear(productId, year);
+			double stock=initialInventory!=null ? initialInventory.getStock():0;
+			double priceCost=initialInventory!=null ?initialInventory.getPriceCost():0;			
+			double aux=0;	        		        		
+        	for(MovementDetailDto mov:res)
+	        {
+	        	if(mov.getMovementType()==2)
+	        	{		        			
+	        		aux= (stock * priceCost)+(mov.getQuantity()*mov.getPrice());
+	        		stock+=mov.getQuantity();
+	        		priceCost = NumberHelpers.RoundTo2Decimals(aux / stock);
+	        	}
+	        	else
+	        	{
+	        		stock-= mov.getQuantity();
+	        	}		        		
+	        }
+        	if(initialInventory!=null)
+			{
+				MovementDetailDto initial=new MovementDetailDto();
+				initial.setMovementType(0); //0 denotes iniventory initial
+				initial.setPrice(initialInventory.getPriceCost());
+				initial.setQuantity(initialInventory.getStock());
+				initial.setProductId(initialInventory.getProduct().getId());
+				initial.setOperationDate(initialInventory.getCreationDate());
+				res.add(0,initial);
+			}
+        	MovementDetailDto balance = new MovementDetailDto();
+        	balance.setMovementType(3); //3 denotes balance
+        	balance.setOperationDate(null);
+        	balance.setPrice(priceCost);
+        	balance.setQuantity(stock);
+        	balance.setProductId(productId);
+        	res.add(balance);			
+			return res;	
+		}
+		catch(Exception ex)
+		{
+			loggerService.LogSever(ex);
+			manageException(ex);
+			return null;
+		}		
 	}
 	
 }

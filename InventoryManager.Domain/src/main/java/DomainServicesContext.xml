@@ -18,5 +18,6 @@
 	<bean id="IProductRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.ProductRepository" />
 	<bean id="IClientRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.ClientRepository" />
 	<bean id="IMovementRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.MovementRepository" />
-	<bean id="IPriceSaleHistoryRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.PriceSaleHistoryRepository" />	
+	<bean id="IPriceSaleHistoryRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.PriceSaleHistoryRepository" />
+	<bean id="IInitialInventoryRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.InitialInventoryRepository" />	
 </beans>

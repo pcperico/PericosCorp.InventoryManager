@@ -21,4 +21,5 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="IClientRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.ClientRepository" />
     <bean id="IMovementRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.MovementRepository" />
     <bean id="IInitialInventoryRepository" class="PericosCorp.InventoryManager.Domain.Repositories.Implementations.InitialInventoryRepository" />
+    <bean id="IInitialInventoryService" class="PericosCorp.InventoryManager.Domain.Services.Implementations.InitialInventoryService" />
 </beans>

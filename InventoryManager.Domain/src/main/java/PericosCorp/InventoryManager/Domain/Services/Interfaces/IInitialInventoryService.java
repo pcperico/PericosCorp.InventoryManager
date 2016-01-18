@@ -6,11 +6,16 @@
 */
 package PericosCorp.InventoryManager.Domain.Services.Interfaces;
 
+import java.util.List;
+
+import PericosCorp.InventoryManager.Domain.Dtos.MovementDetailDto;
+
 public interface IInitialInventoryService {
 	/**
 	 *
 	 * @author Arturo E. Salinas
 	 */
 	
-	public void CloseYear(int year,int productId);
+	public void CloseYear(int year);
+	public List<MovementDetailDto>GenerateKardex(int productId, int year);
 }

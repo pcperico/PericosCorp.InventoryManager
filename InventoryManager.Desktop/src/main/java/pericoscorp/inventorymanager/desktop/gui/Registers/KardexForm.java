@@ -9,13 +9,10 @@ package pericoscorp.inventorymanager.desktop.gui.Registers;
 import PericosCorp.Framework.Core.NumberHelpers;
 import PericosCorp.Framework.Core.StringsHelpers;
 import PericosCorp.InventoryManager.Domain.Dtos.MovementDetailDto;
-import PericosCorp.InventoryManager.Domain.Entities.InitialInventory;
 import PericosCorp.InventoryManager.Domain.Entities.Product;
-import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IInitialInventoryRepository;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IMovementRepository;
 import PericosCorp.InventoryManager.Domain.Repositories.Interfaces.IProductRepository;
-import java.util.Calendar;
-import java.util.Date;
+import PericosCorp.InventoryManager.Domain.Services.Interfaces.IInitialInventoryService;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -29,19 +26,17 @@ public class KardexForm extends InternalCenterFrame {
 
     /**
      * Creates new form KardexForm
-     */
-    private IMovementRepository movementRepository;
-    private IProductRepository productRepository;
-    private IInitialInventoryRepository initialInventoryRepository;
+     */    
+    private final IProductRepository productRepository;
+    private final IInitialInventoryService initialInventoryService;
     private DefaultTableModel model;
-    private DefaultComboBoxModel products;
+    private final DefaultComboBoxModel products;
 
     public KardexForm() {
-        initComponents();
-        movementRepository = (IMovementRepository) ctx.getBean("IMovementRepository");
+        initComponents();       
         productRepository = (IProductRepository) ctx.getBean("IProductRepository");
-        initialInventoryRepository = (IInitialInventoryRepository)ctx.getBean("IInitialInventoryRepository");
-        products=new DefaultComboBoxModel(productRepository.GetAll().toArray());
+        initialInventoryService = (IInitialInventoryService) ctx.getBean("IInitialInventoryService");
+        products = new DefaultComboBoxModel(productRepository.GetAll().toArray());
         products.insertElementAt(new Product("Seleccion un producto"), 0);
         this.cmb_products.setModel(products);
         this.cmb_products.setSelectedIndex(0);
@@ -62,6 +57,8 @@ public class KardexForm extends InternalCenterFrame {
         panel_kardex = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_movements = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        txt_year = new pericoscorp.swingcustomcontrolls.NumericTextBox();
 
         setClosable(true);
         addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
@@ -120,22 +117,32 @@ public class KardexForm extends InternalCenterFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel2.setText("Año:");
+
+        txt_year.setIsRequired(true);
+        txt_year.setLength(4);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(160, 160, 160)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cmb_products, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(btn_generate)
-                .addGap(46, 46, 46))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(panel_kardex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cmb_products, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txt_year, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_generate)
+                        .addGap(46, 46, 46))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(panel_kardex, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,68 +151,50 @@ public class KardexForm extends InternalCenterFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmb_products, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(btn_generate))
+                    .addComponent(btn_generate)
+                    .addComponent(jLabel2)
+                    .addComponent(txt_year, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(panel_kardex, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_generateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generateActionPerformed
-        List<MovementDetailDto> movements = movementRepository.GetMovementsByProductAndYear(GetSelectedProduct(), Calendar.getInstance().get(Calendar.YEAR));
+        List<MovementDetailDto> movements = initialInventoryService.GenerateKardex(GetSelectedProduct(), Integer.parseInt(this.txt_year.getText()));
         System.out.println(movements.size());
         fillTable(movements);
     }//GEN-LAST:event_btn_generateActionPerformed
 
     private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-        
+
     }//GEN-LAST:event_formInternalFrameOpened
 
-    private int GetSelectedProduct()
-    {
-        Product p = (Product)products.getElementAt(this.cmb_products.getSelectedIndex());
+    private int GetSelectedProduct() {
+        Product p = (Product) products.getElementAt(this.cmb_products.getSelectedIndex());
         return p.getId();
     }
+
     private void fillTable(List<MovementDetailDto> movements) {
         model = new DefaultTableModel();
         model.addColumn("Fecha");
         model.addColumn("Movimiento");
         model.addColumn("Cantidad");
         model.addColumn("Precio Unitario");
-        model.addColumn("Total");
-        InitialInventory initialInventory = initialInventoryRepository.FindByProductAndYear(GetSelectedProduct(), Calendar.getInstance().get(Calendar.YEAR));
+        model.addColumn("Total");        
         Object[] row = new Object[5];
-        if(initialInventory!=null)
-        {        
-            row[0] =StringsHelpers.GetStringofDate(initialInventory.getCreationDate());
-            row[1] = "Inventario Inicial";
-            row[2] = initialInventory.getStock();
-            row[3] = initialInventory.getPriceCost();
-            row[4]=  NumberHelpers.RoundTo2Decimals(initialInventory.getStock() * initialInventory.getPriceCost());
-            model.addRow(row);
-            for (MovementDetailDto md : movements) {
-                if(md.getProductId() == GetSelectedProduct() && md.getMovementId() != initialInventory.getMovement_Id() )
-                {
-                    //row = new Object[4];
-                    row[0] = StringsHelpers.GetStringofDate(md.getOperationDate());
-                    row[1] = md.getMovementType() == 1 ? "Venta" : "Compra";
-                    row[2] = md.getQuantity();
-                    row[3] = md.getPrice();
-                    row[4] = NumberHelpers.RoundTo2Decimals(md.getQuantity()*md.getPrice());
-                    model.addRow(row);
-                }
+        for (MovementDetailDto md : movements) {
+            if (md.getProductId() == GetSelectedProduct()) {        
+                row[0] = StringsHelpers.GetStringofDate(md.getOperationDate());
+                row[1] = md.getMovementType() == 1 ? "Venta" : md.getMovementType()==2?"Compra":md.getMovementType()==3?"Saldo": "Inventario Inicial";
+                row[2] = md.getQuantity();
+                row[3] = md.getPrice();
+                row[4] = NumberHelpers.RoundTo2Decimals(md.getQuantity() * md.getPrice());
+                model.addRow(row);
             }
-        }        
-        Product p= productRepository.Get(GetSelectedProduct());
-        //row = new Object[4];
-        row[0] = StringsHelpers.GetStringofDate(new Date());
-        row[1] = "Saldo";
-        row[2] = p.getStock();
-        row[3] = p.getPriceCost();
-        row[4] = NumberHelpers.RoundTo2Decimals(p.getStock()*p.getPriceCost());
-        model.addRow(row);
+        }           
         this.tbl_movements.setModel(model);
     }
 
@@ -213,8 +202,10 @@ public class KardexForm extends InternalCenterFrame {
     private javax.swing.JButton btn_generate;
     private pericoscorp.swingcustomcontrolls.BaseComboBoxValidated cmb_products;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel panel_kardex;
     private javax.swing.JTable tbl_movements;
+    private pericoscorp.swingcustomcontrolls.NumericTextBox txt_year;
     // End of variables declaration//GEN-END:variables
 }
